@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+{% load auth_extras %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administración - Maestra Vida</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .sidebar { min-height: 100vh; box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1); background-color: #343a40; display: flex; flex-direction: column; justify-content: space-between; }
+        .sidebar .nav-link { color: #c2c7d0; font-weight: 500; }
+        .sidebar .nav-link:hover { color: #ffffff; }
+        .sidebar-heading { color: #adb5bd; font-size: .75rem; text-transform: uppercase; }
+        .main-content { padding-top: 2rem; padding-bottom: 2rem; }
+        
+        /* Estilo para elementos no autorizados visibles en el menú */
+        .nav-link.disabled-role {
+            color: #6c757d !important;
+            background-color: transparent !important;
+            pointer-events: none;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            
+            <nav class="col-12 col-md-3 col-lg-2 sidebar order-2 order-md-1">
+                <h4 class="nav-link py-2 px-3 mt-3 mb-1 fw-bold"> Panel Maestra Vida</h4>
+                <div class="position-sticky pt-3">
+                    
+                    <!-- SECCIÓN PRODUCCIÓN -->
+                    <h6 class="sidebar-heading px-3 mt-3 mb-1 fw-bold">Producción</h6>
+                    <ul class="nav flex-column mb-3">
+                        <li class="nav-item">
+                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}" 
+                            href="{% url 'eventos:lista_eventos' %}">
+                                <i class="fas fa-calendar-alt me-2"></i> Eventos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}" 
+                            href="{% url 'bandas:lista_bandas' %}">
+                                <i class="fas fa-music me-2"></i> Bandas
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- SECCIÓN FOTOGRAFÍA -->
+                    <h6 class="sidebar-heading px-3 mt-4 mb-1 fw-bold">Fotografía</h6>
+                    <ul class="nav flex-column mb-3">
+                        <li class="nav-item">
+                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Fotografos' %}disabled-role{% endif %}" 
+                            href="{% url 'bandas:panel_fotografo_eventos' %}">
+                                <i class="fas fa-images me-2"></i> Música en vivo
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Fotografos' %}disabled-role{% endif %}" 
+                            href="{% url 'bandas:lista_albumes' %}">
+                                <i class="fas fa-folder-plus me-2"></i> Galería
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- SECCIÓN PUERTA -->
+                    <h6 class="sidebar-heading px-3 mt-4 mb-1 fw-bold">Puerta</h6>
+                    <ul class="nav flex-column mb-3">
+                        <li class="nav-item">
+                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Puerta' %}disabled-role{% endif %}" 
+                            href="{% url 'eventos:eventos_hoy' %}">
+                                <i class="fas fa-user-check me-2"></i> Asistencia
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- SECCIÓN INFERIOR: SITIO PÚBLICO Y CIERRE DE SESIÓN -->
+                <div class="px-3 pb-3 mt-auto">
+                    <hr class="text-secondary">
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a class="nav-link py-2 text-info" href="{% url 'index' %}">
+                                <i class="fas fa-globe me-2"></i> Sitio Público
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="{% url 'usuarios:logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link py-2 text-danger bg-transparent border-0 w-100 text-start">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-12 col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content order-1 order-md-2">
+                {% if messages %}
+                    <div class="container-fluid p-0 mb-4">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                                <i class="fas fa-{% if message.tags == 'success' %}check-circle{% else %}exclamation-circle{% endif %} me-1"></i>
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% block content %}
+                {% endblock %}
+            </main>
+
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

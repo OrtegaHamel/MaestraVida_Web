@@ -1,0 +1,102 @@
+{% extends 'base_staff.html' %}
+{% load auth_extras %}
+
+{% block content %}
+{% if request.user.is_superuser or request.user|has_group:'Productores' %}
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="d-flex align-items-center mb-4">
+                <a href="{% url 'eventos:lista_eventos' %}" class="btn btn-sm btn-outline-secondary me-3" title="Volver al listado">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h2 class="mb-0 fw-bold text-dark">Editar Evento</h2>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- Selección de Banda -->
+                        <div class="mb-3">
+                            <label for="{{ form.banda.id_for_label }}" class="form-label fw-bold text-secondary">Banda / Artista</label>
+                            {{ form.banda }}
+                        </div>
+
+                        <!-- Fecha y Hora -->
+                        <div class="mb-3">
+                            <label for="{{ form.hora.id_for_label }}" class="form-label fw-bold text-secondary">Fecha y Hora del Show</label>
+                            {{ form.hora }}
+                        </div>
+
+                        <!-- Precios -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_precio_preventa" class="form-label fw-bold text-secondary">Precio Preventa ($)</label>
+                                {{ form.precio_preventa }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_precio_puerta" class="form-label fw-bold text-secondary">Precio Puerta ($)</label>
+                                {{ form.precio_puerta }}
+                            </div>
+                        </div>
+
+                        <!-- Afiche Promocional -->
+                        <div class="mb-3">
+                            <label for="{{ form.poster.id_for_label }}" class="form-label fw-bold text-secondary">Afiche del Evento</label>
+                            {% if evento.poster %}
+                                <div class="mb-2 p-2 bg-light border rounded text-center">
+                                    <small class="text-muted d-block mb-1">Afiche publicitario activo:</small>
+                                    <img src="{{ evento.poster.url }}" alt="Afiche" style="max-height: 150px; object-fit: contain;" class="img-thumbnail">
+                                </div>
+                            {% endif %}
+                            {{ form.poster }}
+                        </div>
+
+                        <!-- Enlace de Venta -->
+                        <div class="mb-3">
+                            <label for="{{ form.link_entrada.id_for_label }}" class="form-label fw-bold text-secondary">Enlace de Venta (Ticketera)</label>
+                            {{ form.link_entrada }}
+                        </div>
+
+                        <!-- Descripción Pública -->
+                        <div class="mb-3">
+                            <label for="{{ form.descripcion.id_for_label }}" class="form-label fw-bold text-secondary">Descripción del Evento</label>
+                            {{ form.descripcion }}
+                        </div>
+
+                        <!-- Asistencia -->
+                        <div class="mb-4">
+                            <label for="{{ form.asistencia.id_for_label }}" class="form-label fw-bold text-secondary">Asistencia Estimada / Real</label>
+                            {{ form.asistencia }}
+                        </div>
+
+                        <!-- Notas Privadas -->
+                        <div class="mb-4 p-3 bg-danger-subtle text-danger-emphasis border border-danger-subtle rounded-3">
+                            <label for="id_notas_confidenciales" class="form-label text-danger fw-bold mb-1">
+                                🔒 Notas Confidenciales (Sólo Producción)
+                            </label>
+                            {{ form.notas_confidenciales }}
+                            <div class="form-text text-muted text-danger-emphasis small">Este contenido es privado. Ningún cliente o usuario externo podrá leerlo en la web.</div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-between mt-4 pt-3 border-top">
+                            <button type="submit" class="btn btn-dark fw-semibold">
+                                <i class="fas fa-save me-1"></i> Guardar Cambios
+                            </button>
+                            <a href="{% url 'eventos:lista_eventos' %}" class="btn btn-outline-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="alert alert-danger text-center shadow-sm p-5 mt-4">
+        <i class="fas fa-lock fa-3x mb-3 text-danger"></i>
+        <h3 class="fw-bold">Acceso Restringido</h3>
+        <p class="mb-0">No tienes los permisos necesarios para editar este evento. Consulta con el área de Producción.</p>
+    </div>
+{% endif %}
+{% endblock %}

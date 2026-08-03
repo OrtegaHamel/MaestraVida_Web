@@ -1,0 +1,93 @@
+{% extends 'base_staff.html' %}
+{% load auth_extras %}
+
+{% block content %}
+{% if request.user.is_superuser or request.user|has_group:'Fotografos' %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-dark text-white py-3">
+                <span class="badge bg-info text-white mb-1">Paso 2 de 2</span>
+                <h4 class="mb-0 fw-bold"><i class="fas fa-images me-2 text-info"></i>Álbum: {{ album.titulo }}</h4>
+                <small class="text-white-50">Arrastra fotos generales para este álbum. Se optimizarán a formato WebP.</small>
+            </div>
+            
+            <div class="card-body p-5">
+                <form method="POST" enctype="multipart/form-data" id="upload-form">
+                    {% csrf_token %}
+                    
+                    <div id="drop-zone" class="border border-2 border-dashed rounded-3 p-5 text-center bg-light cursor-pointer mb-4" style="border-color: #0dcaf0 !important; cursor: pointer;">
+                        <i class="fas fa-cloud-upload-alt fa-4x text-info mb-3"></i>
+                        <h5 class="fw-bold text-dark">Arrastra las fotos del álbum aquí</h5>
+                        <p class="text-muted small mb-3">O haz clic para buscar archivos locales</p>
+                        <span class="btn btn-outline-info btn-sm fw-bold">Seleccionar archivos</span>
+                        
+                        <input type="file" name="imagenes" multiple class="form-control d-none" id="input-imagenes" accept="image/*">
+                    </div>
+
+                    <div id="file-counter" class="alert alert-info text-center d-none fw-bold mb-4">
+                        <i class="fas fa-check-circle me-1"></i> <span id="count-number">0</span> fotos listas para subir al álbum.
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-info btn-lg fw-bold text-white shadow-sm">
+                            <i class="fas fa-upload me-1"></i> Subir y Optimizar Álbum
+                        </button>
+                        <a href="{% url 'bandas:lista_albumes' %}" class="btn btn-light text-muted btn-sm">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('input-imagenes');
+    const fileCounter = document.getElementById('file-counter');
+    const countNumber = document.getElementById('count-number');
+
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            dropZone.classList.add('bg-info-subtle');
+        }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('bg-info-subtle');
+        }, false);
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        fileInput.files = files;
+        actualizarContador();
+    });
+
+    fileInput.addEventListener('change', actualizarContador);
+
+    function actualizarContador() {
+        const totalFiles = fileInput.files.length;
+        if (totalFiles > 0) {
+            countNumber.textContent = totalFiles;
+            fileCounter.classList.remove('d-none');
+        } else {
+            fileCounter.classList.add('d-none');
+        }
+    }
+</script>
+{% else %}
+<div class="alert alert-danger text-center shadow-sm p-5 mt-4">
+    <i class="fas fa-camera-slash fa-3x mb-3 text-danger"></i>
+    <h3 class="fw-bold">Acceso Restringido</h3>
+    <p class="mb-0">No tienes permisos para subir fotos a los álbumes. Esta tarea es exclusiva del equipo de <strong>Fotografía</strong>.</p>
+    <a href="{% url 'bandas:lista_albumes' %}" class="btn btn-outline-danger mt-3">Volver al listado</a>
+</div>
+{% endif %}
+{% endblock %}

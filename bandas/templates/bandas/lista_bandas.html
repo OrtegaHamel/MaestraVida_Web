@@ -1,0 +1,147 @@
+{% extends 'base_staff.html' %}
+{% load auth_extras %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h2 mb-1 fw-bold text-dark">Listado de Bandas</h1>
+        <p class="text-muted small mb-0">Gestión de contactos de bandas</p>
+    </div>
+    {# Solo Productores o Superusuarios pueden registrar bandas nuevas #}
+    {% if request.user.is_superuser or request.user|has_group:'Productores' %}
+        <a href="{% url 'bandas:crear_banda' %}" class="btn btn-primary fw-semibold shadow-sm">
+            <i class="fas fa-plus-circle me-1"></i> Crear Banda
+        </a>
+    {% endif %}
+</div>
+
+<!-- Formulario de Búsqueda por Nombre -->
+<form method="get" action="" class="m-0">
+    <div class="d-flex flex-wrap gap-2 align-items-center justify-content-start justify-content-md-end">
+        <div class="input-group input-group-sm" style="max-width: 220px;">
+            <span class="input-group-text bg-white text-muted"><i class="fas fa-music"></i></span>
+            <input type="text" name="q" class="form-control" placeholder="Buscar Banda..." value="{{ request.GET.q|default:'' }}"
+                    aria-label="Buscar por Nombre">
+        </div>
+        <button type="submit" class="btn btn-sm btn-dark fw-semibold" title="Buscar">
+            <i class="fas fa-search"></i>
+        </button>
+            {% if request.GET.q %}
+            <a href="{% url 'bandas:lista_bandas' %}" class="btn btn-sm btn-outline-danger" title="Limpiar filtros">
+                <i class="fas fa-times"></i>
+            </a>
+            {% endif %}
+    </div>
+</form>
+
+{% if request.GET.mensaje %}
+    <div class="alert alert-{{ request.GET.tipo }} alert-dismissible fade show shadow-sm" role="alert">
+        {{ request.GET.mensaje|urlize|linebreaksbr }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" style="min-width: 800px;">
+                <thead class="table-light text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">
+                    <tr>
+                        <th class="ps-4 py-3 text-secondary" style="width: 25%;">Nombre</th>
+                        <th class="py-3 text-secondary" style="width: 20%;">Responsable</th>
+                        <th class="py-3 text-secondary" style="width: 15%;">Teléfono</th>
+                        <th class="py-3 text-secondary" style="width: 20%;">Correo</th>
+                        <th class="py-3 text-secondary" style="width: 10%;">Redes Sociales</th>
+                        {# Solo se muestra la columna Acciones si el usuario es de Producción o Superusuario #}
+                        {% if request.user.is_superuser or request.user|has_group:'Productores' %}
+                            <th class="pe-4 py-3 text-end text-secondary" style="width: 10%;">Acciones</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for banda in bandas %}
+                    <tr>
+                        <td class="ps-4">
+                            <a href="{% url 'bandas:detalle_banda' banda.id %}" class="text-decoration-none fw-bold text-dark d-block link-hover" title="Ver perfil de la banda">
+                                <i class="fas fa-music text-muted small me-2"></i> {{ banda.nombre }}
+                            </a>
+                        </td>
+                        
+                        <td class="text-secondary">{{ banda.responsable|default:"—" }}</td>
+                        <td class="text-secondary">{{ banda.telefono|default:"—" }}</td>
+                        
+                        <td class="text-secondary">
+                            {% if banda.correo %}
+                                <a href="mailto:{{ banda.correo }}" class="text-decoration-none text-secondary hover-email" title="Enviar correo">
+                                    <i class="far fa-envelope me-1"></i> {{ banda.correo }}
+                                </a>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        
+                        <td>
+                            {% if banda.redes_sociales %}
+                                <a href="{{ banda.redes_sociales }}" target="_blank" class="btn btn-sm btn-light border text-decoration-none" title="Visitar redes sociales">
+                                    <i class="fas fa-external-link-alt text-primary me-1"></i> Ir
+                                </a>
+                            {% else %}
+                                <span class="badge bg-light text-muted px-2 py-1.5 border">No tiene</span>
+                            {% endif %}
+                        </td>
+                        
+                        {% if request.user.is_superuser or request.user|has_group:'Productores' %}
+                        <td class="pe-4 text-end text-nowrap">
+                            <a href="{% url 'bandas:editar_banda' banda.id %}" class="btn btn-sm btn-outline-dark me-1" title="Editar Banda">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <a href="{% url 'bandas:eliminar_banda' banda.id %}" class="btn btn-sm btn-outline-danger" title="Eliminar Banda">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-5">
+                            <i class="fas fa-music fa-2x mb-3 d-block text-muted"></i>
+                            No hay bandas registradas en el sistema.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Paginación para Lista de Bandas -->
+<div class="pagination mt-4 d-flex justify-content-center">
+    <span class="step-links">
+        {% if bandas.has_previous %}
+            <a href="?page=1{% if parametros_url %}&{{ parametros_url }}{% endif %}" class="btn btn-outline-primary btn-sm">&laquo; Primera</a>
+            <a href="?page={{ bandas.previous_page_number }}{% if parametros_url %}&{{ parametros_url }}{% endif %}" class="btn btn-outline-primary btn-sm">Anterior</a>
+        {% endif %}
+
+        <span class="current mx-3 fw-bold">
+            Página {{ bandas.number }} de {{ bandas.paginator.num_pages }}
+        </span>
+
+        {% if bandas.has_next %}
+            <a href="?page={{ bandas.next_page_number }}{% if parametros_url %}&{{ parametros_url }}{% endif %}" class="btn btn-outline-primary btn-sm">Siguiente</a>
+            <a href="?page={{ bandas.paginator.num_pages }}{% if parametros_url %}&{{ parametros_url }}{% endif %}" class="btn btn-outline-primary btn-sm">Última &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<style>
+    .link-hover:hover {
+        color: #000000 !important;
+        text-decoration: underline !important;
+    }
+    .hover-email:hover {
+        color: #0d6efd !important;
+        text-decoration: underline !important;
+    }
+</style>
+{% endblock %}

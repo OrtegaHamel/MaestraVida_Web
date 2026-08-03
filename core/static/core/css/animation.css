@@ -1,0 +1,22 @@
+/*
+Copyright (c) 2018 Nigth Club 1.0
+------------------------------------------------------------------
+[animation style Stylesheet]
+
+Project:	 Nigth Club 1.0
+
+-------------------------------------------------------------------*/
+@keyframes fromtop{from{-webkit-transform:translate3d(0, -150px, 0px);transform:translate3d(0, -150px, 0px);opacity:0;}
+to{-webkit-transform:translate3d(0, 0px, 0px);transform:translate3d(0, 0px, 0px);opacity:1;}
+}
+@-webkit-keyframes fromtop{from{-webkit-transform:translate3d(0, -150px, 0px);transform:translate3d(0, -150px, 0px);opacity:0;}
+to{-webkit-transform:translate3d(0, 0px, 0px);transform:translate3d(0, 0px, 0px);opacity:1;}
+}
+.fromtop{animation:fromtop 1s;-webkit-animation:fromtop 1s;-moz-animation:fromtop 1s;}
+@keyframes fromtop_small{from{-webkit-transform:translateX(-50px);transform:translateX(-50px);opacity:0;}
+to{-webkit-transform:translateX(0px);transform:translateX(0px);opacity:1;}
+}
+@-webkit-keyframes fromtop_small{from{-webkit-transform:translateX(-50px);transform:translateX(-50px);opacity:0;}
+to{-webkit-transform:translateX(0px);transform:translateX(0px);opacity:1;}
+}
+.fromtop_small{animation:fromtop_small 1s 500ms;-webkit-animation:fromtop_small 1s 500ms;-moz-animation:fromtop_small 1s 500ms;}

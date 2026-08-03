@@ -1,0 +1,150 @@
+{% extends 'base_staff.html' %}
+{% load auth_extras %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h2 mb-1 fw-bold text-dark">Listado de Eventos</h1>
+        <p class="text-muted small mb-0">Gestión de Música en Vivo</p>
+    </div>
+
+    <!-- Botón condicional seguro para crear eventos usando el filtro has_group -->
+    {% if request.user.is_superuser or request.user|has_group:'Productores' %}
+        <a href="{% url 'eventos:crear_evento' %}" class="btn btn-primary fw-semibold shadow-sm">
+            <i class="fas fa-plus-circle me-1"></i> Crear Evento
+        </a>
+    {% endif %}
+</div>
+
+<form method="get" action="" class="m-0">
+    <div class="d-flex flex-wrap gap-2 align-items-center justify-content-start justify-content-md-end">
+        <!-- Nuevo filtro por nombre de banda -->
+        <div class="input-group input-group-sm" style="max-width: 200px;">
+            <span class="input-group-text bg-white text-muted"><i class="fas fa-music"></i></span>
+            <input type="text" name="banda" class="form-control" placeholder="Buscar banda..." value="{{ request.GET.banda|default:'' }}"
+                aria-label="Buscar por Banda">
+        </div>
+
+        <div class="input-group input-group-sm" style="max-width: 165px;">
+            <span class="input-group-text bg-white text-muted">Desde</span>
+            <input type="date" name="desde" class="form-control" value="{{ request.GET.desde|default:'' }}"
+                aria-label="Fecha Inicio">
+        </div>
+        <div class="input-group input-group-sm" style="max-width: 165px;">
+            <span class="input-group-text bg-white text-muted">Hasta</span>
+            <input type="date" name="hasta" class="form-control" value="{{ request.GET.hasta|default:'' }}"
+                aria-label="Fecha Fin">
+        </div>
+        <button type="submit" class="btn btn-sm btn-dark fw-semibold" title="Buscar">
+            <i class="fas fa-search"></i>
+        </button>
+        {% if request.GET.banda or request.GET.desde or request.GET.hasta %}
+        <a href="{% url 'eventos:lista_eventos' %}" class="btn btn-sm btn-outline-danger" title="Limpiar filtros">
+            <i class="fas fa-times"></i>
+        </a>
+        {% endif %}
+    </div>
+</form>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" style="min-width: 800px;">
+                <thead class="table-light text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">
+                    <tr>
+                        <th class="ps-4 py-3 text-secondary" style="width: 30%;">Banda</th>
+                        <th class="py-3 text-secondary" style="width: 20%;">Fecha y Hora</th>
+                        <th class="py-3 text-secondary" style="width: 15%;">Preventa</th>
+                        <th class="py-3 text-secondary" style="width: 15%;">En Puerta</th>
+                        <th class="py-3 text-secondary" style="width: 10%;">Asistencia</th>
+                        <th class="pe-4 py-3 text-end text-secondary" style="width: 10%;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for evento in eventos %}
+                    <tr>
+                        <td class="ps-4">
+                            <a href="{% url 'bandas:detalle_banda' evento.banda.id %}" class="text-decoration-none fw-bold text-dark d-block link-hover" title="Detalles banda">
+                                <i class="fas fa-music text-muted small me-2"></i> {{ evento.banda.nombre }}
+                            </a>
+                        </td>
+                        
+                        <td>
+                            <span class="text-dark fw-semibold"><i class="far fa-calendar-alt me-1 text-muted"></i> {{ evento.hora|date:"d/m/Y" }}</span>
+                            <span class="badge bg-light text-dark ms-1 fw-medium border"><i class="far fa-clock me-1 text-muted"></i> {{ evento.hora|date:"H:i" }}</span>
+                        </td>
+                        
+                        <td class="text-secondary fw-medium">${{ evento.precio_preventa|default:"0" }}</td>
+                        <td class="text-secondary fw-medium">${{ evento.precio_puerta|default:"0" }}</td>
+                        
+                        <td>
+                            {% if evento.asistencia > 0 %}
+                                <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1.5 fw-semibold">
+                                    <i class="fas fa-users me-1"></i> {{ evento.asistencia }}
+                                </span>
+                            {% else %}
+                                <span class="badge bg-light text-muted px-2 py-1.5 fw-normal border">—</span>
+                            {% endif %}
+                        </td>
+                        
+                        <td class="pe-4 text-end text-nowrap">
+                            <a href="{% url 'eventos:detalle_evento_publico' evento.slug %}" class="btn btn-sm btn-outline-secondary me-1" target="_blank" title="Ver Publicación Pública">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                            
+                            <!-- Botones de edición y eliminación restringidos al grupo Productores o Superusuario -->
+                            {% if request.user.is_superuser or request.user|has_group:'Productores' %}
+                                <a href="{% url 'eventos:editar_evento' evento.id %}" class="btn btn-sm btn-outline-dark me-1" title="Editar Evento">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a href="{% url 'eventos:eliminar_evento' evento.id %}" class="btn btn-sm btn-outline-danger" title="Eliminar Evento">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-5">
+                            <i class="fas fa-calendar-times fa-2x mb-3 d-block text-muted"></i>
+                            No hay eventos planificados en el sistema.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="pagination mt-4 d-flex justify-content-center">
+    <span class="step-links">
+        <!-- Verifica si existe una página anterior -->
+        {% if eventos.has_previous %}
+            <!-- Le decimos que vaya a la pág 1, y si hay filtros, los concatene con un '&' -->
+            <a href="?page=1{% if parametros_url %}&{{ parametros_url }}{% endif %}" class="btn btn-outline-primary btn-sm">&laquo; Primera</a>
+            
+            <a href="?page={{ eventos.previous_page_number }}{% if parametros_url %}&{{ parametros_url }}{% endif %}" class="btn btn-outline-primary btn-sm">Anterior</a>
+        {% endif %}
+
+        <span class="current mx-3 fw-bold">
+            Página {{ eventos.number }} de {{ eventos.paginator.num_pages }}
+        </span>
+
+        <!-- Verifica si existe una página siguiente -->
+        {% if eventos.has_next %}
+            <a href="?page={{ eventos.next_page_number }}{% if parametros_url %}&{{ parametros_url }}{% endif %}" class="btn btn-outline-primary btn-sm">Siguiente</a>
+            
+            <a href="?page={{ eventos.paginator.num_pages }}{% if parametros_url %}&{{ parametros_url }}{% endif %}" class="btn btn-outline-primary btn-sm">Última &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<style>
+    /* Efecto de alto contraste refinado y sutil para la banda */
+    .link-hover:hover {
+        color: #000000 !important;
+        text-decoration: underline !important;
+    }
+</style>
+{% endblock %}

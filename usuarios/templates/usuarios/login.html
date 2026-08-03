@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Staff - Maestra</title>
+    <!-- Importaciones idénticas a tu panel base -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Fondo basado en tu base_staff.html */
+        body { background-color: #f8f9fa; }
+        
+        /* Estilos simples para que el formulario nativo de Django se vea como Bootstrap */
+        .django-form p { margin-bottom: 1rem; }
+        .django-form label { font-weight: bold; color: #6c757d; margin-bottom: .5rem; display: block; font-size: 0.9rem; }
+        .django-form input { display: block; width: 100%; padding: .375rem .75rem; font-size: 1rem; border: 1px solid #ced4da; border-radius: .375rem; transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; }
+        .django-form input:focus { border-color: #86b7fe; outline: 0; box-shadow: 0 0 0 .25rem rgba(13,110,253,.25); }
+        .django-form ul.errorlist { color: #dc3545; list-style: none; padding-left: 0; font-size: 0.875rem; margin-top: 0.25rem; }
+    </style>
+</head>
+<body class="d-flex align-items-center justify-content-center min-vh-100">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-4">
+                
+                <div class="text-center mb-4">
+                    <h2 class="mb-0 fw-bold text-dark">Login Personal Autorizado</h2>
+                    <p class="text-muted small">Ingresa tus credenciales de acceso</p>
+                </div>
+
+                <!-- Tarjeta basada en tu diseño de crear_evento.html -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} small py-2 shadow-sm" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <form method="POST" action="{% url 'usuarios:login' %}">
+                            {% csrf_token %}
+                            <div class="django-form">
+                                {{ form.as_p }}
+                            </div>
+                            <button type="submit" class="btn btn-primary fw-semibold w-100 mt-3 shadow-sm">
+                                <i class="fas fa-sign-in-alt me-1"></i> Ingresar
+                            </button>
+                        </form>
+
+                        <!-- Opción de Registro añadida -->
+                        <div class="text-center mt-3 pt-3 border-top">
+                            <p class="text-muted small mb-0">¿No tienes cuenta?</p>
+                            <a href="{% url 'usuarios:registro' %}" class="fw-semibold text-primary small text-decoration-none">
+                                Registrarse aquí <i class="fas fa-user-plus ms-1"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="{% url 'index' %}" class="text-secondary small text-decoration-none">
+                        <i class="fas fa-arrow-left me-1"></i> Volver al sitio web
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

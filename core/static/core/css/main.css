@@ -1,0 +1,15 @@
+@import url("bootstrap.min.css");
+@import url("animation.css");
+@import url("font-awesome.min.css");
+
+/* plugins css - Ajustando rutas a la carpeta js/plugins */
+@import url("../js/plugins/owl-carousel/owl.carousel.css");
+@import url("../js/plugins/video/css/mediaelementplayer.min.css");
+@import url("../js/plugins/video/css/mep-feature-playlist.css");
+@import url("../js/plugins/revolution/css/layers.css");
+@import url("../js/plugins/revolution/css/settings.css");
+@import url("../js/plugins/gallery/magnific-popup.css");
+@import url("../js/plugins/jquery_ui/jquery-ui.css");
+
+@import url("style.css");
+@import url("responsive.css");

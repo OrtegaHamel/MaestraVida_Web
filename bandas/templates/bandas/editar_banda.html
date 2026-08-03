@@ -1,0 +1,95 @@
+{% extends 'base_staff.html' %}
+{% load auth_extras %}
+
+{% block content %}
+{% if request.user.is_superuser or request.user|has_group:'Productores' %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="d-flex align-items-center mb-4">
+            <a href="{% url 'bandas:detalle_banda' banda.id %}" class="btn btn-sm btn-outline-secondary me-3" title="Volver al detalle">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h2 class="mb-0 fw-bold text-dark">Editar Banda: {{ banda.nombre }}</h2>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.nombre.id_for_label }}" class="form-label fw-bold text-secondary">Nombre de la Banda</label>
+                        {{ form.nombre }}
+                        {% if form.nombre.help_text %}
+                            <div class="form-text text-muted">{{ form.nombre.help_text }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.responsable.id_for_label }}" class="form-label fw-bold text-secondary">Responsable / Representante</label>
+                        {{ form.responsable }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.telefono.id_for_label }}" class="form-label fw-bold text-secondary">Teléfono de Contacto</label>
+                            {{ form.telefono }}
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.correo.id_for_label }}" class="form-label fw-bold text-secondary">Correo Electrónico</label>
+                            {{ form.correo }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.redes_sociales.id_for_label }}" class="form-label fw-bold text-secondary">Redes Sociales / Sitio Web</label>
+                        {{ form.redes_sociales }}
+                        <div class="form-text text-muted">URL completa (ej: https://instagram.com/mi_banda).</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.dossier.id_for_label }}" class="form-label fw-bold text-secondary">Dossier / Reseña Artística</label>
+                        {{ form.dossier }}
+                        <div class="form-text text-muted">Esta información será visible públicamente en el perfil de la banda.</div>
+                    </div>
+
+                    <div class="mb-4 p-3 bg-danger-subtle text-danger-emphasis border border-danger-subtle rounded-3">
+                        <label for="{{ form.notas_confidenciales.id_for_label }}" class="form-label text-danger fw-bold mb-1">
+                            🔒 Notas Privadas de Producción (Solo Staff)
+                        </label>
+                        {{ form.notas_confidenciales }}
+                        <div class="form-text text-muted text-danger-emphasis small">
+                            Este contenido es completamente privado. Solo los productores y administradores del sistema podrán verlo en la ficha interna.
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4 pt-3 border-top">
+                        <button type="submit" class="btn btn-dark fw-semibold">
+                            <i class="fas fa-save me-1"></i> Guardar Cambios
+                        </button>
+                        <a href="{% url 'bandas:detalle_banda' banda.id %}" class="btn btn-outline-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-danger text-center shadow-sm p-5 mt-4">
+    <i class="fas fa-lock fa-3x mb-3 text-danger"></i>
+    <h3 class="fw-bold">Acceso Restringido</h3>
+    <p class="mb-0">No tienes permisos para editar la información de las bandas. Esta tarea es exclusiva del equipo de <strong>Producción</strong>.</p>
+    <a href="{% url 'bandas:detalle_banda' banda.id %}" class="btn btn-outline-danger mt-3">Volver al detalle</a>
+</div>
+{% endif %}
+{% endblock %}

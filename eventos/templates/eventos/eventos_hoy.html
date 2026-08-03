@@ -1,0 +1,97 @@
+{% extends 'base_staff.html' %}
+{% load auth_extras %}
+
+{% block content %}
+<div class="mb-4 text-center text-md-start">
+    <span class="badge bg-danger mb-2 px-3 py-2">
+        <i class="fas fa-circle-notch fa-spin me-1"></i> EN VIVO HOY
+    </span>
+    <h1 class="h2 mb-1">Eventos de Hoy</h1>
+    <p class="text-muted small">Selecciona el evento para ingresar el total de asistentes de la noche</p>
+</div>
+
+{% if request.GET.mensaje %}
+    <div class="alert alert-{{ request.GET.tipo }} alert-dismissible fade show" role="alert">
+        {{ request.GET.mensaje }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+
+{% if eventos_pendientes %}
+<div class="alert alert-warning border-0 shadow-sm mb-4 p-4">
+    <div class="d-flex align-items-center mb-3">
+        <i class="fas fa-exclamation-triangle fa-2x text-warning me-3"></i>
+        <div>
+            <h5 class="alert-heading fw-bold mb-1" style="color: #664d03;">¡Atención! Tienes registros pendientes</h5>
+            <p class="mb-0 text-muted small">Los siguientes eventos ocurrieron hace poco y no tienen registrada la asistencia de público.</p>
+        </div>
+    </div>
+    <div class="row g-2">
+        {% for pendiente in eventos_pendientes %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card border-0 bg-white shadow-sm h-100">
+                <div class="card-body p-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <small class="text-danger fw-bold d-block mb-1">
+                            <i class="far fa-calendar-alt"></i> {{ pendiente.hora|date:"d/m" }} (Pasado)
+                        </small>
+                        <h6 class="fw-bold text-dark mb-0">{{ pendiente.banda.nombre }}</h6>
+                    </div>
+                    {% if request.user.is_superuser or request.user|has_group:'Productores' or request.user|has_group:'Puerta' %}
+                        <a href="{% url 'eventos:registrar_asistencia' pendiente.id %}" class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit"></i> Completar
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<h4 class="fw-bold text-secondary mb-3">Shows Programados para hoy</h4>
+<div class="row g-3">
+    {% for evento in eventos %}
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="card shadow-sm border-0 border-start border-primary border-4 h-100">
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="badge bg-light text-dark">
+                            <i class="far fa-clock me-1"></i> {{ evento.hora|date:"H:i" }} hrs
+                        </span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle">
+                            <i class="fas fa-users me-1"></i> {{ evento.asistencia }} registrados
+                        </span>
+                    </div>
+                    <h5 class="card-title fw-bold text-dark mb-1">{{ evento.banda.nombre }}</h5>
+                    <p class="card-text text-muted small mb-3">
+                        Precio Puerta: <strong class="text-dark">${{ evento.precio_puerta|default:"0" }}</strong>
+                    </p>
+                </div>
+                
+                {% if request.user.is_superuser or request.user|has_group:'Productores' or request.user|has_group:'Puerta' %}
+                    <a href="{% url 'eventos:registrar_asistencia' evento.id %}" class="btn btn-outline-primary w-100 mt-2">
+                        <i class="fas fa-edit me-1"></i> Ingresar Asistencia
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <div class="card border-0 shadow-sm py-5">
+            <div class="card-body">
+                <i class="fas fa-calendar-day fa-3x mb-3 text-muted"></i>
+                <h5 class="fw-bold text-secondary">No hay eventos para hoy</h5>
+                <p class="text-muted small">Los shows programados para hoy aparecerán aquí al comenzar la jornada.</p>
+                <a href="{% url 'eventos:lista_eventos' %}" class="btn btn-sm btn-outline-secondary">
+                    Ver cartelera completa
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

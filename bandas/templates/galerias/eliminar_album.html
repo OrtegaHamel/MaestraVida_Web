@@ -1,0 +1,39 @@
+{% extends 'base_staff.html' %}
+{% load auth_extras %}
+
+{% block content %}
+{% if request.user.is_superuser or request.user|has_group:'Fotografos' %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="card-title mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Confirmar Eliminación</h5>
+                </div>
+                <div class="card-body">
+                    <p>¿Estás seguro de que deseas eliminar permanentemente el álbum <strong>"{{ album.titulo }}"</strong>?</p>
+                    <p class="text-muted small">Esta acción no se puede deshacer y eliminará todas las imágenes optimizadas dentro de esta galería.</p>
+                </div>
+                <div class="card-footer d-flex justify-content-end gap-2">
+                    <!-- Cancelar regresa al listado seguro -->
+                    <a href="{% url 'bandas:lista_albumes' %}" class="btn btn-light">Cancelar</a>
+                    
+                    <!-- El botón real de destrucción envía el POST seguro -->
+                    <form action="{% url 'bandas:eliminar_album' album.id %}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Sí, eliminar definitivamente</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-danger text-center shadow-sm p-5 mt-4">
+    <i class="fas fa-camera-slash fa-3x mb-3 text-danger"></i>
+    <h3 class="fw-bold">Acceso Restringido</h3>
+    <p class="mb-0">No tienes permisos para eliminar galerías del sistema.</p>
+    <a href="{% url 'bandas:lista_albumes' %}" class="btn btn-outline-danger mt-3">Volver al listado</a>
+</div>
+{% endif %}
+{% endblock %}

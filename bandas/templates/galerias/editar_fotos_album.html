@@ -1,0 +1,70 @@
+{% extends 'base_staff.html' %}
+{% load auth_extras %}
+
+{% block content %}
+{% if request.user.is_superuser or request.user|has_group:'Fotografos' %}
+<div class="container py-4">
+    <div class="d-flex align-items-center mb-4">
+        <!-- Botón de regreso alineado a la izquierda -->
+        <a href="{% url 'bandas:lista_albumes' %}" class="btn btn-sm btn-outline-secondary me-3" title="Volver a la lista">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div>
+            <h2 class="fw-bold mb-1">Gestionar fotos: {{ album.titulo }}</h2>
+            {% if album.descripcion %}
+                <p class="text-muted mb-4">{{ album.descripcion|truncatewords:20 }}</p>
+            {% else %}
+                <p class="text-muted mb-4">Sin descripción asignada.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Botón para agregar más fotos -->
+    <div class="mb-4">
+        <a href="{% url 'bandas:subir_fotos_album' album.id %}" class="btn btn-primary shadow-sm">
+            <i class="fas fa-plus-circle me-1"></i> Agregar más fotos
+        </a>
+    </div>
+
+    <!-- Galería de imágenes -->
+    <div class="row g-3">
+        {% for foto in fotos %}
+        <div class="col-6 col-md-3">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ foto.imagen.url }}" class="card-img-top" alt="Foto álbum" style="height: 150px; object-fit: cover;">
+                <div class="card-body p-2">
+                    
+                    <!-- Botón de Descarga -->
+                    <a href="{{ foto.imagen.url }}" download class="btn btn-sm btn-outline-primary w-100 mb-2">
+                        <i class="fas fa-download"></i> Descargar
+                    </a>
+                    
+                    <!-- Formulario de eliminación -->
+                    <form action="{% url 'bandas:eliminar_foto_album' foto.id %}" method="POST" onsubmit="return confirm('¿Seguro que deseas borrar esta foto del álbum?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-danger w-100">
+                            <i class="fas fa-trash-alt"></i> Borrar
+                        </button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-light text-center py-4 border-dashed" role="alert">
+                <p class="text-muted mb-0"><i class="fas fa-images fa-2x d-block mb-2 text-secondary"></i>No hay fotos en este álbum todavía.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="alert alert-danger text-center shadow-sm p-5 mt-4">
+    <i class="fas fa-camera-slash fa-3x mb-3 text-danger"></i>
+    <h3 class="fw-bold">Acceso Restringido</h3>
+    <p class="mb-0">No tienes permisos para gestionar las fotos de este álbum. Contacta al equipo de <strong>Fotografía</strong>.</p>
+    <a href="{% url 'bandas:lista_albumes' %}" class="btn btn-outline-danger mt-3">Volver al listado</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base_staff.html' %}
+{% load auth_extras %}
+
+{% block content %}
+{% if request.user.is_superuser or request.user|has_group:'Fotografos' %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-dark text-white py-3">
+                <span class="badge bg-info text-white mb-1">Paso 1 de 2</span>
+                <h4 class="mb-0 fw-bold"><i class="fas fa-folder-plus me-2 text-info"></i>Crear Nuevo Álbum</h4>
+                <small class="text-white-50">Registra el contenedor antes de subir las fotos de la galería</small>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-secondary">Título de la Galería / Álbum</label>
+                        {{ form.titulo }}
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-secondary">Descripción o Reseña (Opcional)</label>
+                        {{ form.descripcion }}
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-info fw-bold text-white shadow-sm">
+                            Continuar a subir fotos <i class="fas fa-arrow-right ms-1"></i>
+                        </button>
+                        <a href="{% url 'bandas:lista_albumes' %}" class="btn btn-light btn-sm text-muted">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-danger text-center shadow-sm p-5 mt-4">
+    <i class="fas fa-camera-slash fa-3x mb-3 text-danger"></i>
+    <h3 class="fw-bold">Acceso Restringido</h3>
+    <p class="mb-0">No tienes permisos para crear álbumes. Esta tarea es exclusiva del equipo de <strong>Fotografía</strong>.</p>
+    <a href="{% url 'bandas:lista_albumes' %}" class="btn btn-outline-danger mt-3">Volver al listado</a>
+</div>
+{% endif %}
+{% endblock %}

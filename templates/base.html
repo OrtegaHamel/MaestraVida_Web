@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>{% block title %}Salsoteca Maestra Vida{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/main.css' %}">
+    
+    <link rel="icon" type="image/png" href="{% static 'core/images/icon/logoMaestraVida2.png' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <div class="px_preloader">
+        <div class="loader_overlay">
+            <div class="loader_image">
+                <img src="{% static 'core/images/icon/music_loader.gif' %}" alt="loader">
+            </div>
+        </div>
+    </div>
+
+    <div class="main_wrapper px_header_main_home1">
+        {% block hero_slider %}{% endblock %}
+
+        <div class="main_wrapper wrapper_navigation px_home_1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-1 col-md-3 col-sm-4">
+                        <div class="px_logo">
+                            <a href="{% url 'index' %}">
+                                <img src="{% static 'core/images/icon/logoMaestraVida2Blanco.png' %}" alt="logo">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-8" id="navigation_main">
+                        <div class="navigation_main">
+                            <div class="navbar_header">
+                                <div class="navbar_toggle"><i></i><i></i><i></i></div>
+                            </div>
+                            <div class="px_navigations">
+                                <ul class="menu">
+                                    <li class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+                                        <a href="{% url 'index' %}">Inicio</a>
+                                    </li>
+                                    <li><a href="#">Nosotros</a></li>
+                                    <li><a href="#">Cartelera</a></li>
+                                    <li><a href="#">Bar</a></li>
+                                    <li><a href="#">Galería</a></li>
+                                    <li><a href="#">Contacto</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        <div class="main_wrapper px_footer_area">
+            <div class="color_overlay">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-12">
+                            <aside class="widget footer_widget">
+                                <div class="footer_logo d-flex justify-content-center justify-content-md-start">
+                                    <a href="{% url 'index' %}">
+                                        <img src="{% static 'core/images/icon/logoMaestraVida2Blanco.png' %}" alt="logo">
+                                    </a>
+                                </div>
+                            </aside>
+                        </div>
+                        <div class="col-md-5 col-sm-12">
+                            <aside class="widget px_recent_post">
+                                <div class="widget_text">
+                                    <h3>Ubicación</h3>
+                                    <p>Pio Nono 380, Barrio Bellavista, Santiago de Chile.</p>
+                                </div>
+                                <div class="widget_text">
+                                    <h3>Horario de atención</h3>
+                                    <p> MAR-MIE-JUE-DOM : 10 PM hasta 3 AM</p>
+                                    <p> VIE-SAB-VÍSPERA FERIADO : 10 PM hasta 4 AM</p>
+                                </div>
+                            </aside>
+                        </div>
+                        <div class="col-md-4">
+                            <aside class="widget px_recent_twitt">
+                                <h3 class="widget-title">Síguenos</h3>
+                                <ul>
+                                    <li> <i class="fa fa-instagram"></i>
+                                        <div>
+                                            <p>salsotecamaestravida</p>
+                                        </div>
+                                    </li>
+                                    <li> <i class="fa fa-youtube"></i>
+                                        <div>
+                                            <p>MaestraMusica</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main_wrapper px_footer_strip">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="left_text">
+                            <p class="footer_text">Desarrollado por OrtegaHamel</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="px_copright_text">
+                            <p class="footer_text">
+                                CopyRight @ 2025 Classico Night Club All Rights Reserved 
+                                <span style="margin: 0 10px; opacity: 0.5;">|</span>
+                                <a href="{% url 'usuarios:login' %}" style="color: inherit; text-decoration: none; transition: opacity 0.3s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+                                    <i class="fa fa-lock" style="margin-right: 4px;"></i>Personal Autorizado
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'core/js/jquery.min.js' %}"></script>
+    
+    <script src="{% static 'core/js/bootstrap.min.js' %}"></script>
+
+    <!-- animation js -->
+    <script src="{% static 'core/js/animation/jquery.scrollorama.js' %}"></script>
+    <script src="{% static 'core/js/animation/TweenMax.js' %}"></script>
+    <!-- animation js -->
+
+    <script src="{% static 'core/js/plugins/owl-carousel/owl.carousel.js' %}"></script>
+
+    <script src="{% static 'core/js/plugins/revolution/js/jquery.themepunch.tools.min.js' %}"></script>
+    <script src="{% static 'core/js/plugins/revolution/js/jquery.themepunch.revolution.min.js' %}"></script>
+
+    <script src="{% static 'core/js/plugins/revolution/js/revolution.extension.layeranimation.min.js' %}"></script>
+    <script src="{% static 'core/js/plugins/revolution/js/revolution.extension.navigation.min.js' %}"></script>
+    <script src="{% static 'core/js/plugins/revolution/js/revolution.extension.slideanims.min.js' %}"></script>
+    <script src="{% static 'core/js/plugins/revolution/js/revolution.extension.parallax.min.js' %}"></script>
+    <script src="{% static 'core/js/plugins/revolution/js/revolution.extension.actions.min.js' %}"></script>
+     <!-- gallery js -->
+    <script src="{% static 'core/js/plugins/gallery/jquery.magnific-popup.js' %}"></script>
+    <!-- gallery js -->
+    <!-- ui js -->
+    <script src="{% static 'core/js/plugins/jquery_ui/jquery-ui.js' %}"></script>
+    <!-- ui js -->
+
+    <script>
+        // Tu parche de revslider...
+        function revslider_showDoubleJqueryError() { return; }
+        $(window).on('load', function() {
+            $('.px_preloader').fadeOut('slow');
+        });
+    </script>
+
+    <script src="{% static 'core/js/custom.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

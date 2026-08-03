@@ -1,0 +1,137 @@
+{% extends 'base_staff.html' %}
+{% load auth_extras %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+    <div>
+        <h1 class="h2 mb-1 fw-bold text-dark"><i class="fas fa-camera me-2"></i>Lista de Eventos</h1>
+        <p class="text-muted small mb-0">Gestión de Fotografía</p>
+    </div>
+</div>
+
+<!-- Formulario de Filtros (Banda, Fechas y Estado) -->
+    <form method="get" action="" class="m-0">
+        <div class="d-flex flex-wrap gap-2 align-items-center justify-content-start justify-content-md-end">
+            <!-- Búsqueda por Banda -->
+            <div class="input-group input-group-sm" style="max-width: 180px;">
+                <span class="input-group-text bg-white text-muted"><i class="fas fa-music"></i></span>
+                <input type="text" name="banda" class="form-control" placeholder="Buscar Banda..." value="{{ request.GET.banda|default:'' }}"
+                    aria-label="Buscar por Banda">
+            </div>
+
+            <!-- Filtro Estado -->
+            <div class="input-group input-group-sm" style="max-width: 150px;">
+                <select name="estado" class="form-select" aria-label="Filtrar por estado">
+                    <option value="">Estado: Todos</option>
+                    <option value="pendiente" {% if request.GET.estado == 'pendiente' %}selected{% endif %}>Pendientes</option>
+                    <option value="con_fotos" {% if request.GET.estado == 'con_fotos' %}selected{% endif %}>Con fotos</option>
+                </select>
+            </div>
+
+            <!-- Fecha Desde -->
+            <div class="input-group input-group-sm" style="max-width: 150px;">
+                <span class="input-group-text bg-white text-muted">Desde</span>
+                <input type="date" name="desde" class="form-control" value="{{ request.GET.desde|default:'' }}"
+                    aria-label="Fecha Inicio">
+            </div>
+
+            <!-- Fecha Hasta -->
+            <div class="input-group input-group-sm" style="max-width: 150px;">
+                <span class="input-group-text bg-white text-muted">Hasta</span>
+                <input type="date" name="hasta" class="form-control" value="{{ request.GET.hasta|default:'' }}"
+                    aria-label="Fecha Fin">
+            </div>
+
+            <!-- Botón Buscar -->
+            <button type="submit" class="btn btn-sm btn-dark fw-semibold" title="Buscar">
+                <i class="fas fa-search"></i>
+            </button>
+
+            <!-- Botón Limpiar Filtros -->
+            {% if request.GET.banda or request.GET.desde or request.GET.hasta or request.GET.estado %}
+            <a href="{% url 'bandas:panel_fotografo_eventos' %}" class="btn btn-sm btn-outline-danger" title="Limpiar filtros">
+                <i class="fas fa-times"></i>
+            </a>
+            {% endif %}
+        </div>
+    </form>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" style="min-width: 800px;">
+                <thead class="table-light text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">
+                    <tr>
+                        <th class="ps-4 py-3 text-secondary" style="width: 40%;">Evento / Banda</th>
+                        <th class="py-3 text-secondary" style="width: 25%;">Fecha</th>
+                        <th class="py-3 text-secondary" style="width: 20%;">Estado</th>
+                        {% if request.user.is_superuser or request.user|has_group:'Fotografos' %}
+                            <th class="text-end pe-4 py-3 text-secondary" style="width: 15%;">Acciones</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for evento in eventos %}
+                    <tr>
+                        <td class="ps-4 fw-bold text-dark">{{ evento.banda.nombre }}</td>
+                        <td>{{ evento.hora|date:"d/m/Y" }}</td>
+                        <td>
+                            {% if evento.fotos_galeria.exists %}
+                                <span class="badge bg-success-subtle text-success border border-success-subtle">
+                                    <i class="fas fa-check me-1"></i> Con fotos
+                                </span>
+                            {% else %}
+                                <span class="badge bg-warning-subtle text-warning border border-warning-subtle">
+                                    <i class="fas fa-exclamation-circle me-1"></i> Pendiente
+                                </span>
+                            {% endif %}
+                        </td>
+                        
+                        {% if request.user.is_superuser or request.user|has_group:'Fotografos' %}
+                        <td class="text-end pe-4">
+                            {% if evento.fotos_galeria.exists %}
+                                <a href="{% url 'bandas:editar_fotos_evento' evento.id %}" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                            {% else %}
+                                <a href="{% url 'bandas:subir_fotos_evento' evento.id %}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-upload"></i> Subir
+                                </a>
+                            {% endif %}
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-5">
+                            <i class="fas fa-camera fa-2x mb-3 d-block text-muted"></i>
+                            No se encontraron eventos pasados con los filtros seleccionados.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Paginación para Panel del Fotógrafo -->
+<div class="pagination mt-4 d-flex justify-content-center">
+    <span class="step-links">
+        {% if eventos.has_previous %}
+            <a href="?page=1{% if parametros_url %}&{{ parametros_url }}{% endif %}" class="btn btn-outline-primary btn-sm">&laquo; Primera</a>
+            <a href="?page={{ eventos.previous_page_number }}{% if parametros_url %}&{{ parametros_url }}{% endif %}" class="btn btn-outline-primary btn-sm">Anterior</a>
+        {% endif %}
+
+        <span class="current mx-3 fw-bold">
+            Página {{ eventos.number }} de {{ eventos.paginator.num_pages }}
+        </span>
+
+        {% if eventos.has_next %}
+            <a href="?page={{ eventos.next_page_number }}{% if parametros_url %}&{{ parametros_url }}{% endif %}" class="btn btn-outline-primary btn-sm">Siguiente</a>
+            <a href="?page={{ eventos.paginator.num_pages }}{% if parametros_url %}&{{ parametros_url }}{% endif %}" class="btn btn-outline-primary btn-sm">Última &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

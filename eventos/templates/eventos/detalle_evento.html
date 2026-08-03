@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Estilos integrados para acoplar el diseño Classico con Bootstrap -->
+<style>
+    .px_blog_single { background: #111; padding: 30px; border-radius: 8px; color: #fff; }
+    .blog_thumb img { width: 100%; border-radius: 6px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+    .widget_club_gallery .sidebar_gallery a img { width: 90px; height: 90px; object-fit: cover; margin: 4px; border-radius: 4px; transition: transform 0.2s; }
+    .widget_club_gallery .sidebar_gallery a img:hover { transform: scale(1.05); }
+    .widget { background: #1a1a1a; padding: 20px; margin-bottom: 30px; border-radius: 6px; border: 1px solid #2a2a2a; }
+    .widget_title { color: #fff; text-transform: uppercase; font-size: 18px; margin-bottom: 15px; border-bottom: 2px solid #ff0055; padding-bottom: 5px; }
+</style>
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- CUERPO PRINCIPAL: DETALLE DEL EVENTO Y DOSSIER DE LA BANDA -->
+        <div class="col-lg-8 col-md-12">
+            <div class="px_blog_cover px_blog_single">
+                <!-- Afiche Publicitario Obligatorio -->
+                {% if evento.poster %}
+                    <div class="contenedor-afiche" style="max-width: 500px; margin: 0 auto;">
+                        <img src="{{ evento.poster.url }}" alt="Afiche {{ evento.banda.nombre }}" 
+                            style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                    </div>
+                {% else %}
+                    <img src="/static/core/img/default-event.jpg" alt="Evento Maestra" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover;">
+                {% endif %}
+                
+                <div class="blog_desc mt-3">
+                    <h2 class="text-white mb-2">{{ evento.banda.nombre }} en vivo</h2>
+                    <div class="mb-4 text-muted">
+                        <span class="me-3"><i class="bi bi-calendar-event"></i> {{ evento.hora|date:"d M Y" }}</span>
+                        <span><i class="bi bi-clock"></i> {{ evento.hora|date:"H:i" }} hrs</span>
+                    </div>
+                    
+                    <!-- Reseña pública (Dossier) de la banda -->
+                    <h4 class="text-white">Sobre la Banda</h4>
+                    <p class="text-secondary">
+                        {{ evento.banda.dossier|default:"No hay una descripción disponible para esta banda actualmente."|linebreaksbr }}
+                    </p>
+
+                    {% if evento.descripcion %}
+                        <hr class="border-secondary my-4">
+                        <h5 class="text-white">Notas adicionales del evento</h5>
+                        <p class="text-secondary">{{ evento.descripcion|linebreaksbr }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- FIN CUERPO PRINCIPAL -->
+
+        <!-- SIDEBAR: ENTRADAS Y GALERÍA HISTÓRICA DE LA BANDA -->
+        <div class="col-lg-4 col-md-12 col-sm-12">
+            <div class="px_blog_sidebar">
+                
+                <!-- Tarjeta de Tickets y Valores -->
+                <div class="widget">
+                    <h4 class="widget_title">Tickets & Precios</h4>
+                    <ul class="list-group list-group-flush bg-transparent">
+                        <li class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center px-0 border-secondary">
+                            <span>Precio Preventa:</span>
+                            <strong class="text-success">${{ evento.precio_preventa }}</strong>
+                        </li>
+                        <li class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center px-0 border-secondary">
+                            <span>Precio en Puerta:</span>
+                            <strong class="text-warning">${{ evento.precio_puerta }}</strong>
+                        </li>
+                    </ul>
+                    {% if evento.link_entrada %}
+                        <a href="{{ evento.link_entrada }}" target="_blank" class="btn btn-success btn-lg w-100 my-3">
+                            <i class="fab fa-whatsapp"></i> Comprar Entradas / Reservar Preventa
+                        </a>
+                    {% else %}
+                        <p class="text-muted italic">Venta de entradas directo en la puerta del local.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Muestra de últimas fotos asociadas históricamente a la banda -->
+                {% if evento.banda.fotos.exists %}
+                <div class="widget widget_club_gallery">
+                    <h4 class="widget_title">Galería de {{ evento.banda.nombre }}</h4>
+                    <div class="sidebar_gallery d-flex flex-wrap justify-content-start">
+                        {% for foto in evento.banda.fotos.all|slice:":8" %}
+                            <a class="fancybox" href="{{ foto.imagen.url }}" title="{{ foto.titulo|default:evento.banda.nombre }}">
+                                <img src="{{ foto.imagen.url }}" alt="Recuerdo {{ evento.banda.nombre }}" class="img-thumbnail" />
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+        <!-- FIN SIDEBAR -->
+    </div>
+</div>
+{% endblock %}

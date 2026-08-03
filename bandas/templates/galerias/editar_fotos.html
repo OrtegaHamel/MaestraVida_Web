@@ -1,0 +1,61 @@
+{% extends 'base_staff.html' %}
+{% load auth_extras %}
+
+{% block content %}
+{% if request.user.is_superuser or request.user|has_group:'Fotografos' %}
+<div class="container py-4">
+    <div class="d-flex align-items-center mb-4">
+        <!-- Botón de regreso alineado a la izquierda -->
+        <a href="{% url 'bandas:panel_fotografo_eventos' %}" class="btn btn-sm btn-outline-secondary me-3" title="Volver a la lista">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div>
+            <h2 class="mb-0 fw-bold text-dark">Editando fotos: {{ evento.banda.nombre }}</h2>
+            <p class="text-muted small mb-0">Evento: {{ evento.hora|date:"d/m/Y" }}</p>
+        </div>
+    </div>
+
+    <!-- Botón para agregar más fotos -->
+    <div class="mb-4">
+        <a href="{% url 'bandas:subir_fotos_evento' evento.id %}" class="btn btn-primary">
+            <i class="fas fa-plus-circle me-1"></i> Agregar más fotos
+        </a>
+    </div>
+
+    <div class="row g-3">
+        {% for foto in fotos %}
+        <div class="col-6 col-md-3">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ foto.imagen.url }}" class="card-img-top" alt="Foto banda" style="height: 150px; object-fit: cover;">
+                <div class="card-body p-2">
+                    <!-- Botón de Descarga -->
+                    <a href="{{ foto.imagen.url }}" download class="btn btn-sm btn-outline-primary w-100 mb-2">
+                        <i class="fas fa-download"></i> Descargar
+                    </a>
+                    
+                    <!-- Formulario de eliminación -->
+                    <form action="{% url 'bandas:eliminar_foto' foto.id %}" method="POST" onsubmit="return confirm('¿Seguro que deseas borrar esta foto?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-danger w-100">
+                            <i class="fas fa-trash-alt"></i> Borrar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-muted">No hay fotos en este evento.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="alert alert-danger text-center shadow-sm p-5 mt-4">
+    <i class="fas fa-camera-slash fa-3x mb-3 text-danger"></i>
+    <h3 class="fw-bold">Acceso Restringido</h3>
+    <p class="mb-0">Solo los <strong>Fotógrafos</strong> pueden editar o borrar fotos de eventos en vivo.</p>
+    <a href="{% url 'bandas:panel_fotografo_eventos' %}" class="btn btn-outline-danger mt-3">Volver al panel</a>
+</div>
+{% endif %}
+{% endblock %}
