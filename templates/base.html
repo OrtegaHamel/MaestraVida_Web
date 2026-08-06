@@ -23,10 +23,10 @@
         </div>
     </div>
 
-    <div class="main_wrapper px_header_main_home1">
+    <div class="main_wrapper {% block header_class %}px_header_main_home1{% endblock %}">
         {% block hero_slider %}{% endblock %}
 
-        <div class="main_wrapper wrapper_navigation px_home_1">
+        <div class="main_wrapper wrapper_navigation {% block nav_class %}px_home_1{% endblock %}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-1 col-md-3 col-sm-4">
@@ -47,8 +47,7 @@
                                         <a href="{% url 'index' %}">Inicio</a>
                                     </li>
                                     <li><a href="#">Nosotros</a></li>
-                                    <li><a href="#">Cartelera</a></li>
-                                    <li><a href="#">Bar</a></li>
+                                    <li><a href="{% url 'eventos:cartelera' %}">Cartelera</a></li>
                                     <li><a href="#">Galería</a></li>
                                     <li><a href="#">Contacto</a></li>
                                 </ul>
@@ -62,14 +61,14 @@
 
     {% block content %}{% endblock %}
 
-    <footer>
+    <footer id="footer">
         <div class="main_wrapper px_footer_area">
             <div class="color_overlay">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-3 col-sm-12">
                             <aside class="widget footer_widget">
-                                <div class="footer_logo d-flex justify-content-center justify-content-md-start">
+                                <div class="footer_logo d-flex justify-content-center justify-content-md-start mb-4">
                                     <a href="{% url 'index' %}">
                                         <img src="{% static 'core/images/icon/logoMaestraVida2Blanco.png' %}" alt="logo">
                                     </a>
@@ -79,11 +78,22 @@
                         <div class="col-md-5 col-sm-12">
                             <aside class="widget px_recent_post">
                                 <div class="widget_text">
-                                    <h3>Ubicación</h3>
-                                    <p>Pio Nono 380, Barrio Bellavista, Santiago de Chile.</p>
+                                    <h3>
+                                        <i class="fa fa-map-marker" style="color: #ff0055; margin-right: 8px;" aria-hidden="true"></i>Ubicación
+                                    </h3>
+                                    <p>
+                                        <a href="https://www.google.com/maps/search/?api=1&query=Pio+Nono+380,+Barrio+Bellavista,+Santiago+de+Chile" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        style="color: inherit; text-decoration: underline;">
+                                            Pio Nono 380, Barrio Bellavista, Santiago de Chile.
+                                        </a>
+                                    </p>
                                 </div>
                                 <div class="widget_text">
-                                    <h3>Horario de atención</h3>
+                                    <h3>
+                                        <i class="fa fa-clock-o" style="color: #ff0055; margin-right: 8px;" aria-hidden="true"></i>Horario de atención
+                                    </h3>
                                     <p> MAR-MIE-JUE-DOM : 10 PM hasta 3 AM</p>
                                     <p> VIE-SAB-VÍSPERA FERIADO : 10 PM hasta 4 AM</p>
                                 </div>

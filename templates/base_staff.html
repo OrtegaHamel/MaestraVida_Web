@@ -39,14 +39,20 @@
                     <ul class="nav flex-column mb-3">
                         <li class="nav-item">
                             <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}" 
+                            href="{% url 'eventos:lista_carteleras' %}">
+                                <i class="fas fa-calendar-alt me-2"></i> Cartelera Mensual
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}" 
                             href="{% url 'eventos:lista_eventos' %}">
-                                <i class="fas fa-calendar-alt me-2"></i> Eventos
+                                <i class="fas fa-music me-2"></i> Eventos
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}" 
                             href="{% url 'bandas:lista_bandas' %}">
-                                <i class="fas fa-music me-2"></i> Bandas
+                                <i class="fas fa-star me-2"></i> Bandas
                             </a>
                         </li>
                     </ul>
@@ -57,7 +63,7 @@
                         <li class="nav-item">
                             <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Fotografos' %}disabled-role{% endif %}" 
                             href="{% url 'bandas:panel_fotografo_eventos' %}">
-                                <i class="fas fa-images me-2"></i> Música en vivo
+                                <i class="fas fa-camera me-2"></i> Música en vivo
                             </a>
                         </li>
                         <li class="nav-item">

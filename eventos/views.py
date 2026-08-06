@@ -11,8 +11,8 @@ from django.urls import reverse
 from django.utils import timezone
 from usuarios.decorators import grupo_required
 
-from .forms import AsistenciaEventoForm, BusquedaEventosForm, EventoForm
-from .models import Evento
+from .forms import AsistenciaEventoForm, BusquedaEventosForm, EventoForm, CarteleraMensualForm
+from .models import CarteleraMensual, Evento
 
 # ==========================================
 # VISTA PÚBLICA (INDEX / CARTELERA)
@@ -58,6 +58,50 @@ def home_publico(request):
 def detalle_evento_publico(request, slug):
   evento = get_object_or_404(Evento, slug=slug)
   return render(request, 'eventos/detalle_evento.html', {'evento': evento})
+
+
+def cartelera(request):
+
+    ahora = datetime.now()
+    hoy = ahora.date()
+    dia_semana = hoy.weekday()
+
+    # Cartelera semanal (misma lógica del Home)
+    if dia_semana in [4, 5, 6, 0]:
+        dias_hasta_proximo_martes = (1 - dia_semana) % 7
+        inicio_cartelera = hoy + timedelta(days=dias_hasta_proximo_martes)
+    else:
+        inicio_cartelera = hoy - timedelta(days=(dia_semana - 1))
+
+    fin_cartelera = inicio_cartelera + timedelta(days=2)
+
+    eventos_semana = Evento.objects.filter(
+        hora__date__gte=inicio_cartelera,
+        hora__date__lte=fin_cartelera
+    ).order_by("hora")
+
+    # Cartelera mensual vigente
+    cartelera = CarteleraMensual.vigente()
+
+    # Sólo fotografías de eventos pasados
+    fotos = (
+        FotoBanda.objects
+        .filter(evento__hora__date__lt=hoy)
+        .select_related("evento", "evento__banda")
+        .order_by("-evento__hora")[:8]
+    )
+
+    return render(
+        request,
+        "eventos/cartelera.html",
+        {
+            "cartelera": cartelera,
+            "eventos": eventos_semana,
+            "fotos": fotos,
+            "inicio_cartelera": inicio_cartelera,
+            "fin_cartelera": fin_cartelera,
+        },
+    )
 
 
 # ==========================================
@@ -154,6 +198,111 @@ def eliminar_evento(request, evento_id):
   return render(request, 'eventos/eliminar_evento.html', {'evento': evento})
 
 
+@login_required
+@grupo_required('Productores')
+def lista_carteleras(request):
+
+    carteleras = CarteleraMensual.objects.all().order_by('-anio', '-mes')
+
+    return render(
+        request,
+        'eventos/lista_carteleras.html',
+        {
+            'carteleras': carteleras
+        }
+    )
+
+
+@login_required
+@grupo_required('Productores')
+def crear_cartelera(request):
+    if request.method == 'POST':
+        form = CarteleraMensualForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect(
+                f"{reverse('eventos:lista_carteleras')}?mensaje=Cartelera+creada+exitosamente&tipo=success"
+            )
+
+    else:
+        form = CarteleraMensualForm()
+
+    return render(
+        request,
+        'eventos/form_cartelera.html',
+        {
+            'form': form,
+            'titulo': 'Nueva Cartelera'
+        }
+    )
+
+@login_required
+@grupo_required('Productores')
+def editar_cartelera(request, cartelera_id):
+
+    cartelera = get_object_or_404(
+        CarteleraMensual,
+        id=cartelera_id
+    )
+
+    if request.method == 'POST':
+
+        form = CarteleraMensualForm(
+            request.POST,
+            request.FILES,
+            instance=cartelera
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect(
+                f"{reverse('eventos:lista_carteleras')}?mensaje=Cartelera+actualizada+exitosamente&tipo=success"
+            )
+
+    else:
+
+        form = CarteleraMensualForm(
+            instance=cartelera
+        )
+
+    return render(
+        request,
+        'eventos/form_cartelera.html',
+        {
+            'form': form,
+            'cartelera': cartelera,
+            'titulo': 'Editar Cartelera'
+        }
+    )
+
+@login_required
+@grupo_required('Productores')
+def eliminar_cartelera(request, cartelera_id):
+
+    cartelera = get_object_or_404(
+        CarteleraMensual,
+        id=cartelera_id
+    )
+
+    if request.method == 'POST':
+
+        cartelera.delete()
+
+        return redirect(
+            f"{reverse('eventos:lista_carteleras')}?mensaje=Cartelera+eliminada+exitosamente&tipo=success"
+        )
+
+    return render(
+        request,
+        'eventos/eliminar_cartelera.html',
+        {
+            'cartelera': cartelera
+        }
+    )
 # ==========================================
 # ROL DE LA PUERTA (Control de Asistencia de Hoy)
 # ==========================================

@@ -315,7 +315,7 @@ a {
 }
 
 .px_header_main {
-    background: url('https://dummyimage.com/1920x324/') no-repeat;
+    background: url('../images/maestra/LaFarandula_muralZapata.jpg') no-repeat;
     background-size: cover;
     position: relative;
     margin-top: 99px;
@@ -3741,4 +3741,26 @@ h2.comment_title {
     aspect-ratio:1/1;
     object-fit:cover;
     display:block;
+}
+
+/* ==========================================
+   Navegación páginas interiores
+========================================== */
+
+.wrapper_navigation.px_interior{
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    bottom: auto;
+    width: 100%;
+    background: rgba(0,0,0,.92);
+    z-index: 999;
+}
+
+/* ==========================================
+   Cabecera Cartelera
+========================================== */
+
+.interior_titulo{
+    font-size: 64px;
 }

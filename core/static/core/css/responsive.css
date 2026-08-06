@@ -1064,3 +1064,55 @@ Project:	 Nigth Club 1.0
     }
     /* video player css end*/
 }
+
+/* ==========================================
+   Navbar fijo en móviles
+========================================== */
+
+@media (max-width: 991px) {
+
+    .wrapper_navigation.px_home_1{
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        bottom: auto;
+        width: 100%;
+        background: rgba(0,0,0,.92);
+        z-index: 9999;
+    }
+
+    /* Empuja el contenido para que no quede debajo del menú */
+    .px_slider_home{
+        padding-top: 99px;
+    }
+
+}
+
+/* ==========================================
+   Cartelera
+========================================== */
+
+
+@media (max-width:991px){
+
+    .px_heading_middle h2.interior_titulo{
+        font-size:40px !important;
+    }
+
+}
+
+@media (max-width:409px){
+
+    .px_heading_middle h2.interior_titulo{
+        font-size:30px !important;
+    }
+
+}
+
+@media (max-width:320px){
+
+    .px_heading_middle h2.interior_titulo{
+        font-size:28px !important;
+    }
+
+}

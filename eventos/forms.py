@@ -6,7 +6,7 @@ from django.utils.safestring import mark_safe
 from django.utils import timezone
 import datetime
 from bandas.models import Banda
-from .models import Evento
+from .models import CarteleraMensual, Evento
 
 # ==========================================
 # 1. FORMULARIO PARA EL PRODUCTOR
@@ -92,3 +92,37 @@ class BusquedaEventosForm(forms.Form):
         label="Fecha Fin",
         widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
     )
+
+# ==========================================
+# 4. FORMULARIO CARTELERA MENSUAL
+# ==========================================
+
+class CarteleraMensualForm(forms.ModelForm):
+
+    class Meta:
+        model = CarteleraMensual
+        fields = ['mes', 'anio', 'imagen']
+
+        widgets = {
+            'mes': forms.Select(
+                attrs={'class': 'form-select'}
+            ),
+
+            'anio': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                    'min': 2025,
+                    'placeholder': 'Ej: 2026'
+                }
+            ),
+
+            'imagen': forms.FileInput(
+                attrs={'class': 'form-control'}
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if not self.instance.pk:
+            self.initial['anio'] = timezone.now().year

@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Cartelera | Maestra Vida{% endblock %}
+{% block header_class %}px_header_main{% endblock %}
+{% block nav_class %}px_interior{% endblock %}
+{% block content %}
+
+<!-- ==========================================
+     CABECERA
+========================================== -->
+
+<div class="main_wrapper px_header_main">
+    <div class="overlay_color">
+
+        <div class="px_breadcum">
+            <div class="px_heading_middle">
+                <h2 class="interior_titulo">Cartelera</h2>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ==========================================
+     CARTELERA DEL MES
+========================================== -->
+
+<div class="main_wrapper px_blog_section">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8">
+                <div class="px_heading_middle mb-5">
+                    <h2>Este mes en la Maestra</h2>
+                </div>
+
+                {% if cartelera %}
+
+                <div class="px_blog_cover px_blog_single">
+
+                    <div class="blog_thumb">
+
+                        <a href="{{ cartelera.imagen.url }}"
+                           class="cartelera_popup">
+
+                            <img
+                                src="{{ cartelera.imagen.url }}"
+                                class="img-fluid"
+                                alt="Cartelera {{ cartelera.get_mes_display }} {{ cartelera.anio }}">
+
+                        </a>
+
+                    </div>
+
+                    {% if cartelera.descripcion %}
+                    <div class="blog_desc">
+
+                        <h3>
+                            {{ cartelera.get_mes_display }}
+                            {{ cartelera.anio }}
+                        </h3>
+
+                        <p>
+                            {{ cartelera.descripcion|linebreaks }}
+                        </p>
+
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                {% else %}
+
+                <div class="text-center text-white py-5">
+
+                    <h3>
+                        No existe una cartelera publicada.
+                    </h3>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ==========================================
+     CARTELERA SEMANAL
+========================================== -->
+
+
+
+<div class="main_wrapper px_event_wrapper">
+    <div class="color_overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="px_heading_middle">
+                        <h2>Esta semana</h2>
+                    </div>
+                    <div class="px_event_main">
+                        <div class="row cartelera-row">
+
+                            {% if eventos %}
+                                {% for evento in eventos %}
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="px_event_cover"
+                                        data-poster="{% if evento.poster %}{{ evento.poster.url }}{% else %}/static/core/img/default-event.jpg{% endif %}">
+
+                                        <div class="px_thumb_wrapper">
+
+                                            {% if evento.poster %}
+                                                <div class="contenedor-afiche">
+                                                    <img src="{{ evento.poster.url }}"
+                                                        alt="Afiche {{ evento.banda.nombre }}"
+                                                        class="event-poster">
+                                                </div>
+                                            {% else %}
+                                                <img src="/static/core/img/default-event.jpg"
+                                                    alt="Evento Maestra"
+                                                     class="event-poster">
+                                            {% endif %}
+
+                                            <div class="thumb_overlay triangle_shape">
+
+                                                {% if evento.link_entrada %}
+                                                <div class="book_now_button">
+                                                    <a href="{{ evento.link_entrada }}"
+                                                    class="read_m_btn triangle_btn"
+                                                    target="_blank"
+                                                    rel="noopener">
+                                                        Compra tu entrada
+                                                    </a>
+                                                </div>
+                                                {% endif %}
+
+                                                <div class="overlay_inner_bottom">
+                                                    <h4>{{ evento.banda.nombre }}</h4>
+                                                    <p>{{ evento.descripcion|truncatewords:15 }}</p>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="bottom_tab">
+                                            <span>{{ evento.hora|date:"d/m" }}</span>
+                                            <span>{{ evento.hora|time:"H:i A" }}</span>
+                                            <span>Preventa: ${{ evento.precio_preventa|floatformat:0 }} | Puerta: ${{ evento.precio_puerta|floatformat:0 }}</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                            {% else %}
+
+                                <div class="col-xs-12">
+                                    <p style="color:white;text-align:center;">
+                                        Próximamente más novedades...
+                                    </p>
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================
+     GALERÍA
+========================================== -->
+
+<div class="main_wrapper px_gallery_wrapper">
+
+    <div class="px_heading_middle mb-5">
+        <h2>Maestra Vida <span>en Vivo</span></h2>
+    </div>
+
+    <div class="px_photo_galley home_gallery">
+
+        {% for foto in fotos %}
+
+            <div class="photo_grid width_2">
+
+                <div class="gallery_cover">
+
+                    <a href="{{ foto.imagen.url }}"
+                       class="photo_gallery_popup">
+
+                        <img
+                            src="{{ foto.imagen.url }}"
+                            alt="{{ foto.evento.banda.nombre }}">
+
+                        <div class="gallery_overlay triangle_shape"></div>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <p class="text-center text-white">
+
+                No existen fotografías disponibles.
+
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

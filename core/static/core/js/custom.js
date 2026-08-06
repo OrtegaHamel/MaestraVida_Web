@@ -278,4 +278,32 @@ Project: NightClub
         $(".px_preloader").fadeOut("slow");
     });
 
+    $(document).ready(function () {
+
+        nightclub.init();
+
+        if ($.fn.magnificPopup) {
+
+            $('.home_gallery').magnificPopup({
+                delegate: 'a',
+                type: 'image',
+                gallery: {
+                    enabled: true
+                }
+            });
+
+            $('.cartelera_popup').magnificPopup({
+                type: 'image'
+            });
+
+        }
+
+    });
+
+    $('.cartelera_popup').magnificPopup({
+        type: 'image',
+        mainClass: 'my_zoom_in',
+        removalDelay: 300
+    });
+
 })(jQuery);

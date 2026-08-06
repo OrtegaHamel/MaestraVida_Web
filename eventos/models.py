@@ -1,6 +1,8 @@
 # D:\dev\maestra_webpage\eventos\models.py
 from django.db import models
 from django.utils.text import slugify
+import calendar
+from datetime import date, timedelta
 
 class Evento(models.Model):
     banda = models.ForeignKey('bandas.Banda', on_delete=models.CASCADE, related_name='eventos')
@@ -82,3 +84,51 @@ class CarteleraMensual(models.Model):
 
     def __str__(self):
         return f"Cartelera {self.get_mes_display()} {self.anio}"
+
+    @classmethod
+    def vigente(cls):
+        """
+        Devuelve la cartelera vigente.
+
+        La cartelera de un mes comienza el último viernes
+        del mes anterior.
+        """
+
+        hoy = date.today()
+
+        # Último viernes del mes actual
+        ultimo_dia = calendar.monthrange(hoy.year, hoy.month)[1]
+
+        ultimo_viernes = date(hoy.year, hoy.month, ultimo_dia)
+
+        while ultimo_viernes.weekday() != 4:
+            ultimo_viernes -= timedelta(days=1)
+
+        # ¿Ya comenzó la cartelera del mes siguiente?
+        if hoy >= ultimo_viernes:
+
+            if hoy.month == 12:
+                mes = 1
+                anio = hoy.year + 1
+            else:
+                mes = hoy.month + 1
+                anio = hoy.year
+
+        else:
+
+            mes = hoy.month
+            anio = hoy.year
+
+        return cls.objects.filter(
+            mes=mes,
+            anio=anio
+        ).first()
+
+    @property
+    def esta_activa(self):
+        cartelera_vigente = CarteleraMensual.vigente()
+
+        return (
+            cartelera_vigente is not None
+            and cartelera_vigente.pk == self.pk
+        )

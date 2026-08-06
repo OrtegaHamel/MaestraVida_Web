@@ -16,6 +16,22 @@ urlpatterns = [
     path('hoy/', views.eventos_hoy, name='eventos_hoy'),
     path('asistencia/<int:evento_id>/', views.registrar_asistencia, name='registrar_asistencia'),
 
+    path("cartelera/", views.cartelera, name="cartelera"),
+
+    path('carteleras/', views.lista_carteleras, name='lista_carteleras'),
+    path('carteleras/nueva/', views.crear_cartelera, name='crear_cartelera'),
+    path(
+        "carteleras/<int:cartelera_id>/editar/",
+        views.editar_cartelera,
+        name="editar_cartelera",
+    ),
+
+    path(
+        "carteleras/<int:cartelera_id>/eliminar/",
+        views.eliminar_cartelera,
+        name="eliminar_cartelera",
+    ),
+
     # 2. RUTAS PÚBLICAS DINÁMICAS (Siempre al final)
     # Al estar abajo, Django solo usará el comodín <slug> si la URL NO contenía 'crear', 'editar', etc.
     path('<slug:slug>/', views.detalle_evento_publico, name='detalle_evento_publico'),
