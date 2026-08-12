@@ -46,9 +46,16 @@
                                     <li class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
                                         <a href="{% url 'index' %}">Inicio</a>
                                     </li>
-                                    <li><a href="#">Nosotros</a></li>
+                                    <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
                                     <li><a href="{% url 'eventos:cartelera' %}">Cartelera</a></li>
                                     <li><a href="#">Galería</a></li>
+                                    <li>
+                                        <a href="https://revistamaestravidahome.wordpress.com/" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer">
+                                            Revista
+                                        </a>
+                                    </li>
                                     <li><a href="#">Contacto</a></li>
                                 </ul>
                             </div>

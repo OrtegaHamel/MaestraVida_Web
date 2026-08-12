@@ -5,7 +5,8 @@
 {% if request.user.is_superuser or request.user|has_group:'Productores' %}
     <!-- Carga directa de los estilos de Select2 y su tema para Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css"
+        rel="stylesheet" />
 
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
@@ -21,68 +22,123 @@
                     <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                         {% csrf_token %}
 
-                        <!-- Selección de Banda con Select2 integrado -->
+                        {# Errores no campo #}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for err in form.non_field_errors %}
+                                    <div>{{ err }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        {# Campo: Banda / Artista #}
                         <div class="mb-3">
                             <label for="{{ form.banda.id_for_label }}" class="form-label fw-bold text-secondary">Banda / Artista</label>
                             {{ form.banda }}
+                            {% if form.banda.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for err in form.banda.errors %}{{ err }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                </div>
+                            {% endif %}
                             {% if form.banda.help_text %}
                                 <div class="form-text text-muted">{{ form.banda.help_text|safe }}</div>
                             {% endif %}
                         </div>
 
-                        <!-- Fecha y Hora -->
+                        {# Campo: Enlace de venta (URL o WhatsApp) #}
+                        <div class="mb-3">
+                            <label for="{{ form.link_entrada.id_for_label }}" class="form-label fw-bold text-secondary">Enlace de Venta (Ticketera / WhatsApp)</label>
+                            {{ form.link_entrada }}
+                            {% if form.link_entrada.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for err in form.link_entrada.errors %}{{ err }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text text-muted">Puedes pegar https://... o un número de teléfono (ej: +573001234567 o 3001234567).</div>
+                        </div>
+
+                        {# Campo: Fecha y Hora #}
                         <div class="mb-3">
                             <label for="{{ form.hora.id_for_label }}" class="form-label fw-bold text-secondary">Fecha y Hora del Show</label>
                             {{ form.hora }}
+                            {% if form.hora.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for err in form.hora.errors %}{{ err }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                </div>
+                            {% endif %}
                         </div>
 
-                        <!-- Precios -->
+                        {# Campos: Precios #}
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="id_precio_preventa" class="form-label fw-bold text-secondary">Precio Preventa ($)</label>
+                                <label for="{{ form.precio_preventa.id_for_label }}" class="form-label fw-bold text-secondary">Precio Preventa ($)</label>
                                 {{ form.precio_preventa }}
+                                {% if form.precio_preventa.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {% for err in form.precio_preventa.errors %}{{ err }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="id_precio_puerta" class="form-label fw-bold text-secondary">Precio Puerta ($)</label>
+                                <label for="{{ form.precio_puerta.id_for_label }}" class="form-label fw-bold text-secondary">Precio Puerta ($)</label>
                                 {{ form.precio_puerta }}
+                                {% if form.precio_puerta.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {% for err in form.precio_puerta.errors %}{{ err }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
 
-                        <!-- Afiche Promocional -->
+                        {# Campo: Afiche Promocional #}
                         <div class="mb-3">
                             <label for="{{ form.poster.id_for_label }}" class="form-label fw-bold text-secondary">Afiche del Evento</label>
                             {{ form.poster }}
+                            {% if form.poster.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for err in form.poster.errors %}{{ err }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                </div>
+                            {% endif %}
                             <div class="form-text text-muted small">Requerido. Se promocionará automáticamente en la sección "Próxima Semana" de la cartelera pública.</div>
                         </div>
 
-                        <!-- Enlace de Venta -->
-                        <div class="mb-3">
-                            <label for="{{ form.link_entrada.id_for_label }}" class="form-label fw-bold text-secondary">Enlace de Venta (Ticketera)</label>
-                            {{ form.link_entrada }}
-                        </div>
-
-                        <!-- Descripción Pública -->
+                        {# Campo: Descripción pública #}
                         <div class="mb-3">
                             <label for="{{ form.descripcion.id_for_label }}" class="form-label fw-bold text-secondary">Descripción del Evento</label>
                             {{ form.descripcion }}
+                            {% if form.descripcion.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for err in form.descripcion.errors %}{{ err }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                </div>
+                            {% endif %}
                         </div>
 
-                        <!-- Asistencia -->
+                        {# Campo: Asistencia #}
                         <div class="mb-4">
                             <label for="{{ form.asistencia.id_for_label }}" class="form-label fw-bold text-secondary">Asistencia</label>
                             {{ form.asistencia }}
+                            {% if form.asistencia.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for err in form.asistencia.errors %}{{ err }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                </div>
+                            {% endif %}
                         </div>
 
-                        <!-- Notas Privadas -->
+                        {# Campo: Notas confidenciales #}
                         <div class="mb-4 p-3 bg-danger-subtle text-danger-emphasis border border-danger-subtle rounded-3">
-                            <label for="id_notas_confidenciales" class="form-label text-danger fw-bold mb-1">
+                            <label for="{{ form.notas_confidenciales.id_for_label }}" class="form-label text-danger fw-bold mb-1">
                                 🔒 Notas Confidenciales (Sólo Producción)
                             </label>
                             {{ form.notas_confidenciales }}
+                            {% if form.notas_confidenciales.errors %}
+                                <div class="invalid-feedback d-block mt-2">
+                                    {% for err in form.notas_confidenciales.errors %}{{ err }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                </div>
+                            {% endif %}
                             <div class="form-text text-muted text-danger-emphasis small">Este contenido es privado. Ningún cliente o usuario externo podrá leerlo en la web.</div>
                         </div>
 
-                        <!-- Botones -->
+                        {# Botones #}
                         <div class="d-flex justify-content-between mt-4 pt-3 border-top">
                             <button type="submit" class="btn btn-primary fw-semibold">
                                 <i class="fas fa-plus-circle me-1"></i> Guardar Evento

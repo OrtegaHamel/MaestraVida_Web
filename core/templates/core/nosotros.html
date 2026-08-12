@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Nosotros | Maestra Vida{% endblock %}
+{% block header_class %}px_header_main{% endblock %}
+{% block nav_class %}px_interior{% endblock %}
+{% block content %}
+
+<!-- CABECERA -->
+<div class="main_wrapper px_header_main">
+    <div class="overlay_color">
+        <div class="px_breadcum">
+            <div class="px_heading_middle">
+                <h2 class="interior_titulo">Nosotros</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- HISTORIA -->
+<div class="main_wrapper px_blog_section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="px_heading_middle mb-5">
+                    <h2>Nuestra Historia</h2>
+                </div>
+
+                {% if cartelera %}
+                <div class="px_blog_cover px_blog_single">
+                    <div class="blog_thumb text-center">
+                        <a href="{{ cartelera.imagen.url }}" class="cartelera_popup">
+                            <img src="{{ cartelera.imagen.url }}" class="img-fluid" alt="Historia Maestra Vida">
+                        </a>
+
+                        <!-- Caja de texto debajo de la imagen -->
+                        <div class="mt-3 px_blog_single p-3 text-left" style="background: rgba(255,255,255,0.03);">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum
+                                vestibulum. Cras venenatis euismod malesuada. Integer non lorem ut nibh posuere blandit.
+                                Curabitur et mauris nec ipsum placerat tincidunt sed eu arcu.
+                            </p>
+                        </div>
+                    </div>
+
+                    {% if cartelera.descripcion %}
+                    <div class="blog_desc mt-4">
+                        <h3>{{ cartelera.get_mes_display }} {{ cartelera.anio }}</h3>
+                        <p>{{ cartelera.descripcion|linebreaks }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="text-center text-white py-5">
+                    <h3>No hay contenido histórico publicado.</h3>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- NUESTRO LOCAL: muestra álbumes (publicos) -->
+<div class="main_wrapper px_event_wrapper">
+    <div class="color_overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="px_heading_middle">
+                        <h2>Nuestro local</h2>
+                    </div>
+
+                    <!-- cuadro intro pequeño -->
+                    <div class="px_blog_single p-3 mb-4">
+                        <p>
+                            Nuestra casa: un espacio para la música en vivo, la pista y la comunidad. Abajo encontrarás
+                            las galerías subidas por nuestros fotógrafos — haz click en una portada para ver su álbum.
+                        </p>
+                    </div>
+
+                    <div class="px_event_main">
+                        <div class="row cartelera-row">
+                            {% if albums %}
+                                {% for album in albums %}
+                                    {# portada: primera foto del álbum #}
+                                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                                        <div class="px_blog_single text-center p-1">
+                                            {% with fotos_list=album.fotos.all %}
+                                                {% if fotos_list %}
+                                                    {# portada: primera foto #}
+                                                    <a href="{{ fotos_list.0.imagen.url }}" class="photo_gallery_popup" data-bs-toggle="lightbox" data-gallery="album-{{ album.id }}">
+                                                        <img src="{{ fotos_list.0.imagen.url }}" alt="{{ album.titulo }}" class="img-fluid" style="height:160px; width:100%; object-fit:cover;">
+                                                    </a>
+                                                {% else %}
+                                                    <img src="{% static 'core/img/album-default.jpg' %}" alt="{{ album.titulo }}" class="img-fluid" style="height:160px; width:100%; object-fit:cover;">
+                                                {% endif %}
+                                            {% endwith %}
+
+                                            <div class="mt-2">
+                                                <strong>{{ album.titulo }}</strong><br>
+                                                <small class="text-muted">{{ album.creado_en|date:"d/m/Y" }}</small>
+                                            </div>
+
+                                            {# enlaces ocultos para que el lightbox pueda abrir el resto del álbum #}
+                                            <div style="display:none;">
+                                                {% for foto in album.fotos.all %}
+                                                    <a href="{{ foto.imagen.url }}" class="photo_gallery_popup" data-gallery="album-{{ album.id }}"></a>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="col-xs-12">
+                                    <p style="color:white;text-align:center;">
+                                        No hay galerías disponibles todavía...
+                                    </p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MAESTRA VIDA EN VIVO (texto antes de galería) -->
+<div class="main_wrapper px_gallery_wrapper">
+    <div class="px_heading_middle mb-3">
+        <h2>Maestra Vida <span>en Vivo</span></h2>
+    </div>
+
+    <!-- texto breve -->
+    <div class="container mb-4">
+        <div class="px_blog_single p-3">
+            <p>
+                Aquí tenemos una selección de fotografías tomadas en nuestras noches: momentos en la pista, la orquesta y el público.
+            </p>
+        </div>
+    </div>
+
+    <div class="px_photo_galley home_gallery">
+        {% for foto in fotos %}
+            <div class="photo_grid width_2">
+                <div class="gallery_cover">
+                    <a href="{{ foto.imagen.url }}" class="photo_gallery_popup">
+                        <img src="{{ foto.imagen.url }}" alt="{{ foto.evento.banda.nombre }}">
+                        <div class="gallery_overlay triangle_shape"></div>
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center text-white">
+                No existen fotografías disponibles.
+            </p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 
 from bandas.models import FotoBanda
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib import messages
+import logging
 from django.core.paginator import Paginator
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Q, Sum
@@ -13,6 +15,8 @@ from usuarios.decorators import grupo_required
 
 from .forms import AsistenciaEventoForm, BusquedaEventosForm, EventoForm, CarteleraMensualForm
 from .models import CarteleraMensual, Evento
+
+logger = logging.getLogger(__name__)
 
 # ==========================================
 # VISTA PÚBLICA (INDEX / CARTELERA)
@@ -156,18 +160,25 @@ def lista_eventos(request):
 @login_required
 @grupo_required('Productores')
 def crear_evento(request):
-  if request.method == 'POST':
-    form = EventoForm(request.POST, request.FILES)
-    if form.is_valid():
-      evento = form.save(commit=False)
-      evento.creado_por = request.user
-      evento.save()
-      return redirect(
-          f"{reverse('eventos:lista_eventos')}?mensaje=Evento+creado+exitosamente&tipo=success"
-      )
-  else:
-    form = EventoForm()
-  return render(request, 'eventos/crear_evento.html', {'form': form})
+    if request.method == 'POST':
+        form = EventoForm(request.POST, request.FILES)
+        if form.is_valid():
+            evento = form.save(commit=False)
+            evento.creado_por = request.user
+            evento.save()
+            return redirect(
+                f"{reverse('eventos:lista_eventos')}?mensaje=Evento+creado+exitosamente&tipo=success"
+            )
+        else:
+            # Depuración: loguear errores y mostrar message para que los veas en UI
+            logger.debug("ERROR creando Evento: %s", form.errors.as_json())
+            # también imprimir en stdout si quieres verlo en la consola del runserver
+            print("ERROR creando Evento:", form.errors)
+            # Mostrar mensaje flash para alertar que hubo errores
+            messages.error(request, "El formulario contiene errores. Revisa las validaciones dentro del formulario.")
+    else:
+        form = EventoForm()
+    return render(request, 'eventos/crear_evento.html', {'form': form})
 
 
 @login_required

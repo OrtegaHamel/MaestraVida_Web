@@ -129,3 +129,5 @@ LOGIN_URL = 'usuarios:login'
 
 # URL a la que se redirige tras cerrar sesión
 LOGOUT_REDIRECT_URL = 'usuarios:login'
+
+DEFAULT_PHONE_COUNTRY_CODE = '56'

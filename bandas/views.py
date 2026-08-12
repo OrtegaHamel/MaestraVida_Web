@@ -91,16 +91,21 @@ def detalle_banda(request, banda_id):
 @login_required
 @grupo_required('Productores')
 def crear_banda(request):
-  if request.method == 'POST':
-    form = BandaForm(request.POST)
-    if form.is_valid():
-      form.save()
-      return redirect(
-          f"{reverse('bandas:lista_bandas')}?mensaje=Banda+creada+exitosamente&tipo=success"
-      )
-  else:
-    form = BandaForm()
-  return render(request, 'bandas/crear_banda.html', {'form': form})
+    if request.method == 'POST':
+        form = BandaForm(request.POST, request.FILES)
+        if form.is_valid():
+            banda = form.save(commit=False)
+            # si tienes campos como creado_por, asigna: banda.creado_por = request.user
+            banda.save()
+            messages.success(request, 'Banda creada correctamente.')
+            return redirect(f"{reverse('bandas:lista_bandas')}?mensaje=Banda+creada+exitosamente&tipo=success")
+        else:
+            # Mostrar errores en consola/log para debugging
+            print('Errores formulario Banda:', form.errors.as_json())
+            messages.error(request, 'El formulario contiene errores. Revisa los campos marcados.')
+    else:
+        form = BandaForm()
+    return render(request, 'bandas/crear_banda.html', {'form': form})
 
 
 @login_required
