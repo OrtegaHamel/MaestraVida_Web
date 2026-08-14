@@ -114,7 +114,7 @@
                         <img src="{% static 'core/images/maestra/historia.png' %}" class="img-responsive" alt="historia">
                         <div class="px_sevice_overlay triangle_shape">
                             <!-- Agregamos la etiqueta <a> para enlazar a Nosotros -->
-                            <a href="#" style="display: block; color: inherit; text-decoration: none; height: 100%;">
+                            <a href="{%url 'nosotros'%}" style="display: block; color: inherit; text-decoration: none; height: 100%;">
                                 <div class="overlay_inner">
                                     <!-- Reemplazo de SVG por ícono FontAwesome -->
                                     <div class="border" style="display: flex; justify-content: center; align-items: center; margin: 0 auto; text-align: center;">
@@ -220,7 +220,7 @@
 
 <div class="main_wrapper px_gallery_wrapper">
     <div class="px_heading_middle mb-5">
-        <h2>Nuestro local</h2>
+        <h2>Nuestro <span>local</span></h2>
     </div>
 
     <div class="px_photo_galley home_gallery">

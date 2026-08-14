@@ -4,6 +4,46 @@
 {% block title %}Nosotros | Maestra Vida{% endblock %}
 {% block header_class %}px_header_main{% endblock %}
 {% block nav_class %}px_interior{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Carrusel de la sección "Nuestra Historia" */
+.historia-carousel .item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000; /* fondo negro de la tarjeta */
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  overflow: hidden;
+  height: 500px; /* ajusta según lo que quieras */
+}
+
+/* Imagen: escalar lo máximo posible sin salir ni deformarse */
+.historia-carousel .item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Ajustes visuales mínimos para los controles de Owl (si no están cubiertos por tu CSS global) */
+.historia-carousel .owl-nav button {
+  background: rgba(0,0,0,0.45);
+  border: none;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+.historia-carousel .owl-dots {
+  margin-top: 10px;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
 <!-- CABECERA -->
@@ -22,25 +62,48 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="px_heading_middle mb-5">
-                    <h2>Nuestra Historia</h2>
+                <div class="px_heading_middle mb-3">
+                    <h2>Nuestra <span>Historia</span></h2>
+                </div> 
+                <!-- Caja de texto -->
+                <div class="px_blog_single blog_desc text-center p-3 mb-4">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum
+                        vestibulum. Cras venenatis euismod malesuada. Integer non lorem ut nibh posuere blandit.
+                        Curabitur et mauris nec ipsum placerat tincidunt sed eu arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Vivamus lacinia odio vitae vestibulum
+                        vestibulum. Cras venenatis euismod malesuada. Integer non lorem ut nibh posuere blandit.
+                        Curabitur et mauris nec ipsum placerat tincidunt sed eu arcu.
+                    </p>
                 </div>
 
-                {% if cartelera %}
+                {% if cartelera or historia_imgs %}
                 <div class="px_blog_cover px_blog_single">
                     <div class="blog_thumb text-center">
-                        <a href="{{ cartelera.imagen.url }}" class="cartelera_popup">
-                            <img src="{{ cartelera.imagen.url }}" class="img-fluid" alt="Historia Maestra Vida">
-                        </a>
 
-                        <!-- Caja de texto debajo de la imagen -->
-                        <div class="mt-3 px_blog_single p-3 text-left" style="background: rgba(255,255,255,0.03);">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum
-                                vestibulum. Cras venenatis euismod malesuada. Integer non lorem ut nibh posuere blandit.
-                                Curabitur et mauris nec ipsum placerat tincidunt sed eu arcu.
-                            </p>
+                        {# --- CARROUSEL (Owl) --- #}
+                        <div class="historia-carousel owl-carousel owl-theme">
+                            <div class="item">
+                                <a href="{% static 'core/images/maestra/_MG_2891.jpg' %}" class="cartelera_popup">
+                                <img src="{% static 'core/images/maestra/_MG_2891.jpg' %}" class="img-fluid" alt="Historia - 1">
+                                </a>
+                            </div>
+
+                            <div class="item">
+                                <a href="{% static 'core/images/maestra/31anios1.jpg' %}" class="cartelera_popup">
+                                <img src="{% static 'core/images/maestra/31anios1.jpg' %}" class="img-fluid" alt="Historia - 2">
+                                </a>
+                            </div>
+
+                            <div class="item">
+                                <a href="{% static 'core/images/maestra/_MG_0330.JPG' %}" class="cartelera_popup">
+                                <img src="{% static 'core/images/maestra/_MG_0330.JPG' %}" class="img-fluid" alt="Historia - 3">
+                                </a>
+                            </div>
                         </div>
+                        {# --- /CARROUSEL --- #}
+
+                        
                     </div>
 
                     {% if cartelera.descripcion %}
@@ -67,58 +130,21 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="px_heading_middle">
-                        <h2>Nuestro local</h2>
+                        <h2>Nuestro <span>local</span></h2>
                     </div>
 
                     <!-- cuadro intro pequeño -->
-                    <div class="px_blog_single p-3 mb-4">
-                        <p>
-                            Nuestra casa: un espacio para la música en vivo, la pista y la comunidad. Abajo encontrarás
-                            las galerías subidas por nuestros fotógrafos — haz click en una portada para ver su álbum.
-                        </p>
-                    </div>
-
-                    <div class="px_event_main">
-                        <div class="row cartelera-row">
-                            {% if albums %}
-                                {% for album in albums %}
-                                    {# portada: primera foto del álbum #}
-                                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                        <div class="px_blog_single text-center p-1">
-                                            {% with fotos_list=album.fotos.all %}
-                                                {% if fotos_list %}
-                                                    {# portada: primera foto #}
-                                                    <a href="{{ fotos_list.0.imagen.url }}" class="photo_gallery_popup" data-bs-toggle="lightbox" data-gallery="album-{{ album.id }}">
-                                                        <img src="{{ fotos_list.0.imagen.url }}" alt="{{ album.titulo }}" class="img-fluid" style="height:160px; width:100%; object-fit:cover;">
-                                                    </a>
-                                                {% else %}
-                                                    <img src="{% static 'core/img/album-default.jpg' %}" alt="{{ album.titulo }}" class="img-fluid" style="height:160px; width:100%; object-fit:cover;">
-                                                {% endif %}
-                                            {% endwith %}
-
-                                            <div class="mt-2">
-                                                <strong>{{ album.titulo }}</strong><br>
-                                                <small class="text-muted">{{ album.creado_en|date:"d/m/Y" }}</small>
-                                            </div>
-
-                                            {# enlaces ocultos para que el lightbox pueda abrir el resto del álbum #}
-                                            <div style="display:none;">
-                                                {% for foto in album.fotos.all %}
-                                                    <a href="{{ foto.imagen.url }}" class="photo_gallery_popup" data-gallery="album-{{ album.id }}"></a>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            {% else %}
-                                <div class="col-xs-12">
-                                    <p style="color:white;text-align:center;">
-                                        No hay galerías disponibles todavía...
-                                    </p>
-                                </div>
-                            {% endif %}
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="px_blog_single blog_desc text-center p-3 mb-4">
+                            <p>
+                                La Salsoteca Maestra Vida fue inaugurada el 9 de septiembre de 1988, desde entonces hemos funcionado siempre en el mismo lugar.
+                            </p>
+                            </div>
                         </div>
                     </div>
+
+                    
                 </div>
             </div>
         </div>
@@ -133,10 +159,14 @@
 
     <!-- texto breve -->
     <div class="container mb-4">
-        <div class="px_blog_single p-3">
-            <p>
-                Aquí tenemos una selección de fotografías tomadas en nuestras noches: momentos en la pista, la orquesta y el público.
-            </p>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="px_blog_single blog_desc text-center p-3 mb-4">
+                <p>
+                    Aquí tenemos una selección de fotografías tomadas en nuestras noches: momentos en la pista, la orquesta y el público.
+                </p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -158,4 +188,42 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  (function($){
+    $(document).ready(function(){
+      var $carousel = $('.historia-carousel');
+
+      $carousel.owlCarousel({
+        items: 1,
+        loop: true,
+        nav: true,
+        navText: ['<i class="fa fa-chevron-left"></i>','<i class="fa fa-chevron-right"></i>'],
+        dots: true,
+        autoplay: true,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: true,
+        smartSpeed: 800,
+        autoplaySpeed: 800,
+        responsive: {
+          0:   { items:1 },
+          576: { items:1 },
+          768: { items:1 }
+        }
+      });
+
+      // Si usas magnific-popup y quieres que los enlaces dentro del carousel abran el popup:
+      if ($.fn.magnificPopup) {
+        $('.historia-carousel .cartelera_popup').magnificPopup({
+          type: 'image',
+          gallery: {
+            enabled: true
+          }
+        });
+      }
+    });
+  })(jQuery);
+</script>
 {% endblock %}
