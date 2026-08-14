@@ -17,6 +17,22 @@ from usuarios.decorators import grupo_required
 from .forms import AlbumForm, BandaForm, SubirFotosAlbumForm
 from .models import Album, Banda, FotoAlbum, FotoBanda, procesar_y_optimizar_a_webp
 
+
+def galeria(request):
+    """
+    Renderiza la plantilla de galería.
+    Ajusta la consulta según lo que quieras mostrar (albums, fotos, etc.).
+    """
+    albums = Album.objects.all().prefetch_related('fotos')[:50]  # ejemplo
+    context = {
+        'albums': albums,
+    }
+    
+
+    
+    return render(request, 'galerias/galeria.html', context)
+
+
 # ==========================================
 # ACCIONES EXCLUSIVAS DEL PRODUCTOR
 # ==========================================

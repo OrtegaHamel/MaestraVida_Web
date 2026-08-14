@@ -19,4 +19,5 @@ urlpatterns = [
     path('album/<int:album_id>/eliminar/', views.eliminar_album, name='eliminar_album'),
     path('album/<int:album_id>/gestionar-fotos/', views.gestionar_fotos_album, name='gestionar_fotos_album'),
     path('foto-album/<int:foto_id>/eliminar/', views.eliminar_foto_album, name='eliminar_foto_album'),
+    path('galeria/', views.galeria, name='galeria'),
     ]

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Galería | Maestra Vida{% endblock %}
+{% block header_class %}px_header_main{% endblock %}
+{% block nav_class %}px_interior{% endblock %}
+
+{% block content %}
+
+<!-- CABECERA -->
+<div class="main_wrapper px_header_main">
+    <div class="overlay_color">
+        <div class="px_breadcum">
+            <div class="px_heading_middle">
+                <h2 class="interior_titulo">Galería</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- NUESTRO LOCAL: muestra álbumes (publicos) -->
+<div class="main_wrapper px_event_wrapper">
+    <div class="color_overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="px_heading_middle">
+                        <h2>Nuestro <span>local</span></h2>
+                    </div>
+
+                    <!-- cuadro intro pequeño -->
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="px_blog_single blog_desc text-center p-3 mb-4">
+                            <p>
+                                La Salsoteca Maestra Vida fue inaugurada el 9 de septiembre de 1988, desde entonces hemos funcionado siempre en el mismo lugar.
+                            </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MAESTRA VIDA EN VIVO (texto antes de galería) -->
+<div class="main_wrapper px_gallery_wrapper">
+    <div class="px_heading_middle mb-3">
+        <h2>Maestra Vida <span>en Vivo</span></h2>
+    </div>
+
+    <!-- texto breve -->
+    <div class="container mb-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="px_blog_single blog_desc text-center p-3 mb-4">
+                <p>
+                    Aquí tenemos una selección de fotografías tomadas en nuestras noches: momentos en la pista, la orquesta y el público.
+                </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="px_photo_galley home_gallery">
+        {% for foto in fotos %}
+            <div class="photo_grid width_2">
+                <div class="gallery_cover">
+                    <a href="{{ foto.imagen.url }}" class="photo_gallery_popup">
+                        <img src="{{ foto.imagen.url }}" alt="{{ foto.evento.banda.nombre }}">
+                        <div class="gallery_overlay triangle_shape"></div>
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center text-white">
+                No existen fotografías disponibles.
+            </p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- VIDEOS  -->
+<div class="main_wrapper px_event_wrapper">
+    <div class="color_overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="px_heading_middle">
+                        <h2>Canal de <span>YouTube</span></h2>
+                    </div>
+
+                    <!-- cuadro intro pequeño -->
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="px_blog_single blog_desc text-center p-3 mb-4">
+                            <p>
+                                La Salsoteca Maestra Vida fue inaugurada el 9 de septiembre de 1988, desde entonces hemos funcionado siempre en el mismo lugar.
+                            </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
