@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<!-- NUESTRO LOCAL: muestra álbumes (publicos) -->
+<!-- NUESTRO LOCAL: CUADRÍCULA DE ÁLBUMES -->
 <div class="main_wrapper px_event_wrapper">
     <div class="color_overlay">
         <div class="container">
@@ -28,19 +28,62 @@
                         <h2>Nuestro <span>local</span></h2>
                     </div>
 
-                    <!-- cuadro intro pequeño -->
+                    <!-- cuadro intro pequeño centrado -->
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
                             <div class="px_blog_single blog_desc text-center p-3 mb-4">
-                            <p>
-                                La Salsoteca Maestra Vida fue inaugurada el 9 de septiembre de 1988, desde entonces hemos funcionado siempre en el mismo lugar.
-                            </p>
+                                <p>
+                                    La Salsoteca Maestra Vida fue inaugurada el 9 de septiembre de 1988, desde entonces hemos funcionado siempre en el mismo lugar.
+                                </p>
                             </div>
                         </div>
                     </div>
 
-                    
+                    <!-- GRID DE ALBUMES -->
+                    <div class="row px_album_grid">
+                        {% if albums %}
+                            {% for album in albums %}
+                                {% with fotos_list=album.fotos.all %}
+                                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 album">
+                                    <div class="px_blog_single text-center p-1">
+                                        {% if fotos_list %}
+                                            {# Portada: primera foto del álbum #}
+                                            <a href="{{ fotos_list.0.imagen.url }}" class="photo_popup d-block">
+                                                <img src="{{ fotos_list.0.imagen.url }}" alt="{{ album.titulo }}" class="img-fluid" style="height:160px; width:100%; object-fit:cover;">
+                                            </a>
+                                        {% else %}
+                                            <a href="{% static 'core/img/album-default.jpg' %}" class="photo_popup d-block">
+                                                <img src="{% static 'core/img/album-default.jpg' %}" alt="{{ album.titulo }}" class="img-fluid" style="height:160px; width:100%; object-fit:cover;">
+                                            </a>
+                                        {% endif %}
+
+                                        <div class="text-center">
+                                            <h6 class="mb-1 mt-1 text-white fw-semibold text-truncate" title="{{ album.titulo }}">{{ album.titulo }}</h6>
+                                            <small class="d-block text-white-50">{{ album.creado_en|date:"d/m/Y" }}</small>
+                                        </div>
+
+                                        <!-- Enlaces ocultos: saltar la primera con forloop.first -->
+                                        <div style="display:none;">
+                                        {% for foto in fotos_list %}
+                                            {% if not forloop.first %}
+                                            <a href="{{ foto.imagen.url }}" class="photo_popup"></a>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endwith %}
+                            {% endfor %}
+                        {% else %}
+                            <div class="col-12">
+                                <p style="color:white;text-align:center;">No hay álbumes disponibles todavía...</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <!-- /GRID DE ALBUMES -->
+
                 </div>
+                
             </div>
         </div>
     </div>
@@ -57,9 +100,9 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="px_blog_single blog_desc text-center p-3 mb-4">
-                <p>
-                    Aquí tenemos una selección de fotografías tomadas en nuestras noches: momentos en la pista, la orquesta y el público.
-                </p>
+                    <p>
+                        Aquí tenemos una selección de fotografías tomadas en nuestras noches: momentos en la pista, la orquesta y el público.
+                    </p>
                 </div>
             </div>
         </div>
@@ -97,9 +140,9 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-8">
                             <div class="px_blog_single blog_desc text-center p-3 mb-4">
-                            <p>
-                                La Salsoteca Maestra Vida fue inaugurada el 9 de septiembre de 1988, desde entonces hemos funcionado siempre en el mismo lugar.
-                            </p>
+                                <p>
+                                    La Salsoteca Maestra Vida fue inaugurada el 9 de septiembre de 1988, desde entonces hemos funcionado siempre en el mismo lugar.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -113,3 +156,37 @@
 
 {% endblock %}
 
+{% block extra_js %}
+<script>
+  (function($){
+    $(document).ready(function(){
+
+      // Inicializar Magnific Popup por álbum: cada .album gestiona su propio gallery
+      $('.px_album_grid .album').each(function(){
+        var $albumContainer = $(this);
+        if ($albumContainer.find('a.photo_popup').length){
+          $albumContainer.magnificPopup({
+            delegate: 'a.photo_popup', // enlaces dentro del album
+            type: 'image',
+            gallery: {
+              enabled: true
+            },
+            // opcional: animación/rapidez
+            removalDelay: 300,
+            mainClass: 'mfp-fade'
+          });
+        }
+      });
+
+      // Inicializar Magnific para la galería general (Maestra Vida en Vivo)
+      if ($.fn.magnificPopup) {
+        $('.px_photo_galley').magnificPopup({
+          delegate: 'a.photo_gallery_popup',
+          type: 'image',
+          gallery: { enabled: true }
+        });
+      }
+    });
+  })(jQuery);
+</script>
+{% endblock %}

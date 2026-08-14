@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
+from django.db.models import Count
 from eventos.models import Evento
 from usuarios.decorators import grupo_required
 
@@ -20,18 +21,33 @@ from .models import Album, Banda, FotoAlbum, FotoBanda, procesar_y_optimizar_a_w
 
 def galeria(request):
     """
-    Renderiza la plantilla de galería.
-    Ajusta la consulta según lo que quieras mostrar (albums, fotos, etc.).
+    Galería pública: muestra:
+      - 'albums' : cuadrícula de álbumes (cada album con sus fotos)
+      - 'fotos'  : fotos sueltas (Maestra Vida en Vivo) — se usan en la sección inferior
     """
-    albums = Album.objects.all().prefetch_related('fotos')[:50]  # ejemplo
+    # Álbumes con al menos 1 foto, prefetch para mejorar consultas
+    albums = (
+        Album.objects
+        .annotate(num_fotos=Count('fotos'))
+        .filter(num_fotos__gt=0)
+        .prefetch_related('fotos')    # related_name 'fotos' asumido
+        .order_by('-creado_en')[:24]
+    )
+
+    # Fotos recientes para "Maestra Vida en Vivo"
+    fotos = (
+        FotoBanda.objects
+        .select_related('evento', 'evento__banda')
+        .filter(imagen__isnull=False)
+        .order_by('-evento__hora', '-creado_en')[:48]
+    )
+
     context = {
         'albums': albums,
+        'fotos': fotos,
     }
-    
 
-    
     return render(request, 'galerias/galeria.html', context)
-
 
 # ==========================================
 # ACCIONES EXCLUSIVAS DEL PRODUCTOR
