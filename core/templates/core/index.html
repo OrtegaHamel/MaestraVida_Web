@@ -220,7 +220,7 @@
 
 <div class="main_wrapper px_gallery_wrapper">
     <div class="px_heading_middle mb-5">
-        <h2>Nuestro <span>local</span></h2>
+        <h2>La Rumba en <span>Maestra Vida</span></h2>
     </div>
 
     <div class="px_blog_cover px_blog_single">
@@ -248,23 +248,10 @@
           {% endif %}
         </div>
 
-        <!-- Texto descriptivo reutilizando clases existentes -->
-        <div class="mt-3 px_blog_single blog_desc text-left">
-          <p>
-            Nuestra casa: un espacio para la música en vivo, la pista y la comunidad. Mira nuestras fotos y recuerdos de las noches en la Maestra.
-          </p>
-        </div>
-
-        <div class="text-center mt-3">
+        <div class="text-center mt-5 mb-3">
           <a href="{% url 'bandas:galeria' %}" class="read_m_btn">Ver galería de fotos</a>
         </div>
       </div>
-    </div>
-
-    <div class="text-center cartelera-footer">
-            <a href="{% url 'bandas:galeria' %}" class="read_m_btn">
-                    Ver galería de fotos
-            </a>
     </div>
 
     
@@ -344,13 +331,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       $carousel.owlCarousel({
         items: 1,
-        loop: ($carousel.find('.item').length > 1),
+        loop: true,
         nav: true,
         navText: ['<i class="fa fa-chevron-left"></i>','<i class="fa fa-chevron-right"></i>'],
         dots: true,
         autoplay: true,
         autoplayTimeout: 5000,
-        autoplayHoverPause: true,
+        autoplayHoverPause: false,
         smartSpeed: 700,
         autoplaySpeed: 700,
         responsive: {

@@ -12,15 +12,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000; /* fondo negro de la tarjeta */
+  background: #000;
   padding: 12px;
   box-sizing: border-box;
   border-radius: 6px;
   overflow: hidden;
-  height: 500px; /* ajusta según lo que quieras */
+  height: 500px;
 }
-
-/* Imagen: escalar lo máximo posible sin salir ni deformarse */
 .historia-carousel .item img {
   width: 100%;
   height: 100%;
@@ -29,8 +27,6 @@
   display: block;
   margin: 0 auto;
 }
-
-/* Ajustes visuales mínimos para los controles de Owl (si no están cubiertos por tu CSS global) */
 .historia-carousel .owl-nav button {
   background: rgba(0,0,0,0.45);
   border: none;
@@ -40,6 +36,31 @@
 }
 .historia-carousel .owl-dots {
   margin-top: 10px;
+}
+
+/* Fotos carousel style (match index visual) */
+.fotos-carousel .item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #000;
+}
+.fotos-carousel .item img {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+  display: block;
+}
+.fotos-carousel .carousel-caption {
+  margin-top: 8px;
+  text-align: center;
+}
+.fotos-carousel .owl-nav button {
+  background: rgba(0,0,0,0.45);
+  border: none;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
 }
 </style>
 {% endblock %}
@@ -57,138 +78,147 @@
     </div>
 </div>
 
-<!-- HISTORIA -->
+<!-- HISTORIA: título + texto dentro del container (centrado) -->
 <div class="main_wrapper px_blog_section">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="px_heading_middle mb-3">
                     <h2>Nuestra <span>Historia</span></h2>
-                </div> 
-                <!-- Caja de texto -->
-                <div class="px_blog_single blog_desc text-center p-3 mb-4">
+                </div>
+                <div class="px_blog_single blog_desc text-center p-3 mb-1">
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum
-                        vestibulum. Cras venenatis euismod malesuada. Integer non lorem ut nibh posuere blandit.
-                        Curabitur et mauris nec ipsum placerat tincidunt sed eu arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Vivamus lacinia odio vitae vestibulum
                         vestibulum. Cras venenatis euismod malesuada. Integer non lorem ut nibh posuere blandit.
                         Curabitur et mauris nec ipsum placerat tincidunt sed eu arcu.
                     </p>
                 </div>
-
-                {% if cartelera or historia_imgs %}
-                <div class="px_blog_cover px_blog_single">
-                    <div class="blog_thumb text-center">
-
-                        {# --- CARROUSEL (Owl) --- #}
-                        <div class="historia-carousel owl-carousel owl-theme">
-                            <div class="item">
-                                <a href="{% static 'core/images/maestra/_MG_2891.jpg' %}" class="cartelera_popup">
-                                <img src="{% static 'core/images/maestra/_MG_2891.jpg' %}" class="img-fluid" alt="Historia - 1">
-                                </a>
-                            </div>
-
-                            <div class="item">
-                                <a href="{% static 'core/images/maestra/31anios1.jpg' %}" class="cartelera_popup">
-                                <img src="{% static 'core/images/maestra/31anios1.jpg' %}" class="img-fluid" alt="Historia - 2">
-                                </a>
-                            </div>
-
-                            <div class="item">
-                                <a href="{% static 'core/images/maestra/_MG_0330.JPG' %}" class="cartelera_popup">
-                                <img src="{% static 'core/images/maestra/_MG_0330.JPG' %}" class="img-fluid" alt="Historia - 3">
-                                </a>
-                            </div>
-                        </div>
-                        {# --- /CARROUSEL --- #}
-
-                        
-                    </div>
-
-                    {% if cartelera.descripcion %}
-                    <div class="blog_desc mt-4">
-                        <h3>{{ cartelera.get_mes_display }} {{ cartelera.anio }}</h3>
-                        <p>{{ cartelera.descripcion|linebreaks }}</p>
-                    </div>
-                    {% endif %}
-                </div>
-                {% else %}
-                <div class="text-center text-white py-5">
-                    <h3>No hay contenido histórico publicado.</h3>
-                </div>
-                {% endif %}
             </div>
         </div>
     </div>
 </div>
 
-<!-- NUESTRO LOCAL: muestra álbumes (publicos) -->
+<!-- HISTORIA SLIDER: full-width (fuera del container) -->
 <div class="main_wrapper px_blog_section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="px_heading_middle mb-1">
-                    <h2>Nuestro <span>Local</span></h2>
-                </div> 
-                <!-- Caja de texto -->
-                <div class="px_blog_single blog_desc text-center p-3 mb-4">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum
-                        vestibulum. Cras venenatis euismod malesuada. Integer non lorem ut nibh posuere blandit.
-                        Curabitur et mauris nec ipsum placerat tincidunt sed eu arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Vivamus lacinia odio vitae vestibulum
-                        vestibulum. Cras venenatis euismod malesuada. Integer non lorem ut nibh posuere blandit.
-                        Curabitur et mauris nec ipsum placerat tincidunt sed eu arcu.
-                    </p>
-                </div>
-
-                {% if cartelera or historia_imgs %}
-                <div class="px_blog_cover px_blog_single">
-                    <div class="blog_thumb text-center">
-
-                        {# --- CARROUSEL (Owl) --- #}
-                        <div class="historia-carousel owl-carousel owl-theme">
-                            <div class="item">
-                                <a href="{% static 'core/images/maestra/frontis.png' %}" class="cartelera_popup">
-                                <img src="{% static 'core/images/maestra/frontis.png' %}" class="img-fluid" alt="Historia - 1">
-                                </a>
-                            </div>
-
-                            <div class="item">
-                                <a href="{% static 'core/images/maestra/418.jpg' %}" class="cartelera_popup">
-                                <img src="{% static 'core/images/maestra/418.jpg' %}" class="img-fluid" alt="Historia - 2">
-                                </a>
-                            </div>
-
-                            <div class="item">
-                                <a href="{% static 'core/images/maestra/_MG_0330.JPG' %}" class="cartelera_popup">
-                                <img src="{% static 'core/images/maestra/_MG_0330.JPG' %}" class="img-fluid" alt="Historia - 3">
-                                </a>
-                            </div>
-                        </div>
-                        {# --- /CARROUSEL --- #}
-
-                        
-                    </div>
-
-                    {% if cartelera.descripcion %}
-                    <div class="blog_desc mt-4">
-                        <h3>{{ cartelera.get_mes_display }} {{ cartelera.anio }}</h3>
-                        <p>{{ cartelera.descripcion|linebreaks }}</p>
-                    </div>
-                    {% endif %}
-                </div>
-                {% else %}
-                <div class="text-center text-white py-5">
-                    <h3>No hay contenido histórico publicado.</h3>
-                </div>
-                {% endif %}
+  <div class="px_blog_cover px_blog_single">
+    <div class="blog_thumb text-center">
+      <div class="historia-carousel owl-carousel owl-theme">
+        {% if historia_imgs %}
+          {% for img_url in historia_imgs %}
+            <div class="item">
+              <a href="{{ img_url }}" class="cartelera_popup">
+                <img src="{{ img_url }}" class="img-fluid" alt="Historia - {{ forloop.counter }}">
+              </a>
             </div>
-        </div>
+          {% endfor %}
+        {% else %}
+          <div class="item">
+            <a href="{% static 'core/images/maestra/_MG_2891.jpg' %}" class="cartelera_popup">
+              <img src="{% static 'core/images/maestra/_MG_2891.jpg' %}" class="img-fluid" alt="Historia - 1">
+            </a>
+          </div>
+
+          <div class="item">
+            <a href="{% static 'core/images/maestra/31anios1.jpg' %}" class="cartelera_popup">
+              <img src="{% static 'core/images/maestra/31anios1.jpg' %}" class="img-fluid" alt="Historia - 2">
+            </a>
+          </div>
+
+          <div class="item">
+            <a href="{% static 'core/images/maestra/_MG_0330.JPG' %}" class="cartelera_popup">
+              <img src="{% static 'core/images/maestra/_MG_0330.JPG' %}" class="img-fluid" alt="Historia - 3">
+            </a>
+          </div>
+        {% endif %}
+      </div>
     </div>
+  </div>
 </div>
 
+<!-- CONTENIDO QUE SIGUE AL SLIDER: cartelera.descripcion (dentro de container) -->
+<div class="main_wrapper px_blog_section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        {% if cartelera.descripcion %}
+          <div class="blog_desc mt-4">
+            <h3>{{ cartelera.get_mes_display }} {{ cartelera.anio }}</h3>
+            <p>{{ cartelera.descripcion|linebreaks }}</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NUESTRO LOCAL: título + texto dentro del container -->
+<div class="main_wrapper px_blog_section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="px_heading_middle mb-1">
+          <h2>Nuestro <span>Local</span></h2>
+        </div>
+
+        <div class="px_blog_single blog_desc text-center p-3 mb-1">
+          <p>
+            Nuestra casa: un espacio para la música en vivo, la pista y la comunidad. Mira nuestras fotos y recuerdos de las noches en la Maestra.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NUESTRO LOCAL SLIDER: full-width (fuera del container) -->
+<div class="main_wrapper px_blog_section">
+  <div class="px_blog_cover px_blog_single">
+    <div class="blog_thumb text-center">
+      <div class="fotos-carousel owl-carousel owl-theme">
+        <div class="item">
+          <a href="{% static 'core/images/maestra/frontis.png' %}" class="cartelera_popup">
+            <img src="{% static 'core/images/maestra/frontis.png' %}" alt="Frontis Maestra" class="img-fluid">
+          </a>
+          <div class="carousel-caption" style="margin-top:8px;">
+            <h6 class="text-white mb-1" style="font-weight:600; font-size:14px;">Frontis</h6>
+            <small class="text-white-50">Nuestra casa</small>
+          </div>
+        </div>
+
+        <div class="item">
+          <a href="{% static 'core/images/maestra/418.jpg' %}" class="cartelera_popup">
+            <img src="{% static 'core/images/maestra/418.jpg' %}" alt="Interior Maestra" class="img-fluid">
+          </a>
+          <div class="carousel-caption" style="margin-top:8px;">
+            <h6 class="text-white mb-1" style="font-weight:600; font-size:14px;">Interior</h6>
+            <small class="text-white-50">Ambiente y pista</small>
+          </div>
+        </div>
+
+        <div class="item">
+          <a href="{% static 'core/images/maestra/_MG_0330.JPG' %}" class="cartelera_popup">
+            <img src="{% static 'core/images/maestra/_MG_0330.JPG' %}" alt="Foto Maestra" class="img-fluid">
+          </a>
+          <div class="carousel-caption" style="margin-top:8px;">
+            <h6 class="text-white mb-1" style="font-weight:600; font-size:14px;">Recuerdos</h6>
+            <small class="text-white-50">Noches en la Maestra</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- botón dentro de container para mantener alineación con el resto de la página -->
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="text-center mt-3 mb-5">
+          <a href="{% url 'bandas:galeria' %}" class="read_m_btn">Ver galería de fotos</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
 
@@ -196,9 +226,9 @@
 <script>
   (function($){
     $(document).ready(function(){
-      var $carousel = $('.historia-carousel');
-
-      $carousel.owlCarousel({
+      // Historia carousel (full-width)
+      var $hist = $('.historia-carousel');
+      $hist.owlCarousel({
         items: 1,
         loop: true,
         nav: true,
@@ -206,23 +236,36 @@
         dots: true,
         autoplay: true,
         autoplayTimeout: 5000,
-        autoplayHoverPause: true,
+        autoplayHoverPause: false,
         smartSpeed: 800,
         autoplaySpeed: 800,
-        responsive: {
-          0:   { items:1 },
-          576: { items:1 },
-          768: { items:1 }
-        }
+        responsive: { 0:{items:1}, 576:{items:1}, 768:{items:1} }
       });
-
-      // Si usas magnific-popup y quieres que los enlaces dentro del carousel abran el popup:
       if ($.fn.magnificPopup) {
-        $('.historia-carousel .cartelera_popup').magnificPopup({
+        $('.historia-carousel .cartelera_popup').magnificPopup({ type: 'image', gallery: { enabled: true } });
+      }
+
+      // Fotos carousel (Nuestro Local - full-width)
+      var $carousel = $('.fotos-carousel');
+      $carousel.owlCarousel({
+        items: 1,
+        loop: ($carousel.find('.item').length > 1),
+        nav: true,
+        navText: ['<i class="fa fa-chevron-left"></i>','<i class="fa fa-chevron-right"></i>'],
+        dots: true,
+        autoplay: true,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: true,
+        smartSpeed: 700,
+        autoplaySpeed: 700,
+        responsive: { 0:{items:1}, 576:{items:1}, 768:{items:1} }
+      });
+      if ($.fn.magnificPopup) {
+        $('.fotos-carousel .cartelera_popup').magnificPopup({
           type: 'image',
-          gallery: {
-            enabled: true
-          }
+          gallery: { enabled: true },
+          removalDelay: 300,
+          mainClass: 'mfp-fade'
         });
       }
     });

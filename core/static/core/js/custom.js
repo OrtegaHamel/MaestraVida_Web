@@ -307,3 +307,30 @@ Project: NightClub
     });
 
 })(jQuery);
+
+// Parche: escuchar en fase de captura para garantizar que el click/touch en el logo
+// se procese antes que otros handlers y forzar la navegación.
+(function(){
+  function navegarLogo(e){
+    try {
+      var target = e.target.closest && e.target.closest('.px_logo a');
+      if (!target) return;
+      // Evitar que otros handlers bloqueen la navegación
+      if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      if (e.stopPropagation) e.stopPropagation();
+      if (e.preventDefault) e.preventDefault();
+      var href = target.getAttribute('href');
+      if (href && href !== '#') {
+        // Forzar navegación
+        window.location.href = href;
+      }
+    } catch (err) {
+      // no romper si hay error
+      console.error('logo-nav-patch:', err);
+    }
+  }
+
+  // Captura click y touchend en fase de captura (true)
+  document.addEventListener('click', navegarLogo, true);
+  document.addEventListener('touchend', navegarLogo, true);
+})();
