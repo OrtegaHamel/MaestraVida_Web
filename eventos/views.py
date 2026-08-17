@@ -88,12 +88,7 @@ def cartelera(request):
     cartelera = CarteleraMensual.vigente()
 
     # Sólo fotografías de eventos pasados
-    fotos = (
-        FotoBanda.objects
-        .filter(evento__hora__date__lt=hoy)
-        .select_related("evento", "evento__banda")
-        .order_by("-evento__hora")[:8]
-    )
+    fotos = FotoBanda.objects.all().order_by('-creado_en')[:16]
 
     return render(
         request,
