@@ -10,7 +10,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
-from django.db.models import Count
+from django.db.models import Count, Max
 from eventos.models import Evento
 from usuarios.decorators import grupo_required
 
@@ -23,18 +23,29 @@ def galeria(request):
     """
     Galería pública: muestra:
       - 'albums' : cuadrícula de álbumes (cada album con sus fotos)
-      - 'fotos'  : fotos sueltas (Maestra Vida en Vivo) — se usan en la sección inferior
+      - 'event_albums' : eventos agrupados por fotos (Maestra Vida en Vivo), presentados como 'álbumes'
+      - 'fotos'  : fotos sueltas (si las quieres mantener)
     """
-    # Álbumes con al menos 1 foto, prefetch para mejorar consultas
+    # Álbumes con al menos 1 foto (si deseas mantener la sección de álbumes)
     albums = (
         Album.objects
-        .annotate(num_fotos=Count('fotos'))
+        .annotate(num_fotos=Count('fotos'), latest_photo=Max('fotos__creado_en'))
         .filter(num_fotos__gt=0)
-        .prefetch_related('fotos')    # related_name 'fotos' asumido
-        .order_by('-creado_en')[:24]
+        .prefetch_related('fotos')
+        .order_by('-latest_photo', '-creado_en')[:6]
     )
 
-    # Fotos recientes para "Maestra Vida en Vivo"
+    # Eventos que tienen fotos (agrupamos fotos de banda por evento)
+    event_albums = (
+        Evento.objects
+        .annotate(num_fotos=Count('fotos_galeria'), latest_photo=Max('fotos_galeria__creado_en'))
+        .filter(num_fotos__gt=0)
+        .select_related('banda')
+        .prefetch_related('fotos_galeria')
+        .order_by('-latest_photo')[:9]   # 9 eventos => 3 filas x 3 columnas
+    )
+
+    # Fotos recientes sueltas (opcional, si quieres mantener la galería suelta)
     fotos = (
         FotoBanda.objects
         .select_related('evento', 'evento__banda')
@@ -44,6 +55,7 @@ def galeria(request):
 
     context = {
         'albums': albums,
+        'event_albums': event_albums,  # nueva variable para la plantilla
         'fotos': fotos,
     }
 

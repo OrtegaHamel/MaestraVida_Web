@@ -33,7 +33,7 @@
                         {% if albums %}
                             {% for album in albums %}
                                 {% with fotos_list=album.fotos.all %}
-                                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 album">
+                                <div class="col-lg-4 col-md-4 col-sm-6 mb-4 album">
                                     <div class="px_blog_single text-center p-1">
                                         {% if fotos_list %}
                                             {# Portada: primera foto del álbum #}
@@ -48,7 +48,12 @@
 
                                         <div class="text-center">
                                             <h6 class="mb-1 mt-1 text-white fw-semibold text-truncate" title="{{ album.titulo }}">{{ album.titulo }}</h6>
+                                            {# Mostrar la fecha de la última foto si existe, sino la fecha de creación del álbum #}
+                                            {% if album.latest_photo %}
+                                            <small class="d-block text-white-50">{{ album.latest_photo|date:"d/m/Y" }}</small>
+                                            {% else %}
                                             <small class="d-block text-white-50">{{ album.creado_en|date:"d/m/Y" }}</small>
+                                            {% endif %}
                                         </div>
 
                                         <!-- Enlaces ocultos: saltar la primera con forloop.first -->
@@ -78,28 +83,60 @@
     </div>
 </div>
 
-<!-- MAESTRA VIDA EN VIVO (texto antes de galería) -->
+<!-- MAESTRA VIDA EN VIVO (agrupados por evento) -->
 <div class="main_wrapper px_gallery_wrapper">
+
     <div class="px_heading_middle mb-5">
         <h2>Maestra Vida <span>en Vivo</span></h2>
     </div>
 
-    <div class="px_photo_galley home_gallery mt-3">
-        {% for foto in fotos %}
-            <div class="photo_grid width_2">
-                <div class="gallery_cover">
-                    <a href="{{ foto.imagen.url }}" class="photo_gallery_popup">
-                        <img src="{{ foto.imagen.url }}" alt="{{ foto.evento.banda.nombre }}">
-                        <div class="gallery_overlay triangle_shape"></div>
-                    </a>
+    <div class="container">
+      <div class="row px_album_grid">
+        {% if event_albums %}
+          {% for evento in event_albums %}
+            {% with fotos_list=evento.fotos_galeria.all %}
+            <div class="col-lg-4 col-md-4 col-sm-6 mb-4 album">
+              <div class="px_blog_single text-center p-1">
+                {% if fotos_list %}
+                  <a href="{{ fotos_list.0.imagen.url }}" class="photo_popup d-block">
+                    <img src="{{ fotos_list.0.imagen.url }}" alt="Fotos de {{ evento.banda.nombre }}" class="img-fluid" style="height:160px; width:100%; object-fit:cover;">
+                  </a>
+                {% else %}
+                  <a href="{% static 'core/img/album-default.jpg' %}" class="photo_popup d-block">
+                    <img src="{% static 'core/img/album-default.jpg' %}" alt="Evento {{ evento.banda.nombre }}" class="img-fluid" style="height:160px; width:100%; object-fit:cover;">
+                  </a>
+                {% endif %}
+
+                <div class="text-center">
+                  <h6 class="mb-1 mt-1 text-white fw-semibold text-truncate" title="{{ evento.banda.nombre }}">{{ evento.banda.nombre }}</h6>
+                  {% if evento.latest_photo %}
+                    <small class="d-block text-white-50">{{ evento.latest_photo|date:"d/m/Y" }}</small>
+                  {% else %}
+                    <small class="d-block text-white-50">{{ evento.hora|date:"d/m/Y" }}</small>
+                  {% endif %}
                 </div>
+
+                <!-- enlaces ocultos para magnific popup: todas las fotos del evento excepto la primera -->
+                <div style="display:none;">
+                  {% for foto in fotos_list %}
+                    {% if not forloop.first %}
+                      <a href="{{ foto.imagen.url }}" class="photo_popup"></a>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+
+              </div>
             </div>
-        {% empty %}
-            <p class="text-center text-white">
-                No existen fotografías disponibles.
-            </p>
-        {% endfor %}
+            {% endwith %}
+          {% endfor %}
+        {% else %}
+          <div class="col-12">
+            <p class="text-center text-white">No hay fotos de eventos todavía...</p>
+          </div>
+        {% endif %}
+      </div>
     </div>
+
 </div>
 
 <!-- VIDEOS  -->
