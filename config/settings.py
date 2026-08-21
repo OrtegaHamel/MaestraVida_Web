@@ -14,7 +14,11 @@ SECRET_KEY = 'django-insecure-f$ix@m+n=(+pn!@(a!wi2fbmy7md&g7yra0w#h!a^dqbzw78)4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'honest-olive-crane.74-50-73-10.cpanel.site',
+    #'maestravida.cl',
+    #'www.maestravida.cl',
+]
 
 
 # Application definition
@@ -68,10 +72,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'maestra_db', 
-        'USER': 'root',
-        'PASSWORD': '', # Si usas XAMPP, suele estar vacío ''
-        'HOST': '127.0.0.1', # O 'localhost'
+        'NAME': 'maestrav_maestra_db', 
+        'USER': 'maestrav_user',
+        'PASSWORD': 'Maestra$2026',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
@@ -112,7 +116,8 @@ USE_TZ = False  # Desactivamos el uso de zonas horarias para simplificar la gest
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 # Configuración para archivos ESTÁTICOS (CSS, JS, imágenes de diseño)
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'core/static')]
 
 # Configuración para archivos MEDIA (Subidas de usuario, cartelera)
