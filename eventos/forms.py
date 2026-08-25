@@ -53,7 +53,7 @@ class EventoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         crear_banda_url = reverse_lazy('bandas:crear_banda')
         self.fields['banda'].help_text = mark_safe(
-            f'Si la banda no está en la lista, <a href="{crear_banda_url}">crea una nueva banda aquí</a>. Asegúrate de seleccionar la banda de la lista (no solo escribir el nombre).'
+            f'Si la banda no está en la lista, <a href="{crear_banda_url}">crea una nueva banda aquí</a>.'
         )
 
         if not self.instance.pk and not self.initial.get('hora'):

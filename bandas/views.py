@@ -142,7 +142,7 @@ def crear_banda(request):
             # si tienes campos como creado_por, asigna: banda.creado_por = request.user
             banda.save()
             messages.success(request, 'Banda creada correctamente.')
-            return redirect(f"{reverse('bandas:lista_bandas')}?mensaje=Banda+creada+exitosamente&tipo=success")
+            return redirect(f"{reverse('eventos:lista_eventos')}?mensaje=Banda+creada+exitosamente&tipo=success")
         else:
             # Mostrar errores en consola/log para debugging
             print('Errores formulario Banda:', form.errors.as_json())
@@ -191,13 +191,20 @@ def eliminar_banda(request, banda_id):
 def panel_fotografo_eventos(request):
     hoy = datetime.now().date()
     
-    eventos = Evento.objects.filter(hora__date__lte=hoy).prefetch_related('fotos_galeria').order_by('-hora')
+    # Anotamos cada evento con el total de fotos en su galería
+    eventos = (
+        Evento.objects.filter(hora__date__lte=hoy)
+        .annotate(total_fotos=Count('fotos_galeria'))
+        .prefetch_related('fotos_galeria')
+        .order_by('-hora')
+    )
 
     nombre_banda = request.GET.get('banda')
     fecha_desde = request.GET.get('desde')
     fecha_hasta = request.GET.get('hasta')
     estado_filtro = request.GET.get('estado')
 
+    # Filtros ORM directos
     if nombre_banda:
         eventos = eventos.filter(banda__nombre__icontains=nombre_banda)
     if fecha_desde:
@@ -205,28 +212,28 @@ def panel_fotografo_eventos(request):
     if fecha_hasta:
         eventos = eventos.filter(hora__date__lte=fecha_hasta)
 
-    # Filtrado por estado (procesa la lista)
+    # Filtrado por estado directamente en la base de datos (SQL)
     if estado_filtro == 'pendiente':
-        eventos = [e for e in eventos if not e.fotos_galeria.exists()]
+        eventos = eventos.filter(total_fotos=0)
     elif estado_filtro == 'con_fotos':
-        eventos = [e for e in eventos if e.fotos_galeria.exists()]
+        eventos = eventos.filter(total_fotos__gt=0)
 
-    # --- NUEVA LÓGICA DE PAGINACIÓN ---
-    paginator = Paginator(eventos, 10) # Paginator funciona perfectamente también con listas
+    # Paginación optimizada a nivel SQL (solo trae 10 registros por página desde la DB)
+    paginator = Paginator(eventos, 10)
     numero_pagina = request.GET.get('page')
     page_obj = paginator.get_page(numero_pagina)
 
+    # Preservar parámetros en los enlaces de paginación
     parametros_get = request.GET.copy()
     if 'page' in parametros_get:
         del parametros_get['page']
     parametros_url = parametros_get.urlencode()
-    # ----------------------------------
 
     return render(
         request,
         'galerias/panel_fotografo_eventos.html',
         {
-            'eventos': page_obj, # Enviamos la página
+            'eventos': page_obj,
             'parametros_url': parametros_url
         },
     )

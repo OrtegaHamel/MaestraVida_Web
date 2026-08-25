@@ -38,14 +38,17 @@ def user_logout(request):
 
 def registro(request):
     if request.method == 'POST':
-        # Usamos CustomUserCreationForm en lugar de UserCreationForm
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            # Redirigimos al login una vez que el registro es exitoso
+            user = form.save()
+            
+            # Asignar un grupo por defecto al registrarse (Opcional)
+            grupo_base, _ = Group.objects.get_or_create(name='Colaborador')
+            user.groups.add(grupo_base)
+            
+            messages.success(request, 'Cuenta creada con éxito. Un administrador asignará tu rol específico pronto.')
             return redirect('usuarios:login') 
     else:
-        # Usamos CustomUserCreationForm para el formulario vacío
         form = CustomUserCreationForm()
         
     return render(request, 'usuarios/registro.html', {'form': form})

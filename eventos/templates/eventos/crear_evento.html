@@ -54,7 +54,7 @@
                                     {% for err in form.link_entrada.errors %}{{ err }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
                                 </div>
                             {% endif %}
-                            <div class="form-text text-muted">Puedes pegar https://... o un número de teléfono (ej: +573001234567 o 3001234567).</div>
+                            <div class="form-text text-muted">Puedes pegar link o un número de teléfono.</div>
                         </div>
 
                         {# Campo: Fecha y Hora #}
@@ -99,7 +99,7 @@
                                     {% for err in form.poster.errors %}{{ err }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
                                 </div>
                             {% endif %}
-                            <div class="form-text text-muted small">Requerido. Se promocionará automáticamente en la sección "Próxima Semana" de la cartelera pública.</div>
+                            <div class="form-text text-muted small">Requerido. Se promocionará automáticamente en la sección "Cartelera de la Semana".</div>
                         </div>
 
                         {# Campo: Descripción pública #}
