@@ -127,7 +127,13 @@ if not DEBUG:
 
 # Configuración para archivos MEDIA (Subidas de usuario, cartelera)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+if DEBUG:
+    # Entorno Local
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    # Entorno Producción (cPanel)
+    MEDIA_ROOT = '/home/maestrav/public_html/honest-olive-crane.74-50-73-10.cpanel.site/media'
 
 AUTH_USER_MODEL = 'usuarios.User'
 
