@@ -46,13 +46,23 @@ def home_publico(request):
     fin_cartelera = inicio_cartelera + timedelta(days=2)
 
     # Filtramos los eventos que ocurran entre ese martes y ese jueves
-    eventos_semana = Evento.objects.filter(
-        hora__date__gte=inicio_cartelera, 
-        hora__date__lte=fin_cartelera
-    ).order_by('hora')
+    eventos_semana = (
+        Evento.objects
+        .select_related('banda')
+        .filter(
+            hora__date__gte=inicio_cartelera,
+            hora__date__lte=fin_cartelera
+        )
+        .order_by('hora')
+    )
 
     # Obtenemos las últimas 8 fotos para la galería
-    fotos_recientes = FotoBanda.objects.all().order_by('-creado_en')[:8]
+    fotos_recientes = (
+        FotoBanda.objects
+        .select_related('evento', 'evento__banda')
+        .filter(imagen__isnull=False)
+        .order_by('-creado_en')[:8]
+    )
     fin_de_semana = FinDeSemana.objects.first()
     fin_de_semana_items = [
         ('Viernes', fin_de_semana.viernes if fin_de_semana else None),

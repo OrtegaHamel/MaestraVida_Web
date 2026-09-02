@@ -14,7 +14,7 @@
                     data-rotate="0" data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7"
                     data-saveperformance="off" data-title="Intro" data-description="">
                     
-                    <img src="{% static 'core/images/maestra/MuralZapata.webp' %}" alt="" data-bgposition="center center"
+                    <img src="{% static 'core/images/maestra/MuralZapata.webp' %}" alt="" loading="eager" fetchpriority="high" decoding="async" data-bgposition="center center"
                         data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg"
                         data-no-retina>
 
@@ -27,7 +27,7 @@
                         data-start="1000" data-splitin="none" data-splitout="none" data-responsive_offset="on"
                         style="z-index: 5; white-space: nowrap;">
                         <div class="center_img">
-                            <img src="{% static 'core/images/icon/logoMaestraVida2Blanco.png' %}" class="img-responsive" alt="logo">
+                            <img src="{% static 'core/images/icon/logoMaestraVida2Blanco.png' %}" class="img-responsive" alt="logo" decoding="async">
                         </div>
                     </div>
                 </li>
@@ -37,7 +37,7 @@
                     data-rotate="0" data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7"
                     data-saveperformance="off" data-title="Intro" data-description="">
                     
-                    <img src="{% static 'core/images/maestra/frontis.webp' %}" alt="" data-bgposition="center center"
+                    <img src="{% static 'core/images/maestra/frontis.webp' %}" alt="" loading="lazy" decoding="async" data-bgposition="center center"
                         data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg"
                         data-no-retina>
 
@@ -50,7 +50,7 @@
                         data-start="1000" data-splitin="none" data-splitout="none" data-responsive_offset="on"
                         style="z-index: 5; white-space: nowrap;">
                         <div class="center_img">
-                            <img src="{% static 'core/images/icon/logoMaestraVida2Blanco.png' %}" class="img-responsive" alt="logo">
+                            <img src="{% static 'core/images/icon/logoMaestraVida2Blanco.png' %}" class="img-responsive" alt="logo" decoding="async">
                         </div>
                     </div>
                 </li>
@@ -71,7 +71,7 @@
                 <!-- CUADRO 1: Música en vivo -->
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="px_thumb_wrapper bottom_1">
-                        <img src="{% static 'core/images/maestra/musica1.webp' %}" class="img-responsive" alt="música">
+                        <img src="{% static 'core/images/maestra/musica1.webp' %}" class="img-responsive" alt="música" loading="lazy" decoding="async">
                         <div class="px_sevice_overlay triangle_shape">
                             <!-- Agregamos la etiqueta <a> para enlazar a la Cartelera -->
                             <a href="{%url 'eventos:cartelera'%}" style="display: block; color: inherit; text-decoration: none; height: 100%;">
@@ -92,7 +92,7 @@
                 <!-- CUADRO 2: Horario de atención -->
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="px_thumb_wrapper bottom_2">
-                        <img src="{% static 'core/images/maestra/pista.webp' %}" class="img-responsive" alt="pista">
+                        <img src="{% static 'core/images/maestra/pista.webp' %}" class="img-responsive" alt="pista" loading="lazy" decoding="async">
                         <div class="px_sevice_overlay triangle_shape">
                             <!-- Agregamos la etiqueta <a> para enlazar a Contacto -->
                             <a href="#footer" style="display: block; color: inherit; text-decoration: none; height: 100%;">
@@ -112,7 +112,7 @@
                 <!-- CUADRO 3: Historia -->
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="px_thumb_wrapper bottom_3">
-                        <img src="{% static 'core/images/maestra/historia.webp' %}" class="img-responsive" alt="historia">
+                        <img src="{% static 'core/images/maestra/historia.webp' %}" class="img-responsive" alt="historia" loading="lazy" decoding="async">
                         <div class="px_sevice_overlay triangle_shape">
                             <!-- Agregamos la etiqueta <a> para enlazar a Nosotros -->
                             <a href="{%url 'nosotros'%}" style="display: block; color: inherit; text-decoration: none; height: 100%;">
@@ -158,12 +158,12 @@
                                                 <div class="contenedor-afiche">
                                                     <img src="{{ evento.poster.url }}"
                                                         alt="Afiche {{ evento.banda.nombre }}"
-                                                        class="event-poster">
+                                                        class="event-poster" loading="lazy" decoding="async">
                                                 </div>
                                             {% else %}
                                                 <img src="/static/core/img/default-event.jpg"
                                                     alt="Evento Maestra"
-                                                     class="event-poster">
+                                                     class="event-poster" loading="lazy" decoding="async">
                                             {% endif %}
 
                                             <div class="thumb_overlay triangle_shape">
@@ -236,7 +236,7 @@
                                     <div class="px_event_cover">
                                         <div class="px_thumb_wrapper">
                                             {% if imagen %}
-                                                <img src="{{ imagen.url }}" alt="{{ dia }}" class="event-poster">
+                                                <img src="{{ imagen.url }}" alt="{{ dia }}" class="event-poster" loading="lazy" decoding="async">
                                             {% else %}
                                                 <div class="event-poster d-flex align-items-center justify-content-center bg-dark text-white">
                                                     <span>Imagen próximamente</span>
@@ -271,7 +271,7 @@
               {% if foto.evento %}
                 <div class="item">
                   <a href="{{ foto.imagen.url }}" class="cartelera_popup">
-                    <img src="{{ foto.imagen.url }}" alt="Foto de {{ foto.evento.banda.nombre }}" class="img-fluid">
+                    <img src="{{ foto.imagen.url }}" alt="Foto de {{ foto.evento.banda.nombre }}" class="img-fluid" loading="lazy" decoding="async">
                   </a>
                   <div class="carousel-caption" style="margin-top:8px;">
                     <h6 class="text-white mb-1" style="font-weight:600; font-size:14px;">{{ foto.evento.banda.nombre }}</h6>
@@ -282,7 +282,7 @@
             {% endfor %}
           {% else %}
             <div class="item">
-              <img src="{% static 'core/img/album-default.jpg' %}" alt="No hay fotos" class="img-fluid">
+              <img src="{% static 'core/img/album-default.jpg' %}" alt="No hay fotos" class="img-fluid" loading="lazy" decoding="async">
             </div>
           {% endif %}
         </div>
