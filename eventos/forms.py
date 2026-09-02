@@ -11,7 +11,7 @@ from django.conf import settings
 import re
 
 from bandas.models import Banda
-from .models import CarteleraMensual, Evento
+from .models import CarteleraMensual, Evento, FinDeSemana
 
 
 # ==========================================
@@ -188,3 +188,14 @@ class CarteleraMensualForm(forms.ModelForm):
 
         if not self.instance.pk:
             self.initial['anio'] = timezone.now().year
+
+
+class FinDeSemanaForm(forms.ModelForm):
+    class Meta:
+        model = FinDeSemana
+        fields = ['viernes', 'sabado', 'domingo']
+        widgets = {
+            'viernes': forms.FileInput(attrs={'class': 'form-control'}),
+            'sabado': forms.FileInput(attrs={'class': 'form-control'}),
+            'domingo': forms.FileInput(attrs={'class': 'form-control'}),
+        }

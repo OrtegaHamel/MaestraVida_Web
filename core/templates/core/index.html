@@ -221,6 +221,42 @@
     </div>
 </div>
 
+<div class="main_wrapper px_event_wrapper">
+    <div class="color_overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="px_heading_middle">
+                        <h2><span>Fin de semana</span> en Maestra Vida</h2>
+                    </div>
+                    <div class="px_event_main">
+                        <div class="row cartelera-row">
+                            {% for dia, imagen in fin_de_semana_items %}
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="px_event_cover">
+                                        <div class="px_thumb_wrapper">
+                                            {% if imagen %}
+                                                <img src="{{ imagen.url }}" alt="{{ dia }}" class="event-poster">
+                                            {% else %}
+                                                <div class="event-poster d-flex align-items-center justify-content-center bg-dark text-white">
+                                                    <span>Imagen próximamente</span>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="bottom_tab text-center">
+                                            <span class="float-none">{{ dia }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="main_wrapper px_gallery_wrapper">
     <div class="px_heading_middle mb-5">
         <h2>La Rumba en <span>Maestra Vida</span></h2>
@@ -363,4 +399,3 @@ document.addEventListener("DOMContentLoaded", function () {
   })(jQuery);
 </script>
 {% endblock %}
-

@@ -13,8 +13,14 @@ from django.urls import reverse
 from django.utils import timezone
 from usuarios.decorators import grupo_required
 
-from .forms import AsistenciaEventoForm, BusquedaEventosForm, EventoForm, CarteleraMensualForm
-from .models import CarteleraMensual, Evento
+from .forms import (
+    AsistenciaEventoForm,
+    BusquedaEventosForm,
+    EventoForm,
+    CarteleraMensualForm,
+    FinDeSemanaForm,
+)
+from .models import CarteleraMensual, Evento, FinDeSemana
 
 logger = logging.getLogger(__name__)
 
@@ -47,6 +53,12 @@ def home_publico(request):
 
     # Obtenemos las últimas 8 fotos para la galería
     fotos_recientes = FotoBanda.objects.all().order_by('-creado_en')[:8]
+    fin_de_semana = FinDeSemana.objects.first()
+    fin_de_semana_items = [
+        ('Viernes', fin_de_semana.viernes if fin_de_semana else None),
+        ('Sábado', fin_de_semana.sabado if fin_de_semana else None),
+        ('Domingo', fin_de_semana.domingo if fin_de_semana else None),
+    ]
 
     return render(
         request,
@@ -54,6 +66,8 @@ def home_publico(request):
         {
             'eventos': eventos_semana,
             'fotos': fotos_recientes,
+            'fin_de_semana': fin_de_semana,
+            'fin_de_semana_items': fin_de_semana_items,
             'inicio_cartelera': inicio_cartelera,
             'fin_cartelera': fin_cartelera,
         },
@@ -308,6 +322,36 @@ def eliminar_cartelera(request, cartelera_id):
         {
             'cartelera': cartelera
         }
+    )
+
+
+@login_required
+@grupo_required('Productores')
+def editar_fin_de_semana(request):
+    fin_de_semana = FinDeSemana.objects.first()
+    if request.method == 'POST':
+        form = FinDeSemanaForm(
+            request.POST,
+            request.FILES,
+            instance=fin_de_semana,
+        )
+        if form.is_valid():
+            if fin_de_semana is None:
+                fin_de_semana = form.save(commit=False)
+                fin_de_semana.pk = 1
+                fin_de_semana.save()
+            else:
+                form.save()
+            return redirect(
+                f"{reverse('eventos:editar_fin_de_semana')}?mensaje=Imágenes+actualizadas+exitosamente&tipo=success"
+            )
+    else:
+        form = FinDeSemanaForm(instance=fin_de_semana)
+
+    return render(
+        request,
+        'eventos/editar_fin_de_semana.html',
+        {'form': form, 'fin_de_semana': fin_de_semana},
     )
 # ==========================================
 # ROL DE LA PUERTA (Control de Asistencia de Hoy)
