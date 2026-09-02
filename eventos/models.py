@@ -170,7 +170,7 @@ class FinDeSemana(models.Model):
     def save(self, *args, **kwargs):
         campos_imagen = ("viernes", "sabado", "domingo")
         imagenes_anteriores = (
-            FinDeSemana.objects.get(pk=self.pk)
+            FinDeSemana.objects.filter(pk=self.pk).first()
             if self.pk
             else None
         )
@@ -185,6 +185,7 @@ class FinDeSemana(models.Model):
             imagen_cambiada = imagen and (
                 not self.pk
                 or not imagen._committed
+                or not imagen_anterior
                 or imagen_anterior.name != imagen.name
             )
             if imagen_cambiada:
