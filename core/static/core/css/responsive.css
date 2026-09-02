@@ -572,6 +572,38 @@ Project:	 Nigth Club 1.0
 }
 
 @media (max-width:767px) {
+    .historia-carousel .item > a {
+        height: auto;
+        min-height: 0;
+    }
+
+    .historia-carousel .item > a img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+    }
+
+    .dynamic-fotos-carousel .item > a {
+        height: auto;
+        min-height: 0;
+    }
+
+    .dynamic-fotos-carousel .item > a img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+    }
+
+    .px_event_wrapper .cartelera-row > [class*="col-"] {
+        margin-bottom: 28px;
+    }
+
+    .px_event_wrapper .cartelera-row > [class*="col-"]:last-child {
+        margin-bottom: 0;
+    }
+
     /* about page slider css start */
     .px_club_slider .item .container {
         text-align: center;
@@ -1116,4 +1148,3 @@ Project:	 Nigth Club 1.0
     }
 
 }
-
