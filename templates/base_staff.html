@@ -38,19 +38,25 @@
                     <h6 class="sidebar-heading px-3 mt-3 mb-1 fw-bold">Producción</h6>
                     <ul class="nav flex-column mb-3">
                         <li class="nav-item">
-                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}" 
+                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}"
                             href="{% url 'eventos:lista_carteleras' %}">
                                 <i class="fas fa-calendar-alt me-2"></i> Cartelera Mensual
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}" 
+                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}"
                             href="{% url 'eventos:lista_eventos' %}">
                                 <i class="fas fa-music me-2"></i> Eventos
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}" 
+                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}"
+                            href="{% url 'eventos:editar_fin_de_semana' %}">
+                                <i class="fas fa-images me-2"></i> Fin de semana
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}"
                             href="{% url 'bandas:lista_bandas' %}">
                                 <i class="fas fa-star me-2"></i> Bandas
                             </a>

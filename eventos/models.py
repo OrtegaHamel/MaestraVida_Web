@@ -4,6 +4,8 @@ from django.utils.text import slugify
 import calendar
 from datetime import date, timedelta
 
+from bandas.models import procesar_y_optimizar_a_webp
+
 class Evento(models.Model):
     banda = models.ForeignKey('bandas.Banda', on_delete=models.CASCADE, related_name='eventos')
     hora = models.DateTimeField()
@@ -25,6 +27,13 @@ class Evento(models.Model):
             fecha_str = self.hora.strftime('%d-%m-%Y')
             texto_base = f"{self.banda.nombre}-{fecha_str}"
             self.slug = slugify(texto_base)
+
+        if self.poster and (
+            not self.pk
+            or Evento.objects.get(pk=self.pk).poster != self.poster
+        ):
+            self.poster = procesar_y_optimizar_a_webp(self.poster)
+
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -132,3 +141,56 @@ class CarteleraMensual(models.Model):
             cartelera_vigente is not None
             and cartelera_vigente.pk == self.pk
         )
+
+
+class FinDeSemana(models.Model):
+    viernes = models.ImageField(
+        upload_to="eventos/fin_de_semana/",
+        blank=True,
+        null=True,
+        verbose_name="Viernes",
+    )
+    sabado = models.ImageField(
+        upload_to="eventos/fin_de_semana/",
+        blank=True,
+        null=True,
+        verbose_name="Sábado",
+    )
+    domingo = models.ImageField(
+        upload_to="eventos/fin_de_semana/",
+        blank=True,
+        null=True,
+        verbose_name="Domingo",
+    )
+
+    class Meta:
+        verbose_name = "Fin de semana en Maestra Vida"
+        verbose_name_plural = "Fin de semana en Maestra Vida"
+
+    def save(self, *args, **kwargs):
+        campos_imagen = ("viernes", "sabado", "domingo")
+        imagenes_anteriores = (
+            FinDeSemana.objects.get(pk=self.pk)
+            if self.pk
+            else None
+        )
+
+        for campo in campos_imagen:
+            imagen = getattr(self, campo)
+            imagen_anterior = (
+                getattr(imagenes_anteriores, campo)
+                if imagenes_anteriores
+                else None
+            )
+            imagen_cambiada = imagen and (
+                not self.pk
+                or not imagen._committed
+                or imagen_anterior.name != imagen.name
+            )
+            if imagen_cambiada:
+                setattr(self, campo, procesar_y_optimizar_a_webp(imagen))
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return "Fin de semana en Maestra Vida"

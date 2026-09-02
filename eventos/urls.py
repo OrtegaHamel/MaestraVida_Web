@@ -21,6 +21,11 @@ urlpatterns = [
     path('carteleras/', views.lista_carteleras, name='lista_carteleras'),
     path('carteleras/nueva/', views.crear_cartelera, name='crear_cartelera'),
     path(
+        'fin-de-semana/',
+        views.editar_fin_de_semana,
+        name='editar_fin_de_semana',
+    ),
+    path(
         "carteleras/<int:cartelera_id>/editar/",
         views.editar_cartelera,
         name="editar_cartelera",
