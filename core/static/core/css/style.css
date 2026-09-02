@@ -315,7 +315,7 @@ a {
 }
 
 .px_header_main {
-    background: url('../images/maestra/LaFarandula_muralZapata.jpg') no-repeat;
+    background: url('../images/maestra/LaFarandula_muralZapata.webp') no-repeat;
     background-size: cover;
     position: relative;
     margin-top: 99px;
@@ -900,7 +900,7 @@ p.logo_bottom_text:hover:after {
 ----------------------------------------------------------------------------------*/
 
 .px_event_wrapper {
-    background: url("../images/maestra/pista.png") no-repeat;
+    background: url("../images/maestra/pista.webp") no-repeat;
     background-size: cover;
     background-position: 100% 100%;
     background-attachment: fixed;
@@ -1446,7 +1446,7 @@ p.logo_bottom_text:hover:after {
 .px_footer_area {
     font-family: 'Ubuntu', sans-serif;
     /* background: url("../images/bg/footerbg.jpg") no-repeat; */
-    background: url("../images/maestra/MuralZapata.jpg") no-repeat;
+    background: url("../images/maestra/MuralZapata.webp") no-repeat;
     background-size: cover;
     background-position: 100%;
 }

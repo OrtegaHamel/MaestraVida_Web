@@ -115,20 +115,26 @@
           {% endfor %}
         {% else %}
           <div class="item">
-            <a href="{% static 'core/images/maestra/_MG_2891.jpg' %}" class="cartelera_popup">
-              <img src="{% static 'core/images/maestra/_MG_2891.jpg' %}" class="img-fluid" alt="Historia - 1">
+            <a href="{% static 'core/images/maestra/IMG_9568.webp' %}" class="cartelera_popup">
+              <img src="{% static 'core/images/maestra/IMG_9568.webp' %}" class="img-fluid" alt="Historia - 1">
             </a>
           </div>
 
           <div class="item">
-            <a href="{% static 'core/images/maestra/31anios1.jpg' %}" class="cartelera_popup">
-              <img src="{% static 'core/images/maestra/31anios1.jpg' %}" class="img-fluid" alt="Historia - 2">
+            <a href="{% static 'core/images/maestra/31anios1.webp' %}" class="cartelera_popup">
+              <img src="{% static 'core/images/maestra/31anios1.webp' %}" class="img-fluid" alt="Historia - 2">
             </a>
           </div>
 
           <div class="item">
-            <a href="{% static 'core/images/maestra/_MG_0330.JPG' %}" class="cartelera_popup">
-              <img src="{% static 'core/images/maestra/_MG_0330.JPG' %}" class="img-fluid" alt="Historia - 3">
+            <a href="{% static 'core/images/maestra/Retiro.webp' %}" class="cartelera_popup">
+              <img src="{% static 'core/images/maestra/Retiro.webp' %}" class="img-fluid" alt="Historia - 3">
+            </a>
+          </div>
+
+          <div class="item">
+            <a href="{% static 'core/images/maestra/_MG_2711.webp' %}" class="cartelera_popup">
+              <img src="{% static 'core/images/maestra/_MG_2711.webp' %}" class="img-fluid" alt="Historia - 4">
             </a>
           </div>
         {% endif %}
@@ -183,8 +189,8 @@
     <div class="blog_thumb text-center">
       <div class="fotos-carousel owl-carousel owl-theme">
         <div class="item">
-          <a href="{% static 'core/images/maestra/frontis.png' %}" class="cartelera_popup">
-            <img src="{% static 'core/images/maestra/frontis.png' %}" alt="Frontis Maestra" class="img-fluid">
+          <a href="{% static 'core/images/maestra/frontis.webp' %}" class="cartelera_popup">
+            <img src="{% static 'core/images/maestra/frontis.webp' %}" alt="Frontis Maestra" class="img-fluid">
           </a>
           <div class="carousel-caption" style="margin-top:8px;">
             <h6 class="text-white mb-1" style="font-weight:600; font-size:14px;">Frontis</h6>
@@ -193,8 +199,8 @@
         </div>
 
         <div class="item">
-          <a href="{% static 'core/images/maestra/418.jpg' %}" class="cartelera_popup">
-            <img src="{% static 'core/images/maestra/418.jpg' %}" alt="Interior Maestra" class="img-fluid">
+          <a href="{% static 'core/images/maestra/418.webp' %}" class="cartelera_popup">
+            <img src="{% static 'core/images/maestra/418.webp' %}" alt="Interior Maestra" class="img-fluid">
           </a>
           <div class="carousel-caption" style="margin-top:8px;">
             <h6 class="text-white mb-1" style="font-weight:600; font-size:14px;">Interior</h6>
@@ -203,12 +209,75 @@
         </div>
 
         <div class="item">
-          <a href="{% static 'core/images/maestra/_MG_0330.JPG' %}" class="cartelera_popup">
-            <img src="{% static 'core/images/maestra/_MG_0330.JPG' %}" alt="Foto Maestra" class="img-fluid">
+          <a href="{% static 'core/images/maestra/_MG_0330.webp' %}" class="cartelera_popup">
+            <img src="{% static 'core/images/maestra/_MG_0330.webp' %}" alt="Foto Maestra" class="img-fluid">
           </a>
           <div class="carousel-caption" style="margin-top:8px;">
             <h6 class="text-white mb-1" style="font-weight:600; font-size:14px;">Recuerdos</h6>
             <small class="text-white-50">Noches en la Maestra</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NUESTROS MURALES: título + texto dentro del container -->
+<div class="main_wrapper px_blog_section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="px_heading_middle mb-1">
+          <h2>Nuestros <span>Murales</span></h2>
+        </div>
+
+        <div class="px_blog_single blog_desc text-center p-3 mb-1">
+          <p>
+           Las murallas de la primera pista, y dos cuadros en el sector de la punta son obra del artista ecuatoriano Jaime Zapata.
+           El más conocido de estas pinturas se llama “La Venus”, que es la presentación gráfica de la fiesta, con elementos simbólicos que reivindican paganismo, 
+           la bacanal y la pureza que entre el boche de la rumba surge, en el centro, un cuadro inspirado en “El nacimiento de Venus” de Sandro Botticelli.
+           A un costado se encuentra “Farándula”, también inspirada en el maestro renacentista, esta vez evoca el “Purgatorio”, 
+           aquel lugar donde los pecadores y sus pecados van a cumplir condena eterna. <br>
+           Las dos obras, de gran formato, recogen las ideas estéticas de Jaime, y los conceptos que Charly 
+           pretendió impregnar de cómo entendía la rumba y cómo concebía a Maestra Vida.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NUESTROS MURALES SLIDER: full-width (fuera del container) -->
+<div class="main_wrapper px_blog_section">
+  <div class="px_blog_cover px_blog_single">
+    <div class="blog_thumb text-center">
+      <div class="fotos-carousel owl-carousel owl-theme">
+        <div class="item">
+          <a href="{% static 'core/images/maestra/MuralZapata.webp' %}" class="cartelera_popup">
+            <img src="{% static 'core/images/maestra/MuralZapata.webp' %}" alt="La Venus" class="img-fluid">
+          </a>
+          <div class="carousel-caption" style="margin-top:8px;">
+            <h6 class="text-white mb-1" style="font-weight:600; font-size:14px;">La Venus</h6>
+            <small class="text-white-50">Jaime Zapata</small>
+          </div>
+        </div>
+
+        <div class="item">
+          <a href="{% static 'core/images/maestra/LaFarandula_muralZapata.webp' %}" class="cartelera_popup">
+            <img src="{% static 'core/images/maestra/LaFarandula_muralZapata.webp' %}" alt="Farándula" class="img-fluid">
+          </a>
+          <div class="carousel-caption" style="margin-top:8px;">
+            <h6 class="text-white mb-1" style="font-weight:600; font-size:14px;">Farándula</h6>
+            <small class="text-white-50">Jaime Zapata</small>
+          </div>
+        </div>
+
+        <div class="item">
+          <a href="{% static 'core/images/maestra/Zapata_pista.webp' %}" class="cartelera_popup">
+            <img src="{% static 'core/images/maestra/Zapata_pista.webp' %}" alt="Mural Pista" class="img-fluid">
+          </a>
+          <div class="carousel-caption" style="margin-top:8px;">
+            <h6 class="text-white mb-1" style="font-weight:600; font-size:14px;">Mural Pista</h6>
+            <small class="text-white-50">Jaime Zapata</small>
           </div>
         </div>
       </div>
