@@ -39,9 +39,12 @@
                     <div class="col-lg-9 col-md-9 col-sm-8" id="navigation_main">
                         <div class="navigation_main">
                             <div class="navbar_header">
-                                <div class="navbar_toggle"><i></i><i></i><i></i></div>
+                                <button type="button" class="navbar_toggle" aria-label="Abrir menú" aria-expanded="false" onclick="toggleMobileMenu(event)">
+                                    <i></i><i></i><i></i>
+                                </button>
                             </div>
                             <div class="px_navigations">
+                                <button type="button" class="mobile_menu_close" aria-label="Cerrar menú" onclick="toggleMobileMenu(event)">×</button>
                                 <ul class="menu">
                                     <li class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
                                         <a href="{% url 'index' %}">Inicio</a>
@@ -189,6 +192,26 @@
     </script>
 
     <script src="{% static 'core/js/custom.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var menu = document.querySelector('.px_navigations');
+            if (menu && menu.parentNode !== document.body) {
+                document.body.appendChild(menu);
+            }
+        });
+
+        function toggleMobileMenu(event) {
+            if (event) event.stopPropagation();
+            var menu = document.querySelector('.px_navigations');
+            var toggle = document.querySelector('.navbar_toggle');
+            if (!menu || !toggle) return;
+
+            var abierto = !menu.classList.contains('menu_open');
+            menu.classList.toggle('menu_open', abierto);
+            toggle.classList.toggle('toggle_open', abierto);
+            toggle.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+        }
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

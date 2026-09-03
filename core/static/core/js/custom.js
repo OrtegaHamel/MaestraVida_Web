@@ -92,11 +92,6 @@ Project: NightClub
                 }
             });
 
-            // Mobile toggle
-            $('.navbar_toggle').off('click').on('click', function() {
-                $(this).toggleClass('toggle_open');
-                $('.px_navigations').toggleClass('menu_open');
-            });
         },
 
         Eventcrousel: function() {

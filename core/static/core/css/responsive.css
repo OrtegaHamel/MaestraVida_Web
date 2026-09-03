@@ -250,46 +250,89 @@ Project:	 Nigth Club 1.0
 }
 
 @media (max-width:991px) {
+    .main_wrapper {
+        backface-visibility: visible;
+    }
+
     .wrapper_navigation .px_logo {
         position: relative;
-        z-index: 100;
+        z-index: 10008;
+        pointer-events: none;
+    }
+
+    .wrapper_navigation {
+        position: relative;
+        z-index: 100000;
+    }
+
+    .wrapper_navigation::before,
+    .wrapper_navigation::after {
+        pointer-events: none;
+    }
+
+    .wrapper_navigation > .container > .row > [class*="col-"]:first-child {
+        pointer-events: none;
     }
 
     .wrapper_navigation .px_logo a {
         display: block;
         position: relative;
-        z-index: 101;
+        z-index: 10009;
         pointer-events: auto;
+    }
+
+    .wrapper_navigation > .container > .row > [class*="col-"]:first-child {
+        position: relative;
+        z-index: 10008;
     }
 
     /* navigation css start */
     .px_navigations {
         margin-top: 0;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
-        padding: 15px;
+        padding: 80px 15px 15px;
         width: 100%;
-        z-index: 9;
+        max-height: 100vh;
+        height: 100vh;
+        box-sizing: border-box;
+        overflow-y: auto;
+        z-index: 10003;
         background-color: #121212;
-        opacity: 0;
-        transform: scale(0);
-        -webkit-transform: scale(0);
-        -moz-transform: scale(0);
-        -ms-transform: scale(0);
-        -o-transform: scale(0);
+        display: none;
+    }
+
+    .mobile_menu_close {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 10006;
+        display: block;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #fff;
+        font-size: 48px;
+        font-weight: 200;
+        line-height: 36px;
+        cursor: pointer;
+    }
+
+    .px_navigations:not(.menu_open) .mobile_menu_close {
+        display: none;
     }
     .px_navigations.menu_open {
-        opacity: 1;
-        transform: scale(1);
-        -webkit-transform: scale(1);
-        -moz-transform: scale(1);
-        -ms-transform: scale(1);
-        -o-transform: scale(1);
+        display: block;
     }
     .navbar_header {
         display: block;
         padding-top: 15px;
+        position: relative;
+        z-index: 10005;
+        pointer-events: auto;
     }
     .px_navigations ul {
         float: left;
@@ -372,6 +415,7 @@ Project:	 Nigth Club 1.0
         top: 0;
         padding-right: 15px;
         left: 0;
+        z-index: 10004;
     }
     .wrapper_navigation #navigation_main {
         position: absolute !important;
@@ -1126,7 +1170,9 @@ Project:	 Nigth Club 1.0
 
 @media (max-width: 991px) {
 
-    .wrapper_navigation.px_home_1{
+    .wrapper_navigation,
+    .wrapper_navigation.px_home_1,
+    .wrapper_navigation.px_interior {
         position: fixed !important;
         top: 0;
         left: 0;
@@ -1134,6 +1180,15 @@ Project:	 Nigth Club 1.0
         width: 100%;
         background: rgba(0,0,0,.92);
         z-index: 9999;
+    }
+
+    .wrapper_navigation .px_navigations {
+        z-index: 10003;
+    }
+
+    .wrapper_navigation .px_navigations ul.menu {
+        position: relative;
+        z-index: 10004;
     }
 
     /* Empuja el contenido para que no quede debajo del menú */
