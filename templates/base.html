@@ -195,9 +195,23 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var menu = document.querySelector('.px_navigations');
-            if (menu && menu.parentNode !== document.body) {
-                document.body.appendChild(menu);
+            if (!menu) return;
+
+            var parent = menu.parentNode;
+            var nextSibling = menu.nextSibling;
+
+            function relocateMenu() {
+                var mobile = window.matchMedia('(max-width: 991px)').matches;
+                if (mobile && menu.parentNode !== document.body) {
+                    document.body.appendChild(menu);
+                } else if (!mobile && menu.parentNode === document.body) {
+                    parent.insertBefore(menu, nextSibling);
+                    menu.classList.remove('menu_open');
+                }
             }
+
+            relocateMenu();
+            window.addEventListener('resize', relocateMenu);
         });
 
         function toggleMobileMenu(event) {
