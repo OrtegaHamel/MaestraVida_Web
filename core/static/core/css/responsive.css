@@ -559,6 +559,10 @@ Project:	 Nigth Club 1.0
 }
 
 @media (min-width:992px) {
+    .mobile_menu_close {
+        display: none;
+    }
+
     /*navigation start*/
     .px_navigations {
         display: block;
