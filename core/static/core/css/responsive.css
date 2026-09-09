@@ -7,68 +7,6 @@ Project:	 Nigth Club 1.0
 
 -----------------------------------------------------------------------*/
 
-@media (min-width:1200px) {
-    .px_tag_cloud a:nth-child(3n) {
-        margin-right: 0;
-    }
-    .track_crousel .owl-nav .owl-prev {
-        left: -53px;
-    }
-    .track_crousel .owl-nav .owl-next {
-        right: -53px;
-    }
-    .px_blog_full .blog_thumb img {
-        width: auto;
-        max-width: inherit;
-    }
-    /* video gallery close buttton */
-    .video_zoom .mfp-close {
-        right: -40px;
-        top: -40px;
-    }
-    /* video gallery close buttton */
-    /* tag cloud */
-    .tagcloud a:nth-child(3n) {
-        margin-right: 0;
-    }
-    /* tag cloud */
-    /* sidebar track player css start */
-    .px_sidebar_track .mejs-button {
-        margin-left: 8px !important;
-    }
-    /* sidebar track player css end */
-    /* player thumb css */
-    .px_media_player .track_thumb img {
-        width: 278px;
-        height: 245px;
-    }
-    /* player thumb css */
-}
-
-@media (max-width:1200px) {
-    .track_crousel .owl-nav .owl-prev {
-        left: 0;
-    }
-    .track_crousel .owl-nav .owl-next {
-        right: 0;
-    }
-}
-
-@media (min-width:1600px) {
-    .px_blog_full .blog_thumb img {
-        width: 100%;
-    }
-}
-
-@media (min-width:1800px) {
-    .px_club_slider .left.carousel-control span {
-        left: 110%;
-    }
-    .px_club_slider .right.carousel-control span {
-        right: 110%;
-    }
-}
-
 @media (min-width:1100px) {
     .my_zoom_in .mfp-close {
         top: -40px;
@@ -112,44 +50,6 @@ Project:	 Nigth Club 1.0
     .contact_details_ract ul li i {
         margin-right: 10px;
     }
-    /* video player css start*/
-    .video_zoom .mejs-button.mejs-volume-button {
-        right: 23%;
-    }
-    .video_zoom .mejs-controls a.mejs-horizontal-volume-slider {
-        width: 124px;
-    }
-    /* video player css start*/
-    /* sidebar track player css start */
-    .px_sidebar_track .mejs-button.mejs-volume-button {
-        left: 66%;
-    }
-    .px_sidebar_track .mejs-shuffle-button {
-        margin-left: 0px !important;
-    }
-    /* sidebar track player css end */
-    /* player thumb css */
-    .px_media_player .track_thumb img {
-        width: 228px;
-        height: 202px;
-    }
-    /* player thumb css */
-}
-
-@media (min-width:992px) and (max-width:1310px) {
-    /* about page slider */
-    .slider_caption .para_slider {
-        padding-top: 10px;
-    }
-    .slider_caption h2 {
-        font-size: 20px;
-    }
-    .slider_caption p {
-        font-size: 11px;
-        line-height: 16px;
-        margin-bottom: 20px;
-    }
-    /* about page slider */
 }
 
 @media (min-width:768px) and (max-width:991px) {
@@ -162,90 +62,11 @@ Project:	 Nigth Club 1.0
     .social_icons.footer_social a {
         margin-right: 2px;
     }
-    /* media player button css start */
-    .media_player {
-        padding: 15px 20px 0 !important;
-        height: 153px;
-    }
-    .media_player .mejs-container .mejs-controls {
-        margin-top: 10px;
-    }
-    .media_player .mejs-time {
-        top: 40px;
-    }
-    .media_player .mejs-button {
-        top: 40px;
-    }
-    .media_player .mejs-button.mejs-prevtrack-button {
-        left: 25%;
-    }
-    .media_player .mejs-button.mejs-playpause-button {
-        left: 35%;
-        top: 35px;
-    }
-    .media_player .mejs-button.mejs-nexttrack-button {
-        left: 45%;
-    }
-    .media_player .mejs-controls a.mejs-horizontal-volume-slider {
-        top: 45px;
-    }
-    /* media player button css end */
-    /*  player button css end */
-    /* video player css start */
-    .video_zoom .mejs-button.mejs-loop-button {
-        left: 20%;
-    }
-    .video_zoom .mejs-button.mejs-volume-button {
-        right: 30.5%;
-    }
-    .video_zoom .mejs-controls a.mejs-horizontal-volume-slider {
-        width: 119px;
-        right: 13.9%;
-    }
     .blog_desc.home_desc h3 {
         font-size: 15px;
     }
     .blog_desc.home_desc p {
         font-size: 15px;
-    }
-    /* video player css end */
-    /* sidebar track player css start */
-    .px_sidebar_track a.mejs-horizontal-volume-slider {
-        left: 62%;
-        top: -8px;
-        width: 32% !important;
-    }
-    /* sidebar track player css end */
-    /* about page slider css */
-    .px_club_slider .slider_caption {
-        padding: 20px 20px 24px;
-        text-align: center;
-    }
-    .slider_caption h2 {
-        font-size: 18px;
-        margin-top: 0;
-    }
-    .slider_caption .para_slider {
-        padding-top: 10px;
-    }
-    .slider_caption p {
-        font-size: 9px;
-        line-height: 15px;
-        margin-bottom: 10px;
-        padding: 0;
-    }
-    /* about page slider css */
-    /* player thumb css */
-    .px_media_player .track_thumb img {
-        width: 173px;
-        height: 153px;
-    }
-    /* player thumb css */
-}
-
-@media (min-width:992px) and (max-width:1199px) {
-    .media_player {
-        height: 202px;
     }
 }
 
@@ -597,38 +418,6 @@ Project:	 Nigth Club 1.0
         -moz-transform: scale(1);
         -o-transform: scale(1);
     }
-    .px_blog_cover.px_blog_full {
-        margin-bottom: 0px;
-    }
-}
-
-@media (min-width:480px) and (max-width:650px) {
-    /* media player button css start */
-    .media_player .mejs-button.mejs-prevtrack-button {
-        left: 26%;
-    }
-    .media_player .mejs-button.mejs-playpause-button {
-        left: 35.7%;
-    }
-    .media_player .mejs-button.mejs-nexttrack-button {
-        left: 46%;
-    }
-    .media_player .mejs-button.mejs-shuffle-button {
-        left: 56%;
-    }
-    .media_player .mejs-button.mejs-volume-button {
-        right: 92px;
-    }
-    .media_player .mejs-controls a.mejs-horizontal-volume-slider {
-        width: 83px;
-    }
-    /* media player button css end */
-}
-
-@media (min-width:768px) {
-    .pad-l-0 {
-        padding-left: 0px !important;
-    }
 }
 
 @media (max-width:767px) {
@@ -675,51 +464,16 @@ Project:	 Nigth Club 1.0
         margin-bottom: 0;
     }
 
-    /* about page slider css start */
-    .px_club_slider .item .container {
-        text-align: center;
-    }
-    .slider_caption {
-        padding: 5px 10px !important;
-        text-align: center;
-        display: inline-block;
-        margin-right: 0 !important;
-        float: none !important;
-    }
-    .slider_caption .center_align:after {
-        bottom: 0;
-    }
-    .slider_caption h2 {
-        font-size: 15px;
-        margin-top: 0px;
-    }
-    .slider_caption .para_slider {
-        padding-top: 6px;
-    }
-    .slider_caption p {
-        font-size: 8px;
-        line-height: 14px;
-        margin-bottom: 14px;
-    }
-    /* about page slider css end */
     .social_icons.footer_social {
         margin-top: 30px;
     }
     .social_icons.footer_social a {
         margin-bottom: 20px;
     }
-    .px_testimonial_inner {
-        padding: 0 15px;
-    }
     .px_comment_form .px_submit {
         float: left;
         margin-left: 15px;
         margin-right: 0px;
-    }
-    .video_crousel .overlay_button i {
-        font-size: 35px;
-        margin-top: -21px;
-        margin-left: -18px;
     }
     .contact_details_ract ul li {
         width: 100%;
@@ -734,68 +488,12 @@ Project:	 Nigth Club 1.0
     .contact_details_ract ul li:first-child div:first-child {
         padding-top: 0;
     }
-    .px_book_table {
-        width: 100%;
-    }
-    .px_media_player+.col-lg-12 .track_crousel {
-        margin-top: 81px;
-    }
-    .px_media_player .track_thumb img {
-        z-index: 1;
-        position: relative;
-    }
     .photo_grid.width_1,
     .photo_grid.width_2,
     .photo_grid.width_3,
     .photo_grid.width_4,
     .photo_grid.width_5 {
         width: 100%;
-    }
-    p.logo_bottom_text:after {
-        height: 65px;
-        bottom: 0;
-        top: 0;
-    }
-    /* video player css start*/
-    .video_zoom .mejs-container .mejs-controls {
-        padding: 0 30px;
-    }
-    .video_zoom .mejs-time-rail {
-        width: 93% !important;
-    }
-    .video_zoom .mejs-button.mejs-volume-button {
-        right: 28.5%;
-    }
-    .video_zoom .mejs-controls a.mejs-horizontal-volume-slider {
-        width: 14%;
-        right: 14.1%;
-    }
-    .video_zoom .mejs-button.mejs-loop-button {
-        left: 23%;
-    }
-    .video_zoom .mejs-time {
-        left: 32%;
-    }
-    .video_zoom.triangle_shape:after {
-        border-bottom: 50px solid #ff2a70;
-        border-left: 50px solid transparent;
-    }
-    .video_zoom.triangle_shape:before {
-        border-top: 50px solid #ff2a70;
-        border-right: 50px solid transparent;
-    }
-    /* video player css end*/
-    .slider_caption h2:after {
-        bottom: -10px;
-    }
-    /* sidebar track css  start */
-    .px_sidebar_track a.mejs-horizontal-volume-slider {
-        width: 32% !important;
-    }
-    /* sidebar track css  end */
-    .blog_center .blog_desc {
-        padding-left: 0;
-        padding-right: 0;
     }
 
     /* Galería Flexbox */
@@ -819,45 +517,12 @@ Project:	 Nigth Club 1.0
     }
 }
 
-@media (min-width:410px) and (max-width:766px) {
-    .slider_caption h2 {
-        font-size: 10px;
-    }
-    .slider_caption p {
-        font-size: 5px;
-        line-height: 5px;
-        margin-bottom: 5px;
-    }
-}
-
 @media (max-width:409px) {
-    .slider_caption h2 {
-        font-size: 5px;
-    }
-    .slider_caption p {
-        font-size: 4px;
-        line-height: 4px;
-        margin-bottom: 4px;
-    }
     .px_heading_middle h2:after {
         width: 100%;
         margin-left: 0;
         left: 0;
     }
-}
-
-@media (min-width:480px) and (max-width:767px) {
-    .px_club_slider .item .container {
-        width: 90%;
-    }
-}
-
-@media (max-width:600px) {
-    /* video player css start */
-    .video_zoom .mejs-container.svg.mejs-video {
-        height: 400px !important;
-    }
-    /* video player css end */
 }
 
 @media (max-width:520px) {
@@ -926,83 +591,9 @@ Project:	 Nigth Club 1.0
         margin-left: 0px;
     }
     /* pagination css  */
-    .px_club_slider .left.carousel-control span {
-        left: 15px;
-    }
-    .px_club_slider .right.carousel-control span {
-        right: 15px;
-    }
-}
-
-@media (max-width:479px) {
-    /* media player button css start */
-    .media_player .mejs-container .mejs-controls {
-        margin-top: 0px;
-    }
-    .media_player .mejs-time {
-        top: 23px;
-    }
-    .media_player .mejs-button {
-        top: 60px;
-    }
-    .media_player .mejs-button.mejs-prevtrack-button {
-        left: 0;
-        top: 64px;
-    }
-    .media_player .mejs-button.mejs-playpause-button {
-        left: 24%;
-    }
-    .media_player .mejs-button.mejs-nexttrack-button {
-        left: 50%;
-        top: 64px;
-    }
-    .media_player .mejs-button.mejs-shuffle-button {
-        right: 0;
-        left: initial;
-        top: 64px;
-    }
-    .media_player .mejs-button.mejs-volume-button {
-        right: 0;
-        left: 0;
-        top: 105px;
-    }
-    .media_player .mejs-controls a.mejs-horizontal-volume-slider {
-        right: 0;
-        top: 110px;
-        left: 39px;
-        width: 86%;
-    }
-    /* media player button css end */
-}
-
-@media (max-width:400px) {
-    /* video player css start*/
-    .video_zoom .mejs-time {
-        left: 26px;
-        top: -3px;
-    }
-    .video_zoom .mejs-button.mejs-loop-button {
-        left: 27%;
-    }
-    .video_zoom .mejs-button.mejs-volume-button {
-        right: 39.5%;
-        top: 43px;
-    }
-    .video_zoom .mejs-controls a.mejs-horizontal-volume-slider {
-        width: 24%;
-        right: 46px;
-        top: 47px;
-    }
-    /* video player css end*/
 }
 
 @media (max-width:360px) {
-    .media_player .mejs-playlist li {
-        font-size: 14px;
-    }
-    .px_sidebar_track img {
-        width: 32%;
-    }
     /* club service section css */
     .px_sevice_overlay .overlay_inner {
         padding: 23px 35px 0px;
@@ -1012,28 +603,6 @@ Project:	 Nigth Club 1.0
         padding-bottom: 0px;
     }
     /* club service section css */
-    /* slidebar player button css start */
-    .px_sidebar_track .mejs-button.mejs-nexttrack-button {
-        left: 17%;
-    }
-    .px_sidebar_track .mejs-playpause-button {
-        left: 7%;
-    }
-    .px_sidebar_track .mejs-shuffle-button {
-        right: 0;
-        position: absolute;
-        margin-left: 0px !important;
-    }
-    .px_sidebar_track .mejs-button.mejs-volume-button {
-        top: 29px;
-        left: 0;
-    }
-    .px_sidebar_track a.mejs-horizontal-volume-slider {
-        width: 74% !important;
-        left: 0;
-        top: 34px;
-    }
-    /* sidebar player button css end */
 }
 
 @media (max-width:320px) {
@@ -1105,40 +674,9 @@ Project:	 Nigth Club 1.0
 }
 
 @media (max-width:240px) {
-    /* sidebar player button css start */
-    .px_sidebar_track img {
-        width: 31%;
-    }
-    .px_sidebar_track .mejs-playpause-button {
-        left: -8px;
-    }
-    .px_sidebar_track .mejs-button.mejs-nexttrack-button {
-        left: -4%;
-    }
-    .px_sidebar_track .mejs-shuffle-button {
-        right: -15px;
-    }
-    .px_sidebar_track a.mejs-horizontal-volume-slider {
-        width: 66% !important;
-    }
-    /* sidebar player button css end */
     .px_blog_sidebar .px_recent_posts ul li img {
         margin-bottom: 15px;
     }
-    /* home media player css start */
-    .media_player .mejs-button.mejs-nexttrack-button {
-        left: 58%;
-    }
-    .media_player .mejs-button.mejs-playpause-button {
-        left: 28%;
-    }
-    .media_player .mejs-button.mejs-shuffle-button {
-        right: -17px;
-    }
-    .media_player .mejs-controls a.mejs-horizontal-volume-slider {
-        width: 80%;
-    }
-    /* home media player css start */
     /* book now button */
     .px_event_cover .book_now_button {
         display: none;
@@ -1154,18 +692,6 @@ Project:	 Nigth Club 1.0
         line-height: 50px;
         font-size: 11px !important;
     }
-    /* video player css start*/
-    .video_zoom .mejs-button.mejs-loop-button {
-        left: 31%;
-    }
-    .video_zoom .mejs-button.mejs-volume-button {
-        right: 34.5%;
-    }
-    .video_zoom .mejs-controls a.mejs-horizontal-volume-slider {
-        width: 18%;
-        right: 40px;
-    }
-    /* video player css end*/
 }
 
 /* ==========================================

@@ -78,28 +78,8 @@ a {
     padding: 0px !important;
 }
 
-.pad_b_0 {
-    padding-bottom: 0px !important;
-}
-
-.pad_l_0 {
-    padding-left: 0px !important
-}
-
-.pad_r_0 {
-    padding-right: 0px !important
-}
-
-.pad_b_50 {
-    padding-bottom: 50px;
-}
-
 .pad_t_55 {
     padding-top: 55px;
-}
-
-.pad_t_60 {
-    padding-top: 60px;
 }
 
 .pad_t_b_80 {
@@ -343,45 +323,6 @@ a {
     width: 100%;
 }
 
-.px_logo_center {
-    float: left;
-    width: 100%;
-    text-align: center;
-    position: relative;
-    display: inline-block;
-}
-
-.px_logo_center>p.logo_bottom_text {
-    color: #fff;
-    font-size: 24px;
-    text-transform: uppercase;
-    letter-spacing: 1.1em;
-    font-weight: 100;
-    position: relative;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-p.logo_bottom_text:after {
-    width: 100%;
-    height: 108px;
-    content: "";
-    position: absolute !important;
-    bottom: -92px;
-    left: 0;
-    background-image: url('../images/bottom_line.png');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center bottom;
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-}
-
-p.logo_bottom_text:hover:after {
-    -webkit-filter: brightness(.5);
-    filter: brightness(.5);
-}
-
 .px_slider_home .tparrows {
     display: none !important;
 }
@@ -546,10 +487,6 @@ p.logo_bottom_text:hover:after {
     padding: 0;
     border: 0;
     background: transparent;
-}
-
-.navbar_close {
-    display: none;
 }
 
 .navbar_toggle i {
@@ -1191,97 +1128,8 @@ p.logo_bottom_text:hover:after {
     margin-top: 60px;
 }
 
-.gallery_main .gallery_item {
-    float: left;
-    position: relative;
-}
-
-.gallery_item .overlay {
-    position: absolute !important;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    top: 0;
-    left: 0;
-    display: block;
-    opacity: 0;
-}
-
-
 /*----------------------------------------------------------------------------------
   7. Home gallery  css end
-----------------------------------------------------------------------------------*/
-
-/*----------------------------------------------------------------------------------
-  9. video css start
-----------------------------------------------------------------------------------*/
-
-.video_section {
-    padding-top: 55px;
-    padding-bottom: 80px;
-}
-
-.video_crousel {}
-
-.video_overlay a {
-    display: block;
-    position: relative;
-}
-
-.overlay_button {
-    position: absolute !important;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-}
-
-.video_overlay a .overlay_button {
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-.overlay_button i {
-    content: "\f144";
-    font: normal normal normal 78px/1 FontAwesome;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    color: #fd644f ;
-    background-color: rgba(209, 200, 211, 0.52);
-    border-radius: 5em;
-    padding: 2px 6px 0;
-    top: 50%;
-    left: 50%;
-    position: absolute !important;
-    margin-top: -40px;
-    margin-left: -38px;
-}
-
-.video_crousel .mejs-overlay-button {
-    background: none;
-}
-
-.video_crousel .owl-nav {
-    display: inline-block;
-    width: 100%;
-}
-
-.video_crousel .owl-nav div {
-    display: inline-block;
-    margin-right: 20px;
-    position: relative;
-}
-
-.video_crousel .owl-nav div:last-child {
-    margin-right: 0;
-}
-
-.owl-controls {
-    margin-top: 50px;
-}
-
-
-/*----------------------------------------------------------------------------------
-  9. video css end
 ----------------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------------
@@ -1296,14 +1144,6 @@ p.logo_bottom_text:hover:after {
 
 .px_blog_section .px_heading_middle h2 {
     margin-top: -4px;
-}
-
-.blog_post_home {}
-
-.blog_cover {
-    float: left;
-    width: 100%;
-    margin-bottom: 70px;
 }
 
 .blog_thumb {
@@ -1725,190 +1565,6 @@ p.logo_bottom_text:hover:after {
     width: 100%;
     padding: 63px 0 90px;
 }
-
-
-/* club slider css start */
-
-.px_club_slider_wrap {
-    padding-top: 55px;
-}
-
-.px_club_slider {
-    position: relative;
-    float: left;
-    width: 100%;
-    margin-top: 60px;
-}
-
-.wrapper_caption {
-    position: absolute;
-    top: 0;
-    right: 7.8%
-}
-
-.px_club_slider .slider_caption {
-    padding: 20px 50px 0px;
-    background-color: rgba(0, 0, 0, 0.85);
-    width: 58%;
-    height: 100%;
-    float: right;
-    margin-right: 15px;
-}
-
-.px_club_slider .item img {
-    width: 100%;
-}
-
-.px_club_slider .item .container {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 100%;
-}
-
-.px_club_slider .item .container .row {
-    height: 100%;
-}
-
-.m_right {
-    float: right;
-    margin-right: 15px;
-}
-
-.slider_caption .center_align {
-    position: relative;
-}
-
-.slider_caption h2 {
-    font-size: 30px;
-    line-height: inherit;
-    text-align: center;
-    position: relative;
-    display: inline-block;
-    color: #ffffff;
-    font-weight: bold;
-    letter-spacing: 0.075em;
-}
-
-.slider_caption .center_align:after {
-    width: 100%;
-    height: 5px;
-    content: "";
-    position: absolute;
-    bottom: -9px;
-    left: 0;
-    z-index: 1;
-    background: -webkit-radial-gradient(50% 50%, ellipse closest-side, #fd644f , rgba(0, 0, 255, 0) 60%);
-    background: -moz-radial-gradient(50% 50%, ellipse closest-side, #fd644f , rgba(0, 0, 255, 0) 100%);
-    background: -ms-radial-gradient(50% 50%, ellipse closest-side, #fd644f , rgba(0, 0, 255, 0) 100%);
-    background: -o-radial-gradient(50% 50%, ellipse closest-side, #fd644f , rgba(0, 0, 255, 0) 100%);
-}
-
-.slider_caption .para_slider {
-    float: left;
-    width: 100%;
-    padding-top: 38px;
-}
-
-.slider_caption p {
-    color: #e0e0e0;
-    font-size: 15px;
-    line-height: 25px;
-    margin-bottom: 25px;
-}
-
-.px_club_slider .item .color_overlay {
-    position: absolute !important;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-
-/* slider navs */
-
-.px_club_slider .carousel-control span {
-    border: 2px solid #fff;
-    width: 37px;
-    height: 37px;
-    line-height: 34px;
-    text-align: center;
-    top: 50%;
-    position: absolute;
-    margin-top: -18px;
-    color: #fff;
-}
-
-.px_club_slider .carousel-control.left,
-.px_club_slider .carousel-control.right {
-    background-color: transparent;
-    background-image: none;
-}
-
-.px_club_slider .left.carousel-control span {
-    left: 52px;
-}
-
-.px_club_slider .right.carousel-control span {
-    right: 52px;
-}
-
-.px_club_slider .carousel-control span i {
-    font-size: 19px;
-    color: #fff;
-}
-
-.carousel-control span,
-.carousel-control span:after,
-.carousel-control span:before,
-.carousel-control span i {
-    transition: all ease-in-out 0.2s;
-    -webkit-transition: all ease-in-out 0.2s;
-    -moz-transition: all ease-in-out 0.2s;
-}
-
-.px_club_slider .carousel-control span:hover {
-    border-color: #fd644f ;
-    border-left-color: transparent;
-    border-right-color: transparent;
-}
-
-.px_club_slider .carousel-control span:hover i {
-    color: #fd644f ;
-}
-
-.px_club_slider .carousel-control span:before {
-    position: absolute;
-    content: "";
-    top: -2px;
-    left: -2px;
-}
-
-.px_club_slider .carousel-control span:after {
-    position: absolute;
-    content: "";
-    bottom: -2px;
-    right: -2px;
-}
-
-.px_club_slider .carousel-control span:hover:after {
-    border-bottom: 14px solid #fd644f ;
-    border-left: 12px solid transparent;
-}
-
-.px_club_slider .carousel-control span:hover:before {
-    border-top: 14px solid #fd644f ;
-    border-right: 12px solid transparent;
-}
-
-
-/* slider navs */
-
-
-/* club slider css end */
 
 
 /*----------------------------------------------------------------------------------
@@ -2571,114 +2227,6 @@ a.fancybox-nav.fancybox-next span:after {
 /*--- sidebar gallery css end ----*/
 
 
-/*--------- track css start -----------*/
-
-.px_sidebar_track {
-    float: left;
-    width: 100%;
-    background-color: #000000;
-    padding: 30px;
-}
-
-.px_sidebar_track .mejs-playlist li {
-    font-family: 'Ubuntu', sans-serif;
-    color: #fff;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-.px_sidebar_track img {
-    width: 32.4%;
-}
-
-.px_sidebar_track .mejs-container {
-    width: 100% !important;
-}
-
-.px_sidebar_track .mejs-container,
-.px_sidebar_track .mejs-playlist {
-    background: none;
-}
-
-.px_sidebar_track .mejs-container .mejs-controls {
-    background: none;
-    position: relative !important;
-    height: auto !important;
-    float: left;
-    margin-top: 5px;
-}
-
-.px_sidebar_track .mejs-playlist {
-    width: 100% !important;
-    top: 15px !important;
-}
-
-.px_sidebar_track .mejs-button {
-    position: relative;
-    top: 66px;
-}
-
-.px_sidebar_track .mejs-button.mejs-prevtrack-button,
-.px_sidebar_track .mejs-button.mejs-nexttrack-button,
-.px_sidebar_track .mejs-shuffle-button {
-    top: 71px;
-}
-
-.px_sidebar_track .mejs-playpause-button,
-.media_player .mejs-playpause-button {
-    border: 2px solid #fff !important;
-    border-radius: 5em;
-    left: -5px;
-    padding: 10px 0 0 12px !important;
-}
-
-.media_player .mejs-playpause-button {
-    top: 40px;
-}
-
-.px_sidebar_track .mejs-shuffle-button {
-    margin-left: 7px !important
-}
-
-.px_sidebar_track .mejs-playpause-button button {
-    margin: 0 !important;
-}
-
-.px_sidebar_track .mejs-button button {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
-
-.px_sidebar_track .mejs-button.mejs-volume-button {
-    top: -12px;
-    left: 62%;
-}
-
-.px_sidebar_track a.mejs-horizontal-volume-slider {
-    left: 62%;
-    top: -8px;
-    width: 22% !important;
-}
-
-.px_sidebar_track .mejs-horizontal-volume-current {
-    background: transparent !important;
-}
-
-.px_sidebar_track .mejs-time,
-.px_sidebar_track .mejs-time {
-    display: none !important;
-}
-
-.px_sidebar_track div.mejs-time-rail,
-.px_sidebar_track .mejs-time-rail .mejs-time-total {
-    width: 100% !important;
-}
-
-
-/*--------- track css end -----------*/
-
-
 /*----------------------------------------------------------------------------------
   19. blog sidebar css end
  ----------------------------------------------------------------------------------*/
@@ -2715,30 +2263,6 @@ a.fancybox-nav.fancybox-next span:after {
 .blog_full_main_cover .blog_pagination {
     padding-top: 80px;
 }
-
-.px_blog_cover.px_blog_full {
-    background-color: #000000;
-}
-
-.px_blog_full .blog_desc {
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
-
-.px_blog_full:nth-child(odd) .blog_desc {
-    padding-right: 14%;
-    padding-left: 30px;
-}
-
-.px_blog_full:nth-child(even) .blog_desc {
-    padding-left: 14%;
-    padding-right: 30px;
-}
-
-.px_blog_full .blog_desc h3 {
-    margin-top: -3px;
-}
-
 
 /*----------------------------------------------------------------------------------
   21. blog full width css end
@@ -2951,17 +2475,6 @@ h2.comment_title {
 /*----------------------------------------------------------------------------------
   23. event page css end 
  ----------------------------------------------------------------------------------*/
-
-
-/*  music track css start */
-
-.px_media_player .mejs-container {
-    width: 100% !important;
-    height: auto !important;
-}
-
-
-/*  music track css end */
 
 
 /*----------------------------------------------------------------------------------
@@ -3626,11 +3139,6 @@ h2.comment_title {
 /*----------------------------------------------------------------------------------
  28. preloader css end
  ----------------------------------------------------------------------------------*/
-
-.px_club_slider .tp-caption {
-    padding: 0px !important;
-}
-
 
 /*----------------------------------------------------------------------------------
  29. triangle and button shape css start
