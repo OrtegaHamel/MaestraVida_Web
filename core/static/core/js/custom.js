@@ -295,11 +295,13 @@ Project: NightClub
 
     });
 
-    $('.cartelera_popup').magnificPopup({
-        type: 'image',
-        mainClass: 'my_zoom_in',
-        removalDelay: 300
-    });
+    if ($.fn.magnificPopup) {
+        $('.cartelera_popup').magnificPopup({
+            type: 'image',
+            mainClass: 'my_zoom_in',
+            removalDelay: 300
+        });
+    }
 
 })(jQuery);
 

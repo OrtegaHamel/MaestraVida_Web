@@ -166,30 +166,9 @@
     
     <script src="{% static 'core/js/bootstrap.min.js' %}"></script>
 
-    <!-- animation js -->
-    <script src="{% static 'core/js/animation/jquery.scrollorama.js' %}"></script>
-    <script src="{% static 'core/js/animation/TweenMax.js' %}"></script>
-    <!-- animation js -->
-
-    <script src="{% static 'core/js/plugins/owl-carousel/owl.carousel.js' %}"></script>
-
-    <script src="{% static 'core/js/plugins/revolution/js/jquery.themepunch.tools.min.js' %}"></script>
-    <script src="{% static 'core/js/plugins/revolution/js/jquery.themepunch.revolution.min.js' %}"></script>
-
-    <script src="{% static 'core/js/plugins/revolution/js/revolution.extension.layeranimation.min.js' %}"></script>
-    <script src="{% static 'core/js/plugins/revolution/js/revolution.extension.navigation.min.js' %}"></script>
-    <script src="{% static 'core/js/plugins/revolution/js/revolution.extension.slideanims.min.js' %}"></script>
-    <script src="{% static 'core/js/plugins/revolution/js/revolution.extension.parallax.min.js' %}"></script>
-    <script src="{% static 'core/js/plugins/revolution/js/revolution.extension.actions.min.js' %}"></script>
-     <!-- gallery js -->
-    <script src="{% static 'core/js/plugins/gallery/jquery.magnific-popup.js' %}"></script>
-    <!-- gallery js -->
-    <!-- ui js -->
-    <script src="{% static 'core/js/plugins/jquery_ui/jquery-ui.js' %}"></script>
-    <!-- ui js -->
+    {% block page_plugin_js %}{% endblock %}
 
     <script>
-        // Tu parche de revslider...
         function revslider_showDoubleJqueryError() { return; }
         $(window).on('load', function() {
             $('.px_preloader').fadeOut('slow');
