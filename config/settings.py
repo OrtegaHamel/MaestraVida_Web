@@ -120,7 +120,6 @@ USE_TZ = False  # Desactivamos el uso de zonas horarias para simplificar la gest
 # Configuración para archivos ESTÁTICOS (CSS, JS, imágenes de diseño)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'core/static')]
 
 if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

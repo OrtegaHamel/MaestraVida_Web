@@ -1540,6 +1540,11 @@ a {
     margin-top: 8px;
 }
 
+.px_footer_strip .developer_credit a {
+    color: #fff;
+    text-decoration: none;
+}
+
 .social_icons.footer_social svg {
     fill: #fff;
     width: 13px;
