@@ -128,10 +128,21 @@ class CarteleraMensual(models.Model):
             mes = hoy.month
             anio = hoy.year
 
-        return cls.objects.filter(
+        cartelera_nueva = cls.objects.filter(
             mes=mes,
             anio=anio
         ).first()
+
+        if cartelera_nueva and cartelera_nueva.imagen:
+            return cartelera_nueva
+
+        # Mantener la última cartelera publicada hasta que exista la nueva.
+        return cls.objects.filter(
+            imagen__isnull=False
+        ).filter(
+            models.Q(anio__lt=anio) |
+            models.Q(anio=anio, mes__lte=mes)
+        ).order_by("-anio", "-mes").first()
 
     @property
     def esta_activa(self):
