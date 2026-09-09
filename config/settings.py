@@ -124,6 +124,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'core/static')]
 
 if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # Los nombres generados por el manifest incluyen un hash del contenido,
+    # por lo que pueden permanecer en caché durante un año.
+    WHITENOISE_MAX_AGE = 31536000
 
 # Configuración para archivos MEDIA (Subidas de usuario, cartelera)
 MEDIA_URL = '/media/'

@@ -278,6 +278,9 @@ Project:	 Nigth Club 1.0
     .navbar_header {
         display: block;
         padding-top: 15px;
+        position: relative;
+        z-index: 10001;
+        pointer-events: auto;
     }
     .px_navigations ul {
         float: left;
@@ -360,6 +363,22 @@ Project:	 Nigth Club 1.0
         top: 0;
         padding-right: 15px;
         left: 0;
+        z-index: 10001;
+    }
+
+    .wrapper_navigation > .container > .row > [class*="col-"]:first-child {
+        position: relative;
+        z-index: 10002;
+    }
+
+    .px_logo {
+        position: relative;
+        z-index: 10000;
+    }
+
+    .px_navigations ul > li > a {
+        position: relative;
+        z-index: 2;
     }
     .wrapper_navigation #navigation_main {
         position: absolute !important;
@@ -1116,4 +1135,3 @@ Project:	 Nigth Club 1.0
     }
 
 }
-

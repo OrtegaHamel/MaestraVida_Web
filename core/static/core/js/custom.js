@@ -92,11 +92,6 @@ Project: NightClub
                 }
             });
 
-            // Mobile toggle
-            $('.navbar_toggle').off('click').on('click', function() {
-                $(this).toggleClass('toggle_open');
-                $('.px_navigations').toggleClass('menu_open');
-            });
         },
 
         Eventcrousel: function() {
@@ -300,11 +295,13 @@ Project: NightClub
 
     });
 
-    $('.cartelera_popup').magnificPopup({
-        type: 'image',
-        mainClass: 'my_zoom_in',
-        removalDelay: 300
-    });
+    if ($.fn.magnificPopup) {
+        $('.cartelera_popup').magnificPopup({
+            type: 'image',
+            mainClass: 'my_zoom_in',
+            removalDelay: 300
+        });
+    }
 
 })(jQuery);
 

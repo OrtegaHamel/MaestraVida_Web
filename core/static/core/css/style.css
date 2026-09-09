@@ -539,6 +539,12 @@ p.logo_bottom_text:hover:after {
     float: left;
     width: 40px;
     cursor: pointer;
+    position: relative;
+    z-index: 10002;
+    pointer-events: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
 }
 
 .navbar_close {

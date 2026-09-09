@@ -4,6 +4,16 @@
 {% block title %}Cartelera | Maestra Vida{% endblock %}
 {% block header_class %}px_header_main{% endblock %}
 {% block nav_class %}px_interior{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/js/plugins/owl-carousel/owl.carousel.css' %}">
+<link rel="stylesheet" href="{% static 'core/js/plugins/gallery/magnific-popup.css' %}">
+{% endblock %}
+
+{% block page_plugin_js %}
+<script src="{% static 'core/js/plugins/owl-carousel/owl.carousel.js' %}"></script>
+<script src="{% static 'core/js/plugins/gallery/jquery.magnific-popup.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 
 <!-- ==========================================
