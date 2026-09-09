@@ -62,9 +62,9 @@ def procesar_y_optimizar_a_webp(imagen_field, max_size=(1600, 1600), quality=80,
 # ==========================================
 class Banda(models.Model):
     nombre = models.CharField(max_length=100)
-    responsable = models.CharField(max_length=100)
-    telefono = models.CharField(max_length=20)
-    correo = models.EmailField()
+    responsable = models.CharField(max_length=100, blank=True)
+    telefono = models.CharField(max_length=20, blank=True)
+    correo = models.EmailField(blank=True)
     redes_sociales = models.URLField(blank=True, null=True)
     dossier = models.TextField(blank=True, null=True, help_text="Descripción o reseña tipo dossier de la banda")
     notas_confidenciales = models.TextField(blank=True, null=True, help_text="Notas privadas de Producción")

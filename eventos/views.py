@@ -7,7 +7,7 @@ from django.contrib import messages
 import logging
 from django.core.paginator import Paginator
 from django.core.exceptions import PermissionDenied
-from django.db.models import Count, Q, Sum
+from django.db.models import Count, OuterRef, Q, Subquery, Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -56,12 +56,23 @@ def home_publico(request):
         .order_by('hora')
     )
 
-    # Obtenemos las últimas 8 fotos para la galería
+    # Mostramos una foto por cada uno de los tres eventos más recientemente
+    # cubiertos por el fotógrafo, evitando repetir varias fotos del mismo evento.
+    ultima_foto_por_evento = (
+        FotoBanda.objects
+        .filter(evento_id=OuterRef('evento_id'), imagen__isnull=False)
+        .order_by('-creado_en')
+        .values('pk')[:1]
+    )
     fotos_recientes = (
         FotoBanda.objects
         .select_related('evento', 'evento__banda')
-        .filter(imagen__isnull=False)
-        .order_by('-creado_en')[:8]
+        .filter(
+            evento__isnull=False,
+            imagen__isnull=False,
+            pk=Subquery(ultima_foto_por_evento),
+        )
+        .order_by('-creado_en')[:3]
     )
     fin_de_semana = FinDeSemana.objects.first()
     fin_de_semana_items = [
@@ -82,11 +93,6 @@ def home_publico(request):
             'fin_cartelera': fin_cartelera,
         },
     )
-
-def detalle_evento_publico(request, slug):
-  evento = get_object_or_404(Evento, slug=slug)
-  return render(request, 'eventos/detalle_evento.html', {'evento': evento})
-
 
 def cartelera(request):
 

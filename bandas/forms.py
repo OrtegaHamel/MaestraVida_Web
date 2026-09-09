@@ -20,7 +20,7 @@ class BandaForm(forms.ModelForm):
       - clean_telefono: normaliza dígitos, añade código de país por defecto opcional y formatea +<digits>
       - clean_correo: valida e-mail
       - clean_redes_sociales: añade esquema https:// si falta
-      - clean: requiere al menos un canal de contacto (teléfono o correo o redes_sociales)
+      - Los datos de contacto y descripción son opcionales al crear la banda.
     """
 
     class Meta:
@@ -48,6 +48,18 @@ class BandaForm(forms.ModelForm):
                 'required': 'El nombre de la banda es obligatorio.',
             },
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name in (
+            'responsable',
+            'telefono',
+            'correo',
+            'redes_sociales',
+            'dossier',
+            'notas_confidenciales',
+        ):
+            self.fields[field_name].required = False
 
     def clean_nombre(self):
         nombre = (self.cleaned_data.get('nombre') or '').strip()
@@ -115,13 +127,6 @@ class BandaForm(forms.ModelForm):
 
     def clean(self):
         cleaned = super().clean()
-        telefono = cleaned.get('telefono') or ''
-        correo = cleaned.get('correo') or ''
-        redes = cleaned.get('redes_sociales') or ''
-
-        if not (telefono or correo or redes):
-            raise ValidationError('Debes indicar al menos un medio de contacto: teléfono, correo o redes sociales.')
-
         return cleaned
 
 

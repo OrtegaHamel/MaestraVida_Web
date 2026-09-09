@@ -37,7 +37,4 @@ urlpatterns = [
         name="eliminar_cartelera",
     ),
 
-    # 2. RUTAS PÚBLICAS DINÁMICAS (Siempre al final)
-    # Al estar abajo, Django solo usará el comodín <slug> si la URL NO contenía 'crear', 'editar', etc.
-    path('<slug:slug>/', views.detalle_evento_publico, name='detalle_evento_publico'),
 ]

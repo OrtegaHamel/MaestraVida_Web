@@ -58,8 +58,8 @@ class EventoForm(forms.ModelForm):
 
         if not self.instance.pk and not self.initial.get('hora'):
             ahora_aware = timezone.now()
-            hoy_a_las_23_aware = ahora_aware.replace(hour=23, minute=0, second=0, microsecond=0)
-            self.initial['hora'] = hoy_a_las_23_aware
+            hoy_a_las_22_30_aware = ahora_aware.replace(hour=22, minute=30, second=0, microsecond=0)
+            self.initial['hora'] = hoy_a_las_22_30_aware
 
     def clean_link_entrada(self):
         """

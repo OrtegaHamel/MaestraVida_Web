@@ -40,7 +40,7 @@
                         <li class="nav-item">
                             <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}"
                             href="{% url 'eventos:lista_carteleras' %}">
-                                <i class="fas fa-calendar-alt me-2"></i> Cartelera Mensual
+                                <i class="fas fa-calendar-alt me-2"></i> Manteles
                             </a>
                         </li>
                         <li class="nav-item">
@@ -51,14 +51,14 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}"
-                            href="{% url 'eventos:editar_fin_de_semana' %}">
-                                <i class="fas fa-images me-2"></i> Fin de semana
+                            href="{% url 'bandas:lista_bandas' %}">
+                                <i class="fas fa-star me-2"></i> Bandas
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Productores' %}disabled-role{% endif %}"
-                            href="{% url 'bandas:lista_bandas' %}">
-                                <i class="fas fa-star me-2"></i> Bandas
+                            href="{% url 'eventos:editar_fin_de_semana' %}">
+                                <i class="fas fa-images me-2"></i> Fin de Semana
                             </a>
                         </li>
                     </ul>
@@ -97,7 +97,7 @@
                     <hr class="text-secondary">
                     <ul class="nav flex-column">
                         <li class="nav-item mb-2">
-                            <a class="nav-link py-2 text-info" href="{% url 'index' %}">
+                            <a class="nav-link py-2 text-info" href="{% url 'index' %}" target="_blank" rel="noopener noreferrer">
                                 <i class="fas fa-globe me-2"></i> Sitio Público
                             </a>
                         </li>

@@ -88,10 +88,6 @@
                         </td>
                         
                         <td class="pe-4 text-end text-nowrap">
-                            <a href="{% url 'eventos:detalle_evento_publico' evento.slug %}" class="btn btn-sm btn-outline-secondary me-1" target="_blank" title="Ver Publicación Pública">
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-                            
                             <!-- Botones de edición y eliminación restringidos al grupo Productores o Superusuario -->
                             {% if request.user.is_superuser or request.user|has_group:'Productores' %}
                                 <a href="{% url 'eventos:editar_evento' evento.id %}" class="btn btn-sm btn-outline-dark me-1" title="Editar Evento">
