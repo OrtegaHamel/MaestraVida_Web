@@ -41,7 +41,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Ubuntu', sans-serif;
-    background: url('../images/bg/pattern_bg.jpg') no-repeat;
+    background: url('../images/bg/pattern_bg.webp') no-repeat;
     background-size: cover;
     font-size: 15px;
     line-height: 1.42857143;
@@ -1074,7 +1074,7 @@ a {
 .px_gallery_wrapper {
     padding-bottom: 80px;
     padding-top: 55px;
-    background: url('../images/bg/pattern_bg.jpg') no-repeat;
+    background: url('../images/bg/pattern_bg.webp') no-repeat;
     background-size: cover;
 }
 
@@ -1138,7 +1138,7 @@ a {
 
 .px_blog_section {
     padding-top: 80px;
-    background: url('../images/bg/pattern_bg.jpg') no-repeat;
+    background: url('../images/bg/pattern_bg.webp') no-repeat;
     background-size: cover;
 }
 
@@ -2449,7 +2449,7 @@ h2.comment_title {
  ----------------------------------------------------------------------------------*/
 
 .px_event_section {
-    background: url('../images/bg/pattern_bg.jpg') no-repeat;
+    background: url('../images/bg/pattern_bg.webp') no-repeat;
     background-size: cover;
 }
 
@@ -2588,7 +2588,7 @@ h2.comment_title {
  ----------------------------------------------------------------------------------*/
 
 .px_gallery_section {
-    background: url('../images/bg/pattern_bg.jpg') no-repeat;
+    background: url('../images/bg/pattern_bg.webp') no-repeat;
     background-size: cover;
 }
 
@@ -2853,7 +2853,7 @@ h2.comment_title {
 }
 
 .video_gallery_wrapper {
-    background: url('../images/bg/pattern_bg.jpg') no-repeat;
+    background: url('../images/bg/pattern_bg.webp') no-repeat;
     background-size: cover;
 }
 
