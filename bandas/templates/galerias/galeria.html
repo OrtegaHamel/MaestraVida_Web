@@ -117,11 +117,7 @@
 
                 <div class="text-center">
                   <h6 class="mb-1 mt-1 text-white fw-semibold text-truncate" title="{{ evento.banda.nombre }}">{{ evento.banda.nombre }}</h6>
-                  {% if evento.latest_photo %}
-                    <small class="d-block text-white-50">{{ evento.latest_photo|date:"d/m/Y" }}</small>
-                  {% else %}
-                    <small class="d-block text-white-50">{{ evento.hora|date:"d/m/Y" }}</small>
-                  {% endif %}
+                  <small class="d-block text-white-50">{{ evento.hora|date:"d/m/Y" }}</small>
                 </div>
 
                 <!-- enlaces ocultos para magnific popup: todas las fotos del evento excepto la primera -->
