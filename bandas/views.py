@@ -30,7 +30,14 @@ def galeria(request):
     albums = (
         Album.objects
         .annotate(num_fotos=Count('fotos'), latest_photo=Max('fotos__creado_en'))
-        .filter(num_fotos__gt=0)
+        .filter(num_fotos__gt=0, tipo=Album.TIPO_LOCAL)
+        .prefetch_related('fotos')
+        .order_by('-latest_photo', '-creado_en')[:6]
+    )
+    exposiciones = (
+        Album.objects
+        .annotate(num_fotos=Count('fotos'), latest_photo=Max('fotos__creado_en'))
+        .filter(num_fotos__gt=0, tipo=Album.TIPO_EXPOSICION)
         .prefetch_related('fotos')
         .order_by('-latest_photo', '-creado_en')[:6]
     )
@@ -55,6 +62,7 @@ def galeria(request):
 
     context = {
         'albums': albums,
+        'exposiciones': exposiciones,
         'event_albums': event_albums,  # nueva variable para la plantilla
         'fotos': fotos,
     }
@@ -248,7 +256,7 @@ def panel_fotografo_eventos(request):
 @grupo_required('Fotografos')
 def lista_albumes(request):
     # Obtenemos todos los álbumes ordenados por fecha de creación descendente por defecto
-    albumes = Album.objects.all().order_by('-creado_en')
+    albumes = Album.objects.filter(tipo=Album.TIPO_LOCAL).order_by('-creado_en')
     
     # Capturamos los parámetros GET
     query_titulo = request.GET.get('q')
@@ -269,8 +277,30 @@ def lista_albumes(request):
         
     contexto = {
         'albumes': albumes,
+        'seccion': 'Galería',
+        'tipo_album': Album.TIPO_LOCAL,
     }
     return render(request, 'galerias/lista_albumes.html', contexto)
+
+
+@login_required
+@grupo_required('Fotografos')
+def lista_exposiciones(request):
+  exposiciones = Album.objects.filter(tipo=Album.TIPO_EXPOSICION).order_by('-creado_en')
+  query = request.GET.get('q')
+  fecha_desde = request.GET.get('desde')
+  fecha_hasta = request.GET.get('hasta')
+  if query:
+    exposiciones = exposiciones.filter(titulo__icontains=query)
+  if fecha_desde:
+    exposiciones = exposiciones.filter(creado_en__date__gte=fecha_desde)
+  if fecha_hasta:
+    exposiciones = exposiciones.filter(creado_en__date__lte=fecha_hasta)
+  return render(request, 'galerias/lista_albumes.html', {
+      'albumes': exposiciones,
+      'seccion': 'Exposiciones',
+      'tipo_album': Album.TIPO_EXPOSICION,
+  })
 
 @login_required
 @grupo_required('Fotografos')
@@ -280,12 +310,29 @@ def crear_album(request):
     if form.is_valid():
       album = form.save(commit=False)
       album.creado_por = request.user
+      album.tipo = Album.TIPO_LOCAL
       album.save()
       return redirect('bandas:subir_fotos_album', album_id=album.id)
   else:
     form = AlbumForm()
 
   return render(request, 'galerias/crear_album.html', {'form': form})
+
+
+@login_required
+@grupo_required('Fotografos')
+def crear_exposicion(request):
+  if request.method == 'POST':
+    form = AlbumForm(request.POST)
+    if form.is_valid():
+      album = form.save(commit=False)
+      album.creado_por = request.user
+      album.tipo = Album.TIPO_EXPOSICION
+      album.save()
+      return redirect('bandas:subir_fotos_album', album_id=album.id)
+  else:
+    form = AlbumForm(initial={'tipo': Album.TIPO_EXPOSICION})
+  return render(request, 'galerias/crear_album.html', {'form': form, 'es_exposicion': True})
 
 
 @login_required
@@ -339,7 +386,7 @@ def eliminar_album(request, album_id):
         request,
         f"El álbum '{titulo_album}' ha sido eliminado correctamente.",
     )
-    return redirect('bandas:lista_albumes')
+    return redirect('bandas:lista_exposiciones' if album.tipo == Album.TIPO_EXPOSICION else 'bandas:lista_albumes')
 
   return render(request, 'galerias/eliminar_album.html', {'album': album})
 
@@ -380,7 +427,7 @@ def editar_album(request, album_id):
     if form.is_valid():
       form.save()
       messages.success(request, 'Álbum actualizado con éxito.')
-      return redirect('bandas:lista_albumes')
+      return redirect('bandas:lista_exposiciones' if album.tipo == Album.TIPO_EXPOSICION else 'bandas:lista_albumes')
   else:
     form = AlbumForm(instance=album)
 
@@ -474,5 +521,3 @@ def subir_foto_galeria(request):
   return render(
       request, 'galerias/subir_foto_galeria.html', {'form': form, 'tipo': 'galeria'}
   )
-
-

@@ -101,8 +101,15 @@ class FotoBanda(models.Model):
 # MODELO: GALERÍA GENERAL (MURALES, EXPOSICIONES, LOCAL)
 # ==========================================
 class Album(models.Model):
+    TIPO_LOCAL = 'local'
+    TIPO_EXPOSICION = 'exposicion'
+    TIPOS = (
+        (TIPO_LOCAL, 'Galería del local'),
+        (TIPO_EXPOSICION, 'Exposición'),
+    )
     titulo = models.CharField(max_length=150, verbose_name="Título del Álbum")
     descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción o Reseña")
+    tipo = models.CharField(max_length=20, choices=TIPOS, default=TIPO_LOCAL, verbose_name="Sección")
     creado_en = models.DateTimeField(auto_now_add=True)
     creado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 

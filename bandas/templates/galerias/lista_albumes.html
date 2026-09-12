@@ -4,12 +4,12 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h1 class="h2 mb-1 fw-bold text-dark"><i class="fas fa-folder-open me-2"></i>Galería</h1>
-        <p class="text-muted small">Administración de la Galería y sus Álbumes.</p>
+        <h1 class="h2 mb-1 fw-bold text-dark"><i class="fas {% if tipo_album == 'exposicion' %}fa-palette{% else %}fa-folder-open{% endif %} me-2"></i>{{ seccion|default:'Galería' }}</h1>
+        <p class="text-muted small">Administración de {{ seccion|default:'la Galería' }} y sus Álbumes.</p>
     </div>
     {% if request.user.is_superuser or request.user|has_group:'Fotografos' %}
-    <a href="{% url 'bandas:crear_album' %}" class="btn btn-primary shadow-sm">
-        <i class="fas fa-plus me-2"></i>Nuevo Álbum
+    <a href="{% if tipo_album == 'exposicion' %}{% url 'bandas:crear_exposicion' %}{% else %}{% url 'bandas:crear_album' %}{% endif %}" class="btn btn-primary shadow-sm">
+        <i class="fas fa-plus me-2"></i>{% if tipo_album == 'exposicion' %}Nueva Exposición{% else %}Nuevo Álbum{% endif %}
     </a>
     {% endif %}
 </div>
@@ -19,7 +19,7 @@
             <!-- Búsqueda por Nombre / Título -->
             <div class="input-group input-group-sm" style="max-width: 200px;">
                 <span class="input-group-text bg-white text-muted"><i class="fas fa-folder-plus"></i></span>
-                <input type="text" name="q" class="form-control" placeholder="Nombre del Álbum..." value="{{ request.GET.q|default:'' }}"
+                <input type="text" name="q" class="form-control" placeholder="Nombre..." value="{{ request.GET.q|default:'' }}"
                     aria-label="Buscar por Título">
             </div>
 
@@ -44,7 +44,7 @@
 
             <!-- Botón Limpiar Filtros -->
             {% if request.GET.q or request.GET.desde or request.GET.hasta %}
-            <a href="{% url 'bandas:lista_albumes' %}" class="btn btn-sm btn-outline-danger" title="Limpiar filtros">
+            <a href="{% if tipo_album == 'exposicion' %}{% url 'bandas:lista_exposiciones' %}{% else %}{% url 'bandas:lista_albumes' %}{% endif %}" class="btn btn-sm btn-outline-danger" title="Limpiar filtros">
                 <i class="fas fa-times"></i>
             </a>
             {% endif %}
@@ -89,7 +89,7 @@
                 <tr>
                     <!-- Ajustamos el colspan dependiendo si se muestra la columna de acciones -->
                     <td colspan="{% if request.user.is_superuser or request.user|has_group:'Fotografos' %}4{% else %}3{% endif %}" class="text-center py-4 text-muted">
-                        No hay álbumes creados aún.
+                    No hay {{ seccion|lower|default:'álbumes' }} creados aún.
                     </td>
                 </tr>
                 {% endfor %}

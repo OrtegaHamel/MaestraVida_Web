@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="px_heading_middle mb-5">
-                        <h2>Nuestro <span>local</span></h2>
+                        <h2>Nuestros <span>recuerdos</span></h2>
                     </div>
 
                     <!-- GRID DE ALBUMES -->
@@ -91,11 +91,40 @@
     </div>
 </div>
 
+<!-- EXPOSICIONES -->
+<div id="exposiciones" class="main_wrapper px_gallery_wrapper">
+    <div class="px_heading_middle mb-5">
+        <h2>Nuestras <span>Exposiciones</span></h2>
+    </div>
+    <div class="container">
+      <div class="row px_album_grid">
+        {% for album in exposiciones %}
+          {% with fotos_list=album.fotos.all %}
+          <div class="col-lg-4 col-md-4 col-sm-6 mb-4 album">
+            <div class="px_blog_single text-center p-1">
+              <a href="{{ fotos_list.0.imagen.url }}" class="photo_popup d-block">
+                <img src="{{ fotos_list.0.imagen.url }}" alt="{{ album.titulo }}" class="img-fluid" style="height:160px; width:100%; object-fit:cover;">
+              </a>
+              <h6 class="mb-1 mt-1 text-white fw-semibold text-truncate" title="{{ album.titulo }}">{{ album.titulo }}</h6>
+              <small class="d-block text-white-50">{% if album.latest_photo %}{{ album.latest_photo|date:"d/m/Y" }}{% else %}{{ album.creado_en|date:"d/m/Y" }}{% endif %}</small>
+              <div style="display:none;">
+                {% for foto in fotos_list %}{% if not forloop.first %}<a href="{{ foto.imagen.url }}" class="photo_popup"></a>{% endif %}{% endfor %}
+              </div>
+            </div>
+          </div>
+          {% endwith %}
+        {% empty %}
+          <div class="col-12"><p class="text-center text-white">No hay exposiciones disponibles todavía...</p></div>
+        {% endfor %}
+      </div>
+    </div>
+</div>
+
 <!-- MAESTRA VIDA EN VIVO (agrupados por evento) -->
 <div class="main_wrapper px_gallery_wrapper">
 
     <div class="px_heading_middle mb-5">
-        <h2>Maestra Vida <span>en Vivo</span></h2>
+        <h2>Nuestra <span>Música en Vivo</span></h2>
     </div>
 
     <div class="container">

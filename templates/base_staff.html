@@ -75,7 +75,13 @@
                         <li class="nav-item">
                             <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Fotografos' %}disabled-role{% endif %}" 
                             href="{% url 'bandas:lista_albumes' %}">
-                                <i class="fas fa-folder-plus me-2"></i> Galería
+                                <i class="fas fa-folder-plus me-2"></i> Álbumes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link py-2 {% if request.user|has_group:'Nuevo' or not request.user.is_superuser and not request.user|has_group:'Fotografos' %}disabled-role{% endif %}"
+                            href="{% url 'bandas:lista_exposiciones' %}">
+                                <i class="fas fa-palette me-2"></i> Exposiciones
                             </a>
                         </li>
                     </ul>

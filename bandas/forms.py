@@ -133,22 +133,11 @@ class BandaForm(forms.ModelForm):
 class AlbumForm(forms.ModelForm):
     class Meta:
         model = Album
-        fields = ['titulo', 'descripcion']
+        fields = ['titulo', 'descripcion', 'tipo']
         widgets = {
             'titulo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título del álbum'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Descripción breve'}),
-        }
-
-# ==========================================
-# FORMULARIO DE ÁLBUM (NUEVO CONTENEDOR)
-# ==========================================
-class AlbumForm(forms.ModelForm):
-    class Meta:
-        model = Album
-        fields = ['titulo', 'descripcion']
-        widgets = {
-            'titulo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título del álbum'}),
-            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Descripción breve'}),
+            'tipo': forms.Select(attrs={'class': 'form-select'}),
         }
 
 # ==========================================
